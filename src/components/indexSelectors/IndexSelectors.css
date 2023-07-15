@@ -1,0 +1,27 @@
+.IndexSelectors {
+    display:flex;
+    justify-content: flex-start;
+}
+
+.IndexSelectors__selector {
+    cursor: pointer;
+    background-color: var(--GreyColor);
+    margin-left: 15px;
+    padding: 1px 5px 1px 5px;
+    border-right: solid 12px var(--DarkGreyColor);
+    min-width: 75px;
+    height: 35px;
+}
+
+.IndexSelectors__selector:hover {
+    background-color: var(--LightGreyColor);
+    border-right: solid 12px var(--FluorescentColor);
+    
+}
+
+.IndexSelectors__text {
+    color: var(--FontColorDefaultBlack);
+    text-align: center;
+    margin-top: 8px;    
+    font-size: 13px;
+}

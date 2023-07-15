@@ -1,0 +1,68 @@
+.MessageReader__header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.MessageReader__date {
+    padding-top: 40px;
+    margin-right: 10px;
+}
+
+.MessageReader__title {
+    width: auto;
+    font-weight: bold;
+    color: var(--FontColorDefaultBlack);
+    border-radius: 2px 2px 0px 0px;
+    margin: 0px 0px 10px 10px;
+    padding: 40px 0px 10px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.MessageReader__content {
+    min-height: 300px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: rgb(218, 218, 218);
+    border: 2px solid rgb(192, 192, 192);
+}
+
+.MessageReader__text {
+    margin: 10px;
+}
+
+.MessageRader__icon {
+    height: 28px;
+    width: 28px;
+}
+
+.MessageReader__footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.MessageReader__icons {
+    margin-right: 10px;
+}
+
+@media (min-width: 1300px) {
+    .MessageReader--size {
+      width: 1200px;
+    }
+}
+@media (max-width: 1300px) {
+    .MessageReader--size {
+      width: 1000px;
+    }
+}
+@media (max-width: 1200px) {
+    .MessageReader--size {
+      width: 800px;
+    }
+}
+
+@media (max-width: 900px) {
+    .MessageReader--size {
+        width: 600px;
+    }
+}

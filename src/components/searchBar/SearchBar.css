@@ -1,0 +1,31 @@
+.SearchBar {
+    
+}
+
+.SearchBar__select {
+    margin-right: 5px;
+}
+
+.SearchBar__itens {
+    background-color: rgb(224, 230, 228);
+    padding-top: 1px;
+    padding-bottom: 3px;
+    border-radius: 3px;
+}
+
+.SearchBar__itens input[type = text] {
+    font-size: 13px;
+    width: 230px;
+    height: 22px;
+    border: none;
+}
+
+.SearchBar__itens img {
+    height: 21px;
+    margin-left: -12px;
+}
+
+.SearchBar__itens img:hover {
+    filter: brightness(5);
+    cursor: pointer;
+}

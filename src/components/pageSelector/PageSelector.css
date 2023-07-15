@@ -1,0 +1,17 @@
+.PageSelector {
+    display: flex;
+    justify-content: space-around;
+}
+
+.PageSelector__button {
+    border-radius:18px;
+    padding: 5px 5px 7px 5px;
+}
+
+.PageSelector__arrow {
+    width: 22px;
+}
+
+.PageSelector__index {
+    margin-top: 15px;
+}
