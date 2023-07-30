@@ -3,18 +3,25 @@ import { connect } from 'react-redux';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import Table from 'src/components/table/Table';
 import WindowTitle from 'src/components/windowTitle/WindowTitle';
-import { ObjFilter, SimpleView, TableType } from 'src/config/types/types';
+import { Listener, ObjFilter, SimpleView, TableType, Year } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { IndexSelectors } from 'src/components/indexSelectors/IndexSelectors';
-import { handleProcesses, handleErros, handleYears } from './ProcessListFunctions';
-import useAsyncError from 'src/components/useAsyncError/UseAsyncError';
+import { handleProcesses, handleErros, handleYears, handleProcessesTable } from './ProcessListFunctions';
+import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import { Navigate, useLocation } from 'react-router-dom';
 
 function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Element {
-    const [changePage, setChangePage] = useState(0);
+    const pathPage = useLocation().pathname.split('/');
+    const mainPath = pathPage[1];
+    const numberPage = +pathPage[pathPage.length - 1];
+    const [index, setIndex] = useState(numberPage || 0);
+    const [changedPath, setChangedPath] = useState<string>('');
     const [filter, setFilter] = useState<ObjFilter>({ year: '0000' });
-    const [yearIndex, setYearIndex] = useState<string[] | null>(null);
-    const [processes, setProcesses] = useState<TableType>();
+    const [yearIndex, setYearIndex] = useState<Year[] | null>(null);
+    const [listener, setListener] = useState<Listener>({ action: null, itemId: null });
+    const [processesTable, setProcessesTable] = useState<TableType>({ head: null, body: null });
+    const limit = 2;
     const throwError = useAsyncError();
 
     useEffect(() => {
@@ -28,29 +35,40 @@ function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Eleme
     }, []);
 
     useEffect(() => {
-        setFilter({ year: '0000' });
+        setChangedPath(path || '');
     }, [path]);
 
     useEffect(() => {
-        handleProcesses(path, 2, changePage, user, filter)
+        setIndex(0);
+    }, [filter]);
+
+    useEffect(() => {
+        setFilter({ year: '0000' });
+        setIndex(0);
+    }, [changedPath]);
+
+    useEffect(() => {
+        handleProcesses(changedPath, 2, index, user, filter)
             .then((data) => {
-                setProcesses(data);
+                setProcessesTable(handleProcessesTable(changedPath, data, setListener));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError, setProcesses);
-                console.log(processes);
+                handleErros(error as Error, dispatchUser, throwError);
             });
-    }, [filter]);
+    }, [filter, index]);
 
     return (
         <div className="MainWindow container">
             <div className="Window">
-                <WindowTitle title={title || ''} />
+                <WindowTitle title={title || ''}>
+                    <h3>{filter.year !== '0000' ? filter.year : ''}</h3>
+                </WindowTitle>
                 <hr />
                 <IndexSelectors index={yearIndex} setFilter={setFilter} />
-                <Table head={processes ? processes.head : null} body={processes ? processes.body : null} />
-                <PageSelector path={''} filter={null} setChangePage={setChangePage} index={0} limit={0} />
+                <Table table={processesTable} />
+                <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} />
             </div>
+            <Navigate to={`/${mainPath}/${index}`} />
         </div>
     );
 }

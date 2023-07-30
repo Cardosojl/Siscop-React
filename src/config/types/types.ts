@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ClassAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 
 export type User<S = string, N = S | number, B = boolean> = {
     _id: S;
@@ -17,7 +17,7 @@ export type Process<S = string, N = S | number, B = boolean> = {
     section_receiver: S;
     nup: N;
     done: B;
-    origin: S;
+    origin: S | Section;
     title: S;
     category: S;
     aggregate: S;
@@ -42,6 +42,11 @@ export type Section<S = string, N = S | number> = {
     _id: S;
     name: S;
     level: N;
+};
+
+export type AcquisitionWay<S = string> = {
+    _id: S;
+    name: S;
 };
 
 export type Message<S = string, N = S | number, B = boolean> = {
@@ -69,7 +74,7 @@ export type Year<S = string, N = S | number> = {
     page: N;
 };
 
-export type File<S = string, N = S | number, F = Buffer> = {
+export type File<S = string, N = S | number, F = { type: string; data: number[] }> = {
     _id: S;
     file?: F;
     filename: S;
@@ -98,7 +103,7 @@ export type DispatchUserRedux = {
 
 export type ReduxUser = UserRedux & DispatchUserRedux;
 
-export type SimpleView = UserRedux & DispatchUserRedux & { path: string; title?: string };
+export type SimpleView = UserRedux & DispatchUserRedux & { path?: string; title?: string };
 
 export type TableElements = {
     content: string;
@@ -188,13 +193,24 @@ export type ErrorBoundaryState = {
     error: Error | null;
 };
 
-export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<File>;
+export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<File> & Partial<AcquisitionWay>;
 
-export type SiscopApiIndex = User[] | Process[] | Message[] | Year[] | Section[] | File[] | ProcessState[];
+export type SiscopApiIndex = User[] | Process[] | Message[] | Year[] | Section[] | File[] | ProcessState[] | AcquisitionWay[] | null;
 
-export type SiscopApiShow = User | Process | Message | Year | Section | File | ProcessState;
+export type SiscopApiShow = User | Process | Message | Year | Section | File | ProcessState | AcquisitionWay;
 
 export type FilesList = {
     process: Process;
-    files: File[];
+    files: File[] | null;
+};
+
+export type Listener = {
+    action: string | null;
+    itemId: string | null;
+};
+
+export type ElementCreatorNode = {
+    type: string;
+    props: ClassAttributes<HTMLElement> | InputHTMLAttributes<HTMLInputElement> | null;
+    inner: ReactNode | ReactNode[] | string | null;
 };

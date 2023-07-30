@@ -23,5 +23,10 @@
 }
 
 .WindowTitle__children {
-    margin-right: 5px;
+    margin-right: 15px;
+}
+
+.WindowTitle__children h3 {
+    color: var(--FontColorDefaultBlack);
+    font-weight: bold;
 }

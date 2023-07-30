@@ -1,128 +1,64 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Message, ObjFilter, Process, SiscopApiIndex, SiscopApiShow, User } from 'src/config/types/types';
-import { ObjectToQueryString } from './apiFunctions';
+import axios, { AxiosResponse } from 'axios';
+import { DispatchUser, Message, ObjFilter, SiscopApiIndex, SiscopApiShow, User } from 'src/config/types/types';
+import { ObjectToQueryString, generateIndexRequest, generateShowRequest } from './apiFunctions';
 
 const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_DB, withCredentials: true });
 
 export async function siscopLoginCreate(login: Partial<User>): Promise<User> {
-    try {
-        const response = await axiosSiscopDB.post('/login', login);
-        return { ...response.data.user, logged: true };
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            const stringCode = error.response.status.toString();
-
-            throw new AxiosError(errorMessage, stringCode);
-        } else {
-            throw new Error((error as Error).message);
-        }
-    }
+    const response = await axiosSiscopDB.post('/login', login);
+    return { ...response.data.user, logged: true };
 }
 
 export async function siscopLogoffDelete(): Promise<User> {
-    try {
-        const response = await axiosSiscopDB.delete('/logoff');
-        return { ...response.data.user, logged: true };
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            const stringCode = error.response.status.toString();
-
-            throw new AxiosError(errorMessage, stringCode);
-        } else {
-            throw new Error((error as Error).message);
-        }
-    }
+    const response = await axiosSiscopDB.delete('/logoff');
+    return { ...response.data.user, logged: true };
 }
 
 // eslint-disable-next-line prettier/prettier
-export async function siscopIndex(path: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<SiscopApiIndex> {
-    try {
-        const population = typeof includes === 'number' ? '' : includes.map((element, index) => `include[${index}]=${element}&`).join('');
-        const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
-        const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
-        const url = `/${path}?${population}limit=${limit}&page=${index}&${queryParameters}${queryFilter}`;
-        const response = await axiosSiscopDB.get(url);
-        return response.data.response;
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            console.log(errorMessage);
-        }
-        throw error;
-    }
+export async function siscopIndex(baseUrl: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
+    const url = generateIndexRequest(baseUrl, limit, index, includes, parameters, filter);
+    const response = await axiosSiscopDB.get(url);
+    return response; //.data.response;
 }
 
-export async function siscopLenght(path: string, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<Message[]> {
-    try {
-        const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
-        const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
-        const url = `/${path}?select=1_id&${queryParameters}${queryFilter}`;
-        const response = await axiosSiscopDB.get(url);
-        const messages: Message[] = response.data.response;
-        return messages;
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            console.log(errorMessage);
-        }
-        throw error;
-    }
+export async function siscopLenght(baseUrl: string, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
+    const url = generateIndexRequest(baseUrl, 0, 0, 0, { ...parameters, select: '1_id' }, filter);
+    const response = await axiosSiscopDB.get(url);
+    return response; //.data.response;
 }
 
-export async function siscopShow(path: string, includes: string[] | number, parameters: ObjFilter, filter?: ObjFilter | null): Promise<SiscopApiShow> {
-    try {
-        const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
-        const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
-        const population = typeof includes === 'number' ? '' : includes.map((element, index) => `include[${index}]=${element}&`).join('');
-        const url = `/${path}?${population}&${queryParameters}${queryFilter}`;
-        const response = await axiosSiscopDB.get(url);
-        const messages: Message = response.data.response;
-        return messages;
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            console.log(errorMessage);
-        }
-        throw error;
-    }
+export async function siscopShow(baseUrl: string, includes: string[] | number, parameters: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
+    const url = generateShowRequest(baseUrl, includes, parameters, filter);
+    const response = await axiosSiscopDB.get(url);
+    return response;
 }
 
-export async function siscopDelete(path: string, parameters: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse<string, string>> {
-    try {
-        const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
-        const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
-        const url = `/${path}?${queryParameters}${queryFilter}`;
-        const response = await axiosSiscopDB.delete(url);
-        return response;
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            console.log(errorMessage);
-        }
-        throw error;
-    }
+export async function siscopDelete(baseUrl: string, parameters: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
+    const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
+    const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
+    const url = `/${baseUrl}?${queryParameters}${queryFilter}`;
+    const response = await axiosSiscopDB.delete(url);
+    return response;
 }
 
-export async function siscopCreate(path: string, body: ObjFilter): Promise<void> {
-    try {
-        await axiosSiscopDB.post(`/${path}`, body);
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-            const errors: [] = error.response.data.errors;
-            const errorMessage = errors.map((element: Record<string, string>) => element.message).join('\n');
-            const stringCode = error.response.status.toString();
+export async function siscopCreate(baseUrl: string, body: ObjFilter): Promise<AxiosResponse> {
+    const response = await axiosSiscopDB.post(`/${baseUrl}`, body);
+    return response;
+}
 
-            throw new AxiosError(errorMessage, stringCode);
-        } else {
-            throw new Error((error as Error).message);
+export async function siscopUpdate(baseUrl: string, parameters: ObjFilter, body: ObjFilter): Promise<AxiosResponse> {
+    const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
+    const response = await axiosSiscopDB.put(`/${baseUrl}?${queryParameters}`, body);
+    return response;
+}
+
+//------------------------------------------------------------------------------------------------------------------//
+
+export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setMessage?: CallableFunction): void {
+    if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) dispatchUser.logoffRedux();
+        else {
+            setMessage ? setMessage(error.message) : throwError(new Error((error as Error).message));
         }
-    }
+    } else throwError(new Error((error as Error).message));
 }

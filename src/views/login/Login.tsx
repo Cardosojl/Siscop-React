@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ReduxUser, User } from 'src/config/types/types';
-import useAsyncError from 'src/components/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import './Login.css';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
@@ -11,10 +11,10 @@ import { handleInputs, handleUser } from './LoginFunction';
 
 function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
     const [form, setForm] = useState<Partial<User>>({ name: '', password: '' });
-    const [messageError, setMessageError] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const throwError = useAsyncError();
     const navigate = useNavigate();
-    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, dispatchUser, form, throwError, setMessageError);
+    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, dispatchUser, form, throwError, setErrorMessage);
     const userValues = (e: ChangeEvent<HTMLInputElement>) => handleInputs(e, setForm, form);
 
     if (user.logged) {
@@ -25,7 +25,7 @@ function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
         <div className="Login--size container">
             <form className="Login" onSubmit={sendForm}>
                 <WindowTitle title="Login">
-                    <label className="Login__error">{messageError}</label>
+                    <label className="Login__error">{errorMessage}</label>
                 </WindowTitle>
                 <hr />
                 <div className="Login__fields">

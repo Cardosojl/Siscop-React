@@ -14,7 +14,7 @@
 }
 
 .IndexSelectors__selector:hover {
-    background-color: var(--LightGreyColor);
+    background-color: var(--MediumGreyColor);
     border-right: solid 12px var(--FluorescentColor);
     
 }

@@ -1,19 +1,21 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { siscopLenght } from 'src/apis/siscopDB';
-import { DispatchUser, Message, ObjFilter, Process, User } from 'src/config/types/types';
+import { DispatchUser, ObjFilter, SiscopApiIndex, User } from 'src/config/types/types';
 
 export async function handleApiLength(path: string, user: User, filter?: ObjFilter | null): Promise<number> {
-    const response: Array<Message | Process> = [];
-    if (path === 'messageSents') response.push(...(await siscopLenght(path, { sender: user._id }, filter)));
-    if (path === 'messages') response.push(...(await siscopLenght(path, { receiver: user._id, section: user.section }, filter)));
-    if (path === 'messageArchiveds') response.push(...(await siscopLenght(path, { receiver: user._id, section: user.section }, filter)));
-    return response.length;
+    let response: SiscopApiIndex = null;
+    if (path === 'messageSents') response = (await siscopLenght(path, { sender: user._id }, filter)).data.response;
+    if (path === 'messages') response = (await siscopLenght(path, { receiver: user._id, section: user.section }, filter)).data.response;
+    if (path === 'messageArchiveds') response = (await siscopLenght(path, { receiver: user._id, section: user.section }, filter)).data.response;
+    if (path === 'myProcess') response = (await siscopLenght('processes', { user: user._id }, filter)).data.response;
+    const length = response ? response.length : 1;
+    return length;
 }
 
 export function buttonActiveClass(direction: string, index: number, limit: number, length?: number): string {
     if (direction === 'left') return index > 1 ? 'Button--green' : 'Button--disabled';
-    if (direction === 'right' && length) return length > limit * index ? 'Button--green' : 'Button--disabled';
+    else if (direction === 'right' && length) return length > limit * index ? 'Button--green' : 'Button--disabled';
     else return 'Button--disabled';
 }
 

@@ -6,3 +6,20 @@ export function ObjectToQueryString(object: ObjFilter): string {
     const queryString = values.map((element, index) => `${keys[index]}=${element}&`).join('');
     return queryString;
 }
+
+// eslint-disable-next-line prettier/prettier
+export function generateIndexRequest(baseUrl: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): string {
+    const population = typeof includes === 'number' ? '' : includes.map((element, index) => `include[${index}]=${element}&`).join('');
+    const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
+    const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
+    const url = `/${baseUrl}?${population}limit=${limit}&page=${index}&${queryParameters}${queryFilter}`;
+    return url;
+}
+
+export function generateShowRequest(baseUrl: string, includes: string[] | number, parameters: ObjFilter, filter?: ObjFilter | null): string {
+    const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
+    const queryFilter = filter && filter !== null ? ObjectToQueryString(filter) : '';
+    const population = typeof includes === 'number' ? '' : includes.map((element, index) => `include[${index}]=${element}&`).join('');
+    const url = `/${baseUrl}?${population}&${queryParameters}${queryFilter}`;
+    return url;
+}

@@ -6,7 +6,8 @@ import './MessageReader.css';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleApiMessage, handleErros, handleIcons, handleResponsible } from './MessageReaderFunction';
-import useAsyncError from 'src/components/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import WindowTitle from 'src/components/windowTitle/WindowTitle';
 
 function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Element {
     const url = useLocation().pathname.split('/');
@@ -25,10 +26,9 @@ function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Ele
         return (
             <div className="MainWindow container">
                 <div className="Window">
-                    <div className="MessageReader__header">
-                        <h4 className="MessageReader__title">{message.title}</h4>
-                        <small className="MessageReader__date">{message.date}</small>
-                    </div>
+                    <WindowTitle title={message.title}>
+                        <small className="Title__date">{message.date}</small>
+                    </WindowTitle>
                     <hr />
                     <div className="MessageReader__content">
                         <p className="MessageReader__text">{message?.content}</p>

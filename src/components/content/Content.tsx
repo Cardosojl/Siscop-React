@@ -9,6 +9,8 @@ import MessageBox from 'src/views/messageBox/MessageBox';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import ProcessList from 'src/views/processList/ProcessList';
 import DocumentList from 'src/views/documentList/DocumentList';
+import EditProcess from 'src/views/editProcess/EditProcess';
+import ProcessStatus from 'src/views/processStatus/ProcessStatus';
 
 function Content({ user }: UserRedux): JSX.Element {
     const login = <Login />;
@@ -22,6 +24,10 @@ function Content({ user }: UserRedux): JSX.Element {
     const receivedProcess = <ProcessList path="receivedProcess" title="Processos Recebidos" />;
     const myFiles = <DocumentList path="myProcess" />;
     const receivedFiles = <DocumentList path="receivedProcess" />;
+    const editMyProcess = <EditProcess path="myProcess" />;
+    const editReceivedProcess = <EditProcess path="receivedProcess" />;
+    const stateMyProcess = <ProcessStatus path="myProcess" />;
+    const stateReceivedProcess = <ProcessStatus path="receivedProcess" />;
     return (
         <main className="Content">
             <Routes>
@@ -36,6 +42,10 @@ function Content({ user }: UserRedux): JSX.Element {
                 <Route path="/processosRecebidos/:number" element={user.logged ? receivedProcess : login} />
                 <Route path="/meusProcessos/processo/:id" element={user.logged ? myFiles : login} />
                 <Route path="/processosRecebidos/processo/:id" element={user.logged ? receivedFiles : login} />
+                <Route path="/meusProcessos/processo/editar/:id" element={user.logged ? editMyProcess : login} />
+                <Route path="/processosRecebidos/processo/editar/:id" element={user.logged ? editReceivedProcess : login} />
+                <Route path="/meusProcessos/processo/anotar/:id" element={user.logged ? stateMyProcess : login} />
+                <Route path="/processosRecebidos/processo/anotar/:id" element={user.logged ? stateReceivedProcess : login} />
             </Routes>
         </main>
     );

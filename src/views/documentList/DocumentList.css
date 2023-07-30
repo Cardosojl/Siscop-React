@@ -1,0 +1,12 @@
+.DocumentList__table {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.DocumentList__text {
+    color: var(--FontColorDefaultBlack);
+}
+
+.DocumentList__body {
+    background-color: var(--MediumGreyColor);
+}

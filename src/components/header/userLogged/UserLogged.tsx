@@ -5,7 +5,7 @@ import { ReduxUser, User } from 'src/config/types/types';
 import '../Header.css';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import useAsyncError from 'src/components/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { siscopLogoffDelete } from 'src/apis/siscopDB';
 
 function UserLogged({ user, dispatchUser }: ReduxUser): JSX.Element {

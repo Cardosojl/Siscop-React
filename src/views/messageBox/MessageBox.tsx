@@ -1,46 +1,76 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import MessageTable from 'src/components/messageTable/MessageTable';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import SearchBar from 'src/components/searchBar/SearchBar';
-import { MessageBoxType, ObjFilter } from 'src/config/types/types';
+import { Listener, Message, ObjFilter, SimpleView, TableType } from 'src/config/types/types';
 import WindowTitle from 'src/components/windowTitle/WindowTitle';
+import Table from 'src/components/table/Table';
+import { handleApiArchiveMessage, handleApiDeleteMessage, handleErros, handleMessageTable, handleMessages } from './MessageBoxFunctions';
+import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import mapDispatchToProps from 'src/redux/actions/actionUsers';
+import { connect } from 'react-redux';
+import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 
-function MessageBox({ title, path }: MessageBoxType): JSX.Element {
+function MessageBox({ title, path, user, dispatchUser }: SimpleView): JSX.Element {
     const pathPage = useLocation().pathname.split('/');
     const mainPath = pathPage[1];
     const numberPage = +pathPage[pathPage.length - 1];
-    const [page, setPage] = useState(numberPage || 0);
-    const [index, setIndex] = useState(page);
-    const [changePage, setChangePage] = useState(0);
+    const [index, setIndex] = useState(numberPage);
+    const [changedPath, setChangedPath] = useState<string>('');
     const [filter, setFilter] = useState<ObjFilter | null>(null);
-    const [search, setSearch] = useState<ObjFilter | null>(null);
+    const [messages, setMessages] = useState<Message[] | null>([]);
+    const [listener, setListener] = useState<Listener>({ action: null, itemId: null });
     const limit = 2;
+    const throwError = useAsyncError();
 
     useEffect(() => {
         setIndex(0);
-        setPage(0);
-        setChangePage(0);
-        setFilter(search);
-    }, [path, search]);
+        setChangedPath(path || '');
+    }, [path, filter]);
 
     useEffect(() => {
-        setIndex(changePage);
-        setPage(numberPage);
-    }, [changePage, search]);
+        if (listener && listener.itemId && listener.action === 'delete') {
+            handleApiDeleteMessage(changedPath, listener.itemId)
+                .then(() => {
+                    setListener({ itemId: null, action: null });
+                })
+                .catch((error) => {
+                    handleErros(error as Error, dispatchUser, throwError);
+                });
+        }
+        if (listener && listener.itemId && listener.action === 'archive') {
+            handleApiArchiveMessage('messageArchiveds', listener.itemId)
+                .then(() => {
+                    setListener({ itemId: null, action: null });
+                })
+                .catch((error) => {
+                    handleErros(error as Error, dispatchUser, throwError);
+                });
+        }
+    }, [listener]);
+
+    useEffect(() => {
+        handleMessages(changedPath, limit, index, user, filter)
+            .then((data) => {
+                setMessages(data);
+            })
+            .catch((error) => {
+                handleErros(error as Error, dispatchUser, throwError);
+            });
+    }, [index, filter, changedPath, listener.itemId]);
 
     return (
         <div className="MainWindow container">
             <div className="Window">
-                <WindowTitle title={title} className="dark">
-                    <SearchBar setFilter={setSearch} path={path} />
+                <WindowTitle title={title || ''} className="dark">
+                    <SearchBar setFilter={setFilter} path={changedPath} />
                 </WindowTitle>
-                <MessageTable index={index} filter={filter} path={path} limit={limit} />
-                <PageSelector setChangePage={setChangePage} path={path} index={index} limit={limit} filter={filter} />
+                <Table table={handleMessageTable(changedPath, messages, setListener)} />
+                <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={limit} filter={filter} />
             </div>
             <Navigate to={`/${mainPath}/${index}`} />
         </div>
     );
 }
 
-export default MessageBox;
+export default connect(mapStateToProps, mapDispatchToProps)(MessageBox);

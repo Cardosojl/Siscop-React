@@ -1,0 +1,11 @@
+.FileComponent__button {
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: var(--FontColorDefaultBlack);
+    font-size: 15px;
+}
+
+.FileComponent__button:hover {
+    color: var(--FontColorDefaultBlackHover);
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { siscopCreate, siscopDelete, siscopShow } from 'src/apis/siscopDB';
 import { DispatchUser, Message, Section, User } from 'src/config/types/types';
 import archived from './images/archive.png';
@@ -15,12 +15,14 @@ async function handleApiArchiveMessage(path: string, id: string): Promise<void> 
 }
 
 export async function handleApiMessage(path: string, user: User, messageID: string): Promise<Message | null> {
+    let message: AxiosResponse;
     if (path === 'messageSents/message') {
-        return (await siscopShow(path, ['receiver', 'section_receiver', 'process'], { sender: user._id, _id: messageID })) as Message;
-    }
-    if (path === 'messages/message' || path === 'messageArchiveds/message') {
-        return (await siscopShow(path, ['sender', 'process'], { receiver: user._id, section: user.section, _id: messageID })) as Message;
+        message = await siscopShow(path, ['receiver', 'section_receiver', 'process'], { sender: user._id, _id: messageID });
+    } else if (path === 'messages/message' || path === 'messageArchiveds/message') {
+        message = await siscopShow(path, ['sender', 'process'], { receiver: user._id, section: user.section, _id: messageID });
     } else return null;
+    const { response }: { response: Message | null } = message.data;
+    return response;
 }
 
 export function handleResponsible(path: string, message: Message): JSX.Element {

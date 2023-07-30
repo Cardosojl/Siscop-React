@@ -2,10 +2,12 @@
     --LightColor: rgb(233, 236, 232);
     --GreyColor: rgb(212, 212, 212);
     --FluorescentColor: rgb(132, 235, 73);
-    --LightGreyColor: rgb(223, 223, 223);
+    --LightGreyColor: rgb(226, 226, 226);
+    --MediumGreyColor: rgb(223, 223, 223); 
     --DarkGreyColor:  rgb(141, 141, 141);
     --ErrorColor: rgb(233, 42, 42);
     --FontColorDefault:  rgb(255, 255, 255);
+    --FontColorGrey: rgb(114, 114, 114);
     --FontColorDefaultBlack: rgb(105, 105, 105);
     --FontColorDefaultBlackHover: rgb(134, 134, 134);;
 }
@@ -57,12 +59,12 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     padding-bottom: 20px;
 }
 
-  hr {
+hr {
     border: solid 1px rgb(177, 175, 175);
     margin: 10px 15px 20px 15px;
-  }
+}
 
-  select{
+select{
     background-color: rgb(224, 230, 228);
     border-radius: 3px;
     border: 1px solid rgb(185, 184, 184);
@@ -71,7 +73,7 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     font-size: 13px;
 }
 
-  input[type = text] {
+input[type = text] {
     margin-bottom: 15px;
     margin-right: 10px;
     background-color: rgb(224, 230, 228);
@@ -79,13 +81,13 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     border: 1px solid rgb(185, 184, 184);    
     border-radius: 3px;
     font-size: 13px;
-  }
+}
 
-  input[type = text]:focus {
+input[type = text]:focus {
     outline: none;
-  }
+}
 
-  input[type = password] {
+input[type = password] {
     margin-bottom: 15px;
     margin-right: 10px;
     background-color: rgb(224, 230, 228);
@@ -93,13 +95,56 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     border: 1px solid rgb(185, 184, 184);
     border-radius: 3px;
     font-size: 13px;
-  }
+}
 
-  .Link--default {
+textarea {
+    resize: none;
+    margin-bottom: 15px;
+    margin-right: 10px;
+    background-color: rgb(224, 230, 228);
+    color: rgb(70, 70, 70);
+    border: 1px solid rgb(185, 184, 184);
+    border-radius: 3px;
+    font-size: 13px;
+    width: 400px;
+    height: 150px;
+}
+
+.Form {
+    font-size: 13px;
+}
+
+.Form div {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.Form input[type=text] {
+    width: 400px;
+}
+
+.Form select {
+    margin-bottom: 10px;
+}
+
+.Form textarea {
+    display:block;
+    margin-left: 20px;
+}
+
+.Form__textareaDiv {
+    display: flex;
+}
+
+.Form label {
+    margin-right: 10px;
+}
+
+.Link--default {
     text-decoration: none;
-  }
+}
 
-  .Button--green {
+.Button--green {
     padding: 5px;
     background-color: rgb(131, 185, 43);
     border: 0px;
@@ -130,12 +175,12 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     text-decoration: none;
 }
 
-.Button--red:hover{
+.Button--red:hover {
     background-color: rgb(241, 36, 36);
     cursor:pointer;
 }
 
-.Button--yellow{
+.Button--yellow {
     padding: 5px;
     background-color: rgb(202, 191, 30);
     border: 0px;
@@ -146,7 +191,7 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     height: fit-content;  
 }
 
-.Button--yellow:hover{
+.Button--yellow:hover {
     background-color: rgb(224, 222, 72);
     cursor: pointer;
 }
@@ -162,4 +207,9 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     width:fit-content;
     height: fit-content;
     text-decoration: none;
+}
+
+.Title__date {
+    color: var(--FontColorDefaultBlackHover);
+    font-size: 11.5px;
 }

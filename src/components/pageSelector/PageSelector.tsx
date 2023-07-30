@@ -4,7 +4,7 @@ import left from './images/seta2.png';
 import './PageSelector.css';
 import { PageSelectorType } from 'src/config/types/types';
 import { connect } from 'react-redux';
-import useAsyncError from '../useAsyncError/UseAsyncError';
+import useAsyncError from '../../hooks/useAsyncError/UseAsyncError';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { buttonActiveClass, leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
