@@ -1,6 +1,8 @@
 :root {
     --LightColor: rgb(233, 236, 232);
     --GreyColor: rgb(212, 212, 212);
+    --BackgroundGreen: rgb(180, 230, 123);
+    --BackgroundRed: rgb(250, 138, 138);
     --FluorescentColor: rgb(132, 235, 73);
     --LightGreyColor: rgb(226, 226, 226);
     --MediumGreyColor: rgb(223, 223, 223); 
@@ -9,7 +11,12 @@
     --FontColorDefault:  rgb(255, 255, 255);
     --FontColorGrey: rgb(114, 114, 114);
     --FontColorDefaultBlack: rgb(105, 105, 105);
-    --FontColorDefaultBlackHover: rgb(134, 134, 134);;
+    --FontColorDefaultBlackHover: rgb(134, 134, 134);
+    --InputBackground: rgb(224, 230, 228);
+    --InputBorder: rgb(185, 184, 184);
+    --GreenButton: rgb(131, 185, 43);
+    --BlueButton: rgb(45, 133, 216);
+    --jd-color-panel: #29b658;
 }
 
 body {
@@ -65,9 +72,10 @@ hr {
 }
 
 select{
-    background-color: rgb(224, 230, 228);
+    background-color: var(--InputBackground);
     border-radius: 3px;
-    border: 1px solid rgb(185, 184, 184);
+    border: 1px solid var(--InputBorder);
+    margin-right: 10px;
     padding: 1px;
     color: rgb(70, 70, 70);
     font-size: 13px;
@@ -76,9 +84,9 @@ select{
 input[type = text] {
     margin-bottom: 15px;
     margin-right: 10px;
-    background-color: rgb(224, 230, 228);
+    background-color: var(--InputBackground);
     color: rgb(70, 70, 70);
-    border: 1px solid rgb(185, 184, 184);    
+    border: 1px solid var(--InputBorder);    
     border-radius: 3px;
     font-size: 13px;
 }
@@ -90,9 +98,9 @@ input[type = text]:focus {
 input[type = password] {
     margin-bottom: 15px;
     margin-right: 10px;
-    background-color: rgb(224, 230, 228);
+    background-color: var(--InputBackground);
     color: rgb(70, 70, 70);
-    border: 1px solid rgb(185, 184, 184);
+    border: 1px solid var(--InputBorder);
     border-radius: 3px;
     font-size: 13px;
 }
@@ -101,9 +109,9 @@ textarea {
     resize: none;
     margin-bottom: 15px;
     margin-right: 10px;
-    background-color: rgb(224, 230, 228);
+    background-color: var(--InputBackground);
     color: rgb(70, 70, 70);
-    border: 1px solid rgb(185, 184, 184);
+    border: 1px solid var(--InputBorder);
     border-radius: 3px;
     font-size: 13px;
     width: 400px;
@@ -142,6 +150,24 @@ textarea {
 
 .Link--default {
     text-decoration: none;
+}
+
+.Button--blue {
+    padding: 5px;
+    background-color: var(--BlueButton);
+    border: 0px;
+    border-radius: 3px;
+    color: rgb(253, 253, 253);
+    font-size: 12.5px;  
+    margin: 10px;
+    width:fit-content;
+    height: fit-content;
+    text-decoration: none;
+}
+
+.Button--blue:hover {
+    background-color: rgb(33, 163, 223);
+    cursor: pointer;
 }
 
 .Button--green {
@@ -207,6 +233,64 @@ textarea {
     width:fit-content;
     height: fit-content;
     text-decoration: none;
+}
+
+.Button--round {
+    border-radius:18px;
+    padding: 5px 5px 7px 5px;
+}
+
+.loading {
+    display: inline-block;
+    position:relative;
+    text-align: end;
+    width: 80px;
+    height: 50px;
+    flex: 1;
+}
+
+.loading div {
+    position: absolute;    
+    top: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--InputBackground);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+
+  .loading--dark div {
+    background: var(--DarkGreyColor);
+  }
+
+.loading div:nth-child(1) {
+    left: 8px;
+    animation: loading1 0.6s infinite;
+}
+.loading div:nth-child(2) {
+    left: 8px;
+    animation: loading2 0.6s infinite;
+}
+.loading div:nth-child(3) {
+    left: 32px;
+    animation: loading2 0.6s infinite;
+}
+
+@keyframes loading1 {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }   
+}
+@keyframes loading2 {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(24px, 0);
+    }
 }
 
 .Title__date {

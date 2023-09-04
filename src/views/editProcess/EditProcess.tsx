@@ -9,7 +9,7 @@ import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
-    const url = useLocation().pathname.split('/');
+    const [url] = useLocation().pathname.split('/').reverse();
     const [sections, setSections] = useState<Section[]>([]);
     const [process, setProcess] = useState<Partial<Process>>({});
     const [acquisitionWays, setAcquisition] = useState<AcquisitionWay[]>([]);
@@ -27,7 +27,7 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     };
 
     useEffect(() => {
-        handleProcess(path as string, user, url[url.length - 1])
+        handleProcess(path as string, user, url)
             .then((data) => {
                 setProcess(data);
                 setForm({

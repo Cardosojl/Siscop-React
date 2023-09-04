@@ -14,8 +14,8 @@ import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 function MessageBox({ title, path, user, dispatchUser }: SimpleView): JSX.Element {
     const pathPage = useLocation().pathname.split('/');
     const mainPath = pathPage[1];
-    const numberPage = +pathPage[pathPage.length - 1];
-    const [index, setIndex] = useState(numberPage);
+    const [numberPage] = pathPage.reverse();
+    const [index, setIndex] = useState(+numberPage);
     const [changedPath, setChangedPath] = useState<string>('');
     const [filter, setFilter] = useState<ObjFilter | null>(null);
     const [messages, setMessages] = useState<Message[] | null>([]);

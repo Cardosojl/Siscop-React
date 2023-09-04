@@ -11,7 +11,7 @@ import WindowTitle from 'src/components/windowTitle/WindowTitle';
 
 function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Element {
     const url = useLocation().pathname.split('/');
-    const [messageID] = [...url].reverse();
+    const [messageID] = url.reverse();
     const [message, setMessage] = useState<Message | null>(null);
     const navigate = useNavigate();
     const throwError = useAsyncError();

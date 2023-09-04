@@ -10,10 +10,10 @@ import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 
 function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
-    const url = useLocation().pathname.split('/');
+    const [url] = useLocation().pathname.split('/').reverse();
     const [process, setProcess] = useState<Partial<Process>>({});
     const [errorMessage, setErrorMessage] = useState<string>();
-    const [form, setForm] = useState<Partial<ProcessState>>({ anotation: '', state: '' });
+    const [form, setForm] = useState<Partial<ProcessState<string, string>>>({ anotation: '', state: '' });
     const navigate = useNavigate();
     const throwError = useAsyncError();
 
@@ -26,7 +26,7 @@ function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
     };
 
     useEffect(() => {
-        handleProcess(path as string, user, url[url.length - 1])
+        handleProcess(path as string, user, url)
             .then((data) => {
                 setProcess(data);
                 setForm((current) => ({ ...current, process: data._id, user: user._id }));

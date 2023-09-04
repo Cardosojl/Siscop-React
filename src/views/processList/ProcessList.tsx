@@ -14,8 +14,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Element {
     const pathPage = useLocation().pathname.split('/');
     const mainPath = pathPage[1];
-    const numberPage = +pathPage[pathPage.length - 1];
-    const [index, setIndex] = useState(numberPage || 0);
+    const [numberPage] = pathPage.reverse();
+    const [index, setIndex] = useState(+numberPage || 0);
     const [changedPath, setChangedPath] = useState<string>('');
     const [filter, setFilter] = useState<ObjFilter>({ year: '0000' });
     const [yearIndex, setYearIndex] = useState<Year[] | null>(null);

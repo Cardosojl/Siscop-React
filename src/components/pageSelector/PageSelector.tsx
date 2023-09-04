@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import right from './images/seta.png';
-import left from './images/seta2.png';
+import right from '../../assets/seta.png';
+import left from '../../assets/seta2.png';
 import './PageSelector.css';
 import { PageSelectorType } from 'src/config/types/types';
 import { connect } from 'react-redux';

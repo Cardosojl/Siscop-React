@@ -13,7 +13,8 @@ function validationForm(form: Partial<ProcessState>, setMessage: CallableFunctio
     return error;
 }
 
-export async function handleForm(e: FormEvent, form: Partial<ProcessState>, setMessage: CallableFunction, navigate: CallableFunction): Promise<void> {
+// eslint-disable-next-line prettier/prettier
+export async function handleForm(e: FormEvent, form: Partial<ProcessState<string, string>>, setMessage: CallableFunction, navigate: CallableFunction): Promise<void> {
     e.preventDefault();
     if (!validationForm(form, setMessage)) {
         await siscopCreate('processStates', form);
@@ -25,17 +26,17 @@ export function generateForm(form: Partial<ProcessState>, setForm: CallableFunct
     const stateOptions = ['Coletando Orçamentos', 'Em Montagem', 'Montagem Finalizada', 'Em Análise', 'Outro'];
     const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
 
-    const anotation = createElement('div', { className: 'Form__textareaDiv' }, [
-        createElement('label', null, 'Anotação:'),
-        createElement('textarea', { name: 'anotation', value: form.anotation, onChange: handleInput }),
+    const anotation = createElement('div', { key: 0, className: 'Form__textareaDiv' }, [
+        createElement('label', { key: 1 }, 'Anotação:'),
+        createElement('textarea', { key: 2, name: 'anotation', value: form.anotation, onChange: handleInput }),
     ]);
-    const state = createElement('div', null, [
-        createElement('label', null, 'Estato:'),
-        createElement('select', { name: 'state', value: form.state, onChange: handleInput }, generateOptions(stateOptions, '')),
+    const state = createElement('div', { key: 3 }, [
+        createElement('label', { key: 4 }, 'Estato:'),
+        createElement('select', { key: 5, name: 'state', value: form.state, onChange: handleInput }, generateOptions(stateOptions, '')),
     ]);
-    const sendButton = createElement('input', { type: 'submit', className: 'Button--green', value: 'Enviar' });
+    const sendButton = createElement('input', { key: 6, type: 'submit', className: 'Button--blue', value: 'Enviar' });
 
-    return createElement('div', null, [anotation, state, sendButton]);
+    return createElement('div', { key: 7 }, [anotation, state, sendButton]);
 }
 
 export async function handleProcess(path: string, user: User, processId: string): Promise<Process> {

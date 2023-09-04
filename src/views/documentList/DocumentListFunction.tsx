@@ -2,8 +2,8 @@ import axios from 'axios';
 import React, { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { siscopDelete, siscopIndex, siscopShow } from 'src/apis/siscopDB';
-import { FileComponent } from 'src/components/file/FileComponent';
-import { DispatchUser, File, Process, TableType, User } from 'src/config/types/types';
+import DocumentItem from 'src/components/documentItem/DocumentItem';
+import { DispatchUser, FileTypes, Process, TableType, User } from 'src/config/types/types';
 
 export async function handleProcess(path: string, user: User, processId: string): Promise<Process> {
     const process = await siscopShow('processes/process', 0, { _id: processId, aggregate: 'processstates' });
@@ -13,18 +13,11 @@ export async function handleProcess(path: string, user: User, processId: string)
     else throw { isAxiosError: true, response: { data: null, status: 404, statusText: 'Not Found', headers: {} } };
 }
 
-export async function handleFiles(process: Process): Promise<File[] | null> {
+export async function handleFiles(process: Process): Promise<FileTypes[] | null> {
     const files = await siscopIndex('files', 0, 0, 0, { process: process._id, select: '-file' });
-    const { response }: { response: File[] | null } = files.data;
+    const { response }: { response: FileTypes[] | null } = files.data;
     return response;
 }
-
-/*export async function handleProcessFiles(path: string, user: User, processId: string): Promise<FilesList> {
-    const process = await showProcess(path, user, processId);
-    const files = await showFiles(process);
-    const processFiles: FilesList = { process, files };
-    return processFiles;
-}*/
 
 export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setProcess?: CallableFunction): void {
     if (axios.isAxiosError(error)) {
@@ -33,44 +26,25 @@ export function handleErros(error: Error, dispatchUser: DispatchUser, throwError
         else throwError(new Error((error as Error).message));
     } else throwError(new Error((error as Error).message));
 }
-//-------------------------------------------------------------------------------------------------------------------------
 
-export function handleTableFiles(path: string, files: File[] | null, setListener: CallableFunction): TableType {
+export function handleTableFiles(path: string, files: FileTypes[] | null, setRefresh: CallableFunction): TableType {
     const table = {
         head: null,
-        body: handleArrayFile(path, files, setListener),
+        body: handleArrayFile(path, files, setRefresh),
     };
     return table;
 }
 
-function handleArrayFile(path: string, files: File[] | null, setListener: CallableFunction): ReactNode {
-    if (path === 'myProcess' || path === 'receivedProcess') return generateUnfinishedProcess(files, setListener);
+function handleArrayFile(path: string, files: FileTypes[] | null, setRefresh: CallableFunction): ReactNode {
+    if (path === 'myProcess' || path === 'receivedProcess') return generateUnfinished(files, setRefresh);
     if (path === 'doneProcess') return generateDonedProcess(files);
     else return <></>;
 }
 
-function generateUnfinishedProcess(files: File[] | null, setListener: CallableFunction): ReactNode {
-    const editEvent = (itemId: string) => setListener({ action: 'edit', itemId: itemId });
-    const deleteEvent = (itemId: string) => setListener({ action: 'delete', itemId: itemId });
+function generateUnfinished(files: FileTypes[] | null, setRefresh: CallableFunction): ReactNode {
     let body: ReactNode;
     if (files && files.length > 0) {
-        body = files.map((element, index) => (
-            <tr key={index}>
-                <td className="col-10">
-                    <FileComponent name={`${element.filename}${element.extension}`} id={element._id} />
-                </td>
-                <td className="col-1">
-                    <button type="submit" value="renomear" onClick={() => editEvent(element._id)} className="Button--green col-1">
-                        Renomear
-                    </button>
-                </td>
-                <td className="col-1">
-                    <button type="submit" value="deletar" onClick={() => deleteEvent(element._id)} className="Button--red col-1">
-                        Deletar
-                    </button>
-                </td>
-            </tr>
-        ));
+        body = files.map((element, index) => <DocumentItem setRefresh={setRefresh} element={element} key={index} />);
     } else {
         body = (
             <tr>
@@ -83,7 +57,7 @@ function generateUnfinishedProcess(files: File[] | null, setListener: CallableFu
     return <tbody className="DocumentList__body">{body}</tbody>;
 }
 
-function generateDonedProcess(file: File[] | null): ReactNode {
+function generateDonedProcess(file: FileTypes[] | null): ReactNode {
     let body: ReactNode;
     if (file && file.length > 0) {
         body = file.map((element, index) => (

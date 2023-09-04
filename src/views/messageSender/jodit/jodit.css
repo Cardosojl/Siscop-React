@@ -1,0 +1,11 @@
+.jodit-ui-group_line_true {
+    background-color:rgb(238, 238, 238);
+}
+
+.jodit-status-bar {
+    background-color:rgb(238, 238, 238) !important;
+}
+
+.jodit .jodit-workplace .jodit-wysiwyg, .jodit .jodit-workplace .jodit-wysiwyg_iframe, .jodit-container .jodit-workplace .jodit-wysiwyg, .jodit-container .jodit-workplace .jodit-wysiwyg_iframe {
+    background-color: rgb(246, 248, 253);
+}

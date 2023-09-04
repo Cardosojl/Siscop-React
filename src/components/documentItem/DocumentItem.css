@@ -1,0 +1,28 @@
+.DocumentItem__tr--red {
+    transition: 0.5s;
+    background-color: var(--BackgroundRed)
+}
+
+.DocumentItem__tr--green {
+    transition: 0.5s;
+    background-color: var(--BackgroundGreen);
+}
+
+.DocumentItem__tr--load {
+    transition: 0.5s;
+    background-color: var(--GreyColor);
+    text-align: center;
+}
+
+.DocumentItem__input {
+    width: 300px;
+}
+
+.DocumentItem__text {
+    font-size: 14px;
+    margin-bottom: -5px;
+    font-weight: bold;
+    color: var(--FontColorDefaultBlack);
+}
+
+  

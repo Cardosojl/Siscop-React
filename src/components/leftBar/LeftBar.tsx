@@ -6,13 +6,23 @@ import { Link } from 'react-router-dom';
 import { activeElement } from './leftBarFunction';
 
 export default function LeftBar(): JSX.Element {
-    const messageItens = ['caixaDeEntrada', 'enviadas', 'arquivadas', 'minhasMensagensRecebidas', 'minhasMensagensEnviadas', 'minhasMensagensArquivadas'];
+    const messageItens = [
+        'novaMensagem',
+        'caixaDeEntrada',
+        'enviadas',
+        'arquivadas',
+        'minhasMensagensRecebidas',
+        'minhasMensagensEnviadas',
+        'minhasMensagensArquivadas',
+    ];
     const processItens = ['meusProcessos', 'processosRecebidos'];
 
     return (
         <div className="LeftBar">
             <LeftBarItem title={'Mensagens'} itemLevel={0} active={activeElement(messageItens)}>
-                <LeftBarSubitem title={'Nova Mensagem'} active={activeElement(['novamensagem'])} />
+                <Link to="/novaMensagem/0" className="Link--default LeftBar__link">
+                    <LeftBarSubitem title={'Nova Mensagem'} active={activeElement(['novaMensagem'])} />
+                </Link>
                 <Link to="/caixaDeEntrada/0" className="Link--default LeftBar__link">
                     <LeftBarSubitem title={'Caixa de Entrada'} active={activeElement(['caixaDeEntrada', 'minhasMensagensRecebidas'])} />
                 </Link>

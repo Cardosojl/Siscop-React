@@ -11,6 +11,7 @@ import ProcessList from 'src/views/processList/ProcessList';
 import DocumentList from 'src/views/documentList/DocumentList';
 import EditProcess from 'src/views/editProcess/EditProcess';
 import ProcessStatus from 'src/views/processStatus/ProcessStatus';
+import MessageSender from 'src/views/messageSender/MessageSender';
 
 function Content({ user }: UserRedux): JSX.Element {
     const login = <Login />;
@@ -28,6 +29,8 @@ function Content({ user }: UserRedux): JSX.Element {
     const editReceivedProcess = <EditProcess path="receivedProcess" />;
     const stateMyProcess = <ProcessStatus path="myProcess" />;
     const stateReceivedProcess = <ProcessStatus path="receivedProcess" />;
+    const messageSender = <MessageSender />;
+
     return (
         <main className="Content">
             <Routes>
@@ -46,6 +49,7 @@ function Content({ user }: UserRedux): JSX.Element {
                 <Route path="/processosRecebidos/processo/editar/:id" element={user.logged ? editReceivedProcess : login} />
                 <Route path="/meusProcessos/processo/anotar/:id" element={user.logged ? stateMyProcess : login} />
                 <Route path="/processosRecebidos/processo/anotar/:id" element={user.logged ? stateReceivedProcess : login} />
+                <Route path="/novaMensagem/:id" element={user.logged ? messageSender : login} />
             </Routes>
         </main>
     );

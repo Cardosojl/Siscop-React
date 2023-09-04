@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { DispatchUser, Message, ObjFilter, SiscopApiIndex, SiscopApiShow, User } from 'src/config/types/types';
+import { DispatchUser, ObjFilter, User } from 'src/config/types/types';
 import { ObjectToQueryString, generateIndexRequest, generateShowRequest } from './apiFunctions';
 
 const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_DB, withCredentials: true });
@@ -58,7 +58,9 @@ export function handleErros(error: Error, dispatchUser: DispatchUser, throwError
     if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) dispatchUser.logoffRedux();
         else {
-            setMessage ? setMessage(error.message) : throwError(new Error((error as Error).message));
+            setMessage
+                ? setMessage(error.response?.data.errors.map((element: { message: string }) => `${element.message}\n`))
+                : throwError(new Error((error as Error).message));
         }
     } else throwError(new Error((error as Error).message));
 }

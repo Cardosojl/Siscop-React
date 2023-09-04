@@ -28,10 +28,10 @@ export type Process<S = string, N = S | number, B = boolean> = {
     year: S;
 };
 
-export type ProcessState<S = string> = {
+export type ProcessState<S = string, U = string | User> = {
     _id: S;
     process: S;
-    user: S;
+    user: U;
     state: S;
     anotation: S;
     date: S;
@@ -74,7 +74,16 @@ export type Year<S = string, N = S | number> = {
     page: N;
 };
 
-export type File<S = string, N = S | number, F = { type: string; data: number[] }> = {
+export type FileTypes<
+    S = string,
+    N = S | number,
+    F = {
+        name: string;
+        length: number;
+        type: string;
+        data: number[];
+    }
+> = {
     _id: S;
     file?: F;
     filename: S;
@@ -193,15 +202,15 @@ export type ErrorBoundaryState = {
     error: Error | null;
 };
 
-export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<File> & Partial<AcquisitionWay>;
+export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<FileTypes> & Partial<AcquisitionWay>;
 
-export type SiscopApiIndex = User[] | Process[] | Message[] | Year[] | Section[] | File[] | ProcessState[] | AcquisitionWay[] | null;
+export type SiscopApiIndex = User[] | Process[] | Message[] | Year[] | Section[] | FileTypes[] | ProcessState[] | AcquisitionWay[] | null;
 
-export type SiscopApiShow = User | Process | Message | Year | Section | File | ProcessState | AcquisitionWay;
+export type SiscopApiShow = User | Process | Message | Year | Section | FileTypes | ProcessState | AcquisitionWay;
 
 export type FilesList = {
     process: Process;
-    files: File[] | null;
+    files: FileTypes[] | null;
 };
 
 export type Listener = {

@@ -1,0 +1,25 @@
+.ProcessInformation__buttons {
+    display: flex;
+    justify-content: end;
+    margin-right: 15px;
+}
+
+.ProcessInforation__button {
+    margin-top: -5px;
+}
+
+.ProcessInforation__statusButton {
+    margin-left: 20px;
+}
+
+.ProcessInformation__image {
+    width: 9px;
+}
+
+.ProcessInformation__window {
+    background-color: var(--MediumGreyColor);
+    border: 1px solid var(--GreyColor);
+    margin-left: 15px;
+    margin-right: 15px;
+    border-radius: 5px;
+}

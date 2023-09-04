@@ -86,7 +86,7 @@ export function generateForm(acquisitionWays: AcquisitionWay[], sections: Sectio
         createElement('label', null, 'Descrição:'),
         createElement('textarea', { name: 'description', onChange: handleInput, value: form.description }),
     ]);
-    const sendButton = createElement('input', { type: 'submit', className: 'Button--green', value: 'Enviar' });
+    const sendButton = createElement('input', { type: 'submit', className: 'Button--blue', value: 'Enviar' });
 
     return createElement('div', null, [nameDiv, nupDiv, originDiv, aquisitionWayDiv, descriptionDiv, sendButton]);
 }
