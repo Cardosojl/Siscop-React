@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { DispatchUser, ObjFilter, Section, SiscopApiForm, User } from 'src/config/types/types';
 import { ObjectToQueryString, generateIndexRequest, generateShowRequest } from './apiFunctions';
 
-const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_DB, withCredentials: true });
+const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_API, withCredentials: true });
 
 export async function siscopLoginCreate(login: Partial<User<string, Section>>): Promise<User<string, Section>> {
     const response = await axiosSiscopDB.post('/login', login);
