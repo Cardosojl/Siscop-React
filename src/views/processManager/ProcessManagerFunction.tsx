@@ -16,13 +16,7 @@ export async function handleSections(): Promise<Section[] | null> {
 
 export function generateIndex(elements: SiscopApiIndex | null, filter: ObjFilter, setFilter: CallableFunction): ReactNode {
     return elements?.map((element, index) => (
-        <IndexSelector
-            key={index}
-            index={(element as Section).name as string}
-            value={(element as Section)._id as string}
-            setFilter={setFilter}
-            filter={filter}
-        />
+        <IndexSelector key={index} index={(element as Section).name as string} value={(element as Section)._id as string} setFilter={setFilter} filter={filter} />
     ));
 }
 
@@ -64,7 +58,6 @@ export function generateSectionTitle(select: Partial<Process>, sections: Section
     }
 }
 
-// eslint-disable-next-line prettier/prettier
 export function generatePageSelector(itensLimit: number, index: number, section: Partial<Process>, filter: Partial<Process>, setIndex: CallableFunction, listener: boolean) {
     const objFilter = section.origin ? { ...section, ...filter } : filter;
     return <PageSelector limit={itensLimit} index={index} filter={objFilter} path={'processes'} setChangePage={setIndex} listener={listener} />;

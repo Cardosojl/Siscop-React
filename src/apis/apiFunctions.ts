@@ -7,7 +7,6 @@ export function ObjectToQueryString(object: ObjFilter): string {
     return queryString;
 }
 
-// eslint-disable-next-line prettier/prettier
 export function generateIndexRequest(baseUrl: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): string {
     const population = typeof includes === 'number' ? '' : includes.map((element, index) => `include[${index}]=${element}&`).join('');
     const queryParameters = parameters ? ObjectToQueryString(parameters) : '';

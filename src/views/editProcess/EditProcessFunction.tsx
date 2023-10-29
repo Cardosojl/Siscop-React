@@ -55,8 +55,15 @@ export async function handleAcquisitionWays(): Promise<AcquisitionWay[] | null> 
     return response;
 }
 
-// eslint-disable-next-line prettier/prettier
-export async function handleForm(e: ChangeEvent<HTMLFormElement>, process: Partial<Process>, form: Partial<Process>, sections: Section[], acquisitionWays: AcquisitionWay[], setMessage: CallableFunction, navigate: CallableFunction): Promise<void> {
+export async function handleForm(
+    e: ChangeEvent<HTMLFormElement>,
+    process: Partial<Process>,
+    form: Partial<Process>,
+    sections: Section[],
+    acquisitionWays: AcquisitionWay[],
+    setMessage: CallableFunction,
+    navigate: CallableFunction
+): Promise<void> {
     e.preventDefault();
     if (!formvalidator(form, setMessage, sections, acquisitionWays)) {
         await updateProcess(process, form);
@@ -64,7 +71,6 @@ export async function handleForm(e: ChangeEvent<HTMLFormElement>, process: Parti
     }
 }
 
-// eslint-disable-next-line prettier/prettier
 export function generateForm(acquisitionWays: AcquisitionWay[], sections: Section[], process: Partial<Process>, form: Partial<Process>, setForm: CallableFunction): ReactNode {
     const sectionArray = sections.map((element) => element.name);
     const sectionArrayID = sections.map((element) => element._id);
@@ -77,10 +83,7 @@ export function generateForm(acquisitionWays: AcquisitionWay[], sections: Sectio
         createElement('label', null, 'Nome:'),
         createElement('input', { type: 'text', name: 'title', onChange: handleInput, value: form.title || '' }),
     ]);
-    const nupDiv = createElement('div', { key: '1' }, [
-        createElement('label', null, 'Nup:'),
-        createElement('input', { type: 'text', name: 'nup', onChange: handleInput, value: form.nup || '' }),
-    ]);
+    const nupDiv = createElement('div', { key: '1' }, [createElement('label', null, 'Nup:'), createElement('input', { type: 'text', name: 'nup', onChange: handleInput, value: form.nup || '' })]);
     const originDiv = createElement('div', { key: '2' }, [
         createElement('label', null, 'Origem:'),
         createElement('select', { name: 'origin', onChange: handleInput }, generateOptions(sectionArray, processOrigin, sectionArrayID)),

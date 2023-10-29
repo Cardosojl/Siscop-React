@@ -13,7 +13,6 @@ function validationForm(form: Partial<ProcessState>, setMessage: CallableFunctio
     return error;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleForm(e: FormEvent, form: Partial<ProcessState<string, string>>, setMessage: CallableFunction, navigate: CallableFunction): Promise<void> {
     e.preventDefault();
     if (!validationForm(form, setMessage)) {

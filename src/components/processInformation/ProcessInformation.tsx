@@ -7,7 +7,6 @@ import down from './images/down.png';
 import './ProcessInformation.css';
 import { handleDescription, handleStatus } from './ProcessInformationFunction';
 
-// eslint-disable-next-line prettier/prettier
 function ProcessInformation({ process }: { process: Partial<Process> } & SimpleView): JSX.Element {
     const descriptionArrow = useState<string>(down);
     const statusArrow = useState<string>(down);
@@ -24,17 +23,11 @@ function ProcessInformation({ process }: { process: Partial<Process> } & SimpleV
         <div>
             <div className="ProcessInformation__buttons">
                 <small>Descrição:</small>
-                <button
-                    className="Button--green ProcessInforation__button"
-                    onClick={() => handleDescription(descriptionArrow, statusArrow, setContent, descriptionState)}
-                >
+                <button className="Button--green ProcessInforation__button" onClick={() => handleDescription(descriptionArrow, statusArrow, setContent, descriptionState)}>
                     <img className="ProcessInformation__image" src={descriptionArrow[0]} />
                 </button>
                 <small>Status:</small>
-                <button
-                    className="Button--green ProcessInforation__button"
-                    onClick={() => handleStatus(process, descriptionArrow, statusArrow, setContent, processstatesStates)}
-                >
+                <button className="Button--green ProcessInforation__button" onClick={() => handleStatus(process, descriptionArrow, statusArrow, setContent, processstatesStates)}>
                     <img className="ProcessInformation__image" src={statusArrow[0]} />
                 </button>
             </div>

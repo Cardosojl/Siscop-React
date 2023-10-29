@@ -12,7 +12,7 @@ async function validationEvents(path: string, processId: string, user: User<stri
         const process = (await siscopShow('processes', 0, { receiver: user._id, section: user.section._id, _id: processId })).data.response;
         if (!process) error = true;
     }
-    //else if (path === 'doneProcess') await siscopDelete('processes', { sender: user._id });
+
     return error;
 }
 
@@ -93,7 +93,6 @@ export function generateBody(listenerState: [string, Dispatch<SetStateAction<str
     else return generateLoading();
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleEvents(listenerState: [string, Dispatch<SetStateAction<string>>], element: Process, path: string, user: User<string, Section>, setRefresh: CallableFunction) {
     const [listener, setListener] = listenerState;
 
@@ -112,5 +111,4 @@ export async function handleDeleteProcess(path: string, processId: string, user:
     if (!(await validationEvents(path, processId, user))) {
         await siscopDelete('processes', { _id: processId });
     }
-    //else if (path === 'doneProcess') await siscopDelete('processes', { sender: user._id });
 }

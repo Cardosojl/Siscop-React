@@ -47,7 +47,6 @@ async function validate(form: Partial<Message> & Partial<Process>, setErrorMessa
     return error;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleForm(e: FormEvent, form: Partial<Message> & Partial<Process>, navigate: CallableFunction, setErrorMessage: CallableFunction): Promise<void> {
     e.preventDefault();
     if (!(await validate(form, setErrorMessage))) {
@@ -138,18 +137,14 @@ export function generateProcessSelect(process: Process[] | null, processId: stri
     if (process) {
         const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
         if (processId) {
-            const options = process
-                .sort((a, b) => a.title.localeCompare(b.title))
-                .map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
+            const options = process.sort((a, b) => a.title.localeCompare(b.title)).map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
             return (
                 <>
                     <select name="process">{options}</select>
                 </>
             );
         } else {
-            const options = process
-                .sort((a, b) => a.title.localeCompare(b.title))
-                .map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
+            const options = process.sort((a, b) => a.title.localeCompare(b.title)).map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
             return (
                 <>
                     <select name="process" onChange={handleInput}>

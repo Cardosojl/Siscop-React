@@ -14,7 +14,6 @@ export async function siscopLogoffDelete(): Promise<User> {
     return { ...response.data.user, logged: true };
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function siscopIndex(baseUrl: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
     const url = generateIndexRequest(baseUrl, limit, index, includes, parameters, filter);
     const response = await axiosSiscopDB.get(url);
@@ -52,15 +51,11 @@ export async function siscopUpdate(baseUrl: string, parameters: ObjFilter, body:
     return response;
 }
 
-//------------------------------------------------------------------------------------------------------------------//
-
 export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setMessage?: CallableFunction): void {
     if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) dispatchUser.logoffRedux();
         else {
-            setMessage
-                ? setMessage(error.response?.data.errors.map((element: { message: string }) => `${element.message}\n`))
-                : throwError(new Error((error as Error).message));
+            setMessage ? setMessage(error.response?.data.errors.map((element: { message: string }) => `${element.message}\n`)) : throwError(new Error((error as Error).message));
         }
     } else throwError(new Error((error as Error).message));
 }

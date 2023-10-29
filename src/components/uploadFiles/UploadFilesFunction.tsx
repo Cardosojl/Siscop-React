@@ -23,8 +23,15 @@ export function handleFilename(value: string, length: number | undefined): strin
     }
 }
 
-// eslint-disable-next-line prettier/prettier
-export async function handleFileForm(e: FormEvent<HTMLFormElement>, setLoad: CallableFunction,  setRefresh: CallableFunction, dispatchUser: DispatchUser, formState: [Partial<FileTypes>, CallableFunction], throwError: CallableFunction, setMessageError: Dispatch<SetStateAction<string>>): Promise<void> {
+export async function handleFileForm(
+    e: FormEvent<HTMLFormElement>,
+    setLoad: CallableFunction,
+    setRefresh: CallableFunction,
+    dispatchUser: DispatchUser,
+    formState: [Partial<FileTypes>, CallableFunction],
+    throwError: CallableFunction,
+    setMessageError: Dispatch<SetStateAction<string>>
+): Promise<void> {
     e.preventDefault();
     const [form, setForm] = formState;
     if (!validationForm(form)) {

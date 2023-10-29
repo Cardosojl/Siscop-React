@@ -5,12 +5,10 @@ import MessageItem from 'src/components/messageItem/MessageItem';
 
 async function indexMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<Message[] | null> {
     if (path === 'messages') {
-        const messages = (await siscopIndex(path, limit, index, ['sender', 'process'], { receiver: user._id, section: user.section._id }, filter)).data
-            .response;
+        const messages = (await siscopIndex(path, limit, index, ['sender', 'process'], { receiver: user._id, section: user.section._id }, filter)).data.response;
         if (messages) return messages;
     } else if (path === 'messageArchiveds') {
-        const messages = (await siscopIndex(path, limit, index, ['sender', 'process'], { receiver: user._id, section: user.section._id }, filter)).data
-            .response;
+        const messages = (await siscopIndex(path, limit, index, ['sender', 'process'], { receiver: user._id, section: user.section._id }, filter)).data.response;
         if (messages) return messages;
     } else if (path === 'messageSents') {
         const messages = (await siscopIndex(path, limit, index, ['receiver', 'process', 'section_receiver'], { sender: user._id }, filter)).data.response;
@@ -32,7 +30,6 @@ function thMessage(path: string): JSX.Element {
     );
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<Message[] | null> {
     const messages = (await indexMessages(path, limit, index, user, filter)) as Message[] | null;
     return messages;
@@ -40,11 +37,7 @@ export async function handleMessages(path: string, limit: number, index: number,
 
 export function handleMessageTable(path: string, messages: Message[] | null, listener: CallableFunction): TableType {
     const head = thMessage(path);
-    const body: ReactNode = (
-        <tbody>
-            {messages ? messages.map((element, index) => <MessageItem key={index} path={path} setRefresh={listener} element={element} />) : <tr></tr>}
-        </tbody>
-    );
+    const body: ReactNode = <tbody>{messages ? messages.map((element, index) => <MessageItem key={index} path={path} setRefresh={listener} element={element} />) : <tr></tr>}</tbody>;
     return { head, body };
 }
 

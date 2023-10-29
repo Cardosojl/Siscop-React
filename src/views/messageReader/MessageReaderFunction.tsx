@@ -58,7 +58,6 @@ export function handleResponsible(path: string, message: Message): JSX.Element {
     } else return <></>;
 }
 
-// eslint-disable-next-line prettier/prettier
 export function handleIcons(user: User<string, Section>, path: string, element: Message, navigate: NavigateFunction, dispatchUser: DispatchUser, throwError: CallableFunction): JSX.Element {
     const handleDelete = async () => {
         try {

@@ -17,7 +17,6 @@ function generateLeftBar(children: ReactNode, arrowRotate: string, style: string
     );
 }
 
-// eslint-disable-next-line prettier/prettier
 export function handleLeftBarBody(user: User, level: string | number, children: ReactNode, arrowRotate: string, style: string, title: string, activeItem: [boolean, CallableFunction]) {
     const [itemActive, setItemActive] = activeItem;
     if (level === user.level || user.level > level) {

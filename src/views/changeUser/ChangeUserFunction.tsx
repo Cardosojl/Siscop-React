@@ -15,7 +15,6 @@ export async function handleSections(): Promise<Section[] | null> {
     return response;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleFind(e: ChangeEvent<HTMLFormElement>, name: string, setMessage: CallableFunction, setUser: CallableFunction, setForm: CallableFunction) {
     e.preventDefault();
     setMessage('');
@@ -85,7 +84,6 @@ async function formValidator(form: Partial<User>, setMessage: CallableFunction, 
     return error;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleForm(e: ChangeEvent<HTMLFormElement>, form: Partial<User>, setMessage: CallableFunction, sections: Section[] | null, user: User<string, Section>) {
     e.preventDefault();
     if (!(await formValidator(form, setMessage, sections, user))) {
@@ -129,9 +127,7 @@ export function generateBody(sections: Section[] | null, form: Partial<User>, se
     ]);
     const sectionDiv = createElement('div', { key: '3' }, [
         createElement('label', { key: '12' }, 'Seção:'),
-        createElement('select', { name: 'section', key: '13', onChange: handleInput }, [
-            generateOptions(sectionArray, (user.section as Section).name, sectionArrayID),
-        ]),
+        createElement('select', { name: 'section', key: '13', onChange: handleInput }, [generateOptions(sectionArray, (user.section as Section).name, sectionArrayID)]),
     ]);
     const levelDiv = createElement('div', { key: '4' }, [
         createElement('label', { key: '14' }, 'Level:'),

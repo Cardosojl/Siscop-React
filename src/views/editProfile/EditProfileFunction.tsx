@@ -1,7 +1,7 @@
 import React, { ChangeEvent, createElement } from 'react';
 import { siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { DispatchUser, Profile, Section, User } from 'src/config/types/types';
-import { generateOptions, generateOptionsWS, setInputs } from '../elementsCreator';
+import { generateOptionsWS, setInputs } from '../elementsCreator';
 
 async function formValidator(form: Partial<Profile>, user: User, setMessage: CallableFunction) {
     let error = false;
@@ -57,7 +57,6 @@ async function updateUser(user: User, form: Partial<Profile>) {
     return response;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleForm(e: ChangeEvent<HTMLFormElement>, form: Partial<Profile>, user: User, setMessage: CallableFunction, navigate: CallableFunction, dispatchUser: DispatchUser) {
     e.preventDefault();
     if (!(await formValidator(form, user, setMessage))) {

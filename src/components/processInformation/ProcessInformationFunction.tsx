@@ -28,8 +28,13 @@ export function generateStates(process: Partial<Process>, processstates: Process
     );
 }
 
-// eslint-disable-next-line prettier/prettier
-export function handleStatus(process: Partial<Process>, descriptionArrow: [string, CallableFunction], status: [string, CallableFunction], setContent: CallableFunction, processstatesStates: [ProcessState[], CallableFunction]) {
+export function handleStatus(
+    process: Partial<Process>,
+    descriptionArrow: [string, CallableFunction],
+    status: [string, CallableFunction],
+    setContent: CallableFunction,
+    processstatesStates: [ProcessState[], CallableFunction]
+) {
     const [, setDescriptionArrow] = descriptionArrow;
     const [processstates] = processstatesStates;
     const [statusArrow, setStatusArrow] = status;
@@ -43,8 +48,12 @@ export function handleStatus(process: Partial<Process>, descriptionArrow: [strin
     }
 }
 
-// eslint-disable-next-line prettier/prettier
-export function handleDescription(descriptionArrow: [string, Dispatch<SetStateAction<string>>], status: [string, Dispatch<SetStateAction<string>>], setContent: CallableFunction, descriptionState: [string, Dispatch<SetStateAction<string>>]) {
+export function handleDescription(
+    descriptionArrow: [string, Dispatch<SetStateAction<string>>],
+    status: [string, Dispatch<SetStateAction<string>>],
+    setContent: CallableFunction,
+    descriptionState: [string, Dispatch<SetStateAction<string>>]
+) {
     const [arrowDescription, setArrowDescription] = descriptionArrow;
     const [, setArrowStatus] = status;
     const [description] = descriptionState;

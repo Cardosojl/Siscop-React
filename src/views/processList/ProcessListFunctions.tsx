@@ -6,9 +6,7 @@ import { ObjFilter, Process, Section, SiscopApiIndex, TableType, User, Year } fr
 import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
 
 export function generateIndex(elements: SiscopApiIndex | null, filter: ObjFilter, setFilter: CallableFunction): ReactNode {
-    return elements?.map((element, index) => (
-        <IndexSelector key={index} index={(element as Year).year as string} value={(element as Year).year as string} setFilter={setFilter} filter={filter} />
-    ));
+    return elements?.map((element, index) => <IndexSelector key={index} index={(element as Year).year as string} value={(element as Year).year as string} setFilter={setFilter} filter={filter} />);
 }
 
 export async function handleYears(): Promise<Year[] | null> {
@@ -17,7 +15,6 @@ export async function handleYears(): Promise<Year[] | null> {
     return response;
 }
 
-// eslint-disable-next-line prettier/prettier
 export async function handleProcesses(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<Process[] | null> {
     let process: AxiosResponse;
     if (path === 'myProcess') process = await siscopIndex('processes', limit, index, 0, { user: user._id }, filter);
@@ -31,7 +28,6 @@ export async function handleProcesses(path: string, limit: number, index: number
 export async function handleDeleteProcess(path: string, processId: string, user: User<string, Section>) {
     if (path === 'myProcess') await siscopDelete('processes', { user: user._id, _id: processId });
     else if (path === 'receivedProcess') await siscopDelete('processes', { receiver: user._id, section: user.section._id });
-    //else if (path === 'doneProcess') await siscopDelete('processes', { sender: user._id });
 }
 
 function handleArrayProcesses(path: string, processes: Process[] | null, listener: CallableFunction): ReactNode {
