@@ -25,6 +25,25 @@ export function generateOptions(optionValues: string[], elementValue: string, ap
     ));
 }
 
+export function generateOptionsWS(optionValues: string[], elementValue: string, apiValues?: string[]): ReactNode {
+    let options;
+    if (apiValues) {
+        options = apiValues.length === optionValues.length ? apiValues.map((element, key) => ({ value: element, inner: optionValues[key] })) : null;
+        if (!options) throw new Error('Parametros incompatíveis para criação do select!');
+    } else {
+        options = optionValues.map((element) => ({ value: element, inner: element }));
+    }
+    let firstValue = options.filter((element) => element.inner === elementValue);
+    const restApi = options.filter((element) => element.inner !== elementValue);
+    firstValue = firstValue.length === 0 ? [{ value: '', inner: '' }] : firstValue;
+    const api = [...firstValue, ...restApi];
+    return api.map((element) => (
+        <option key={element.value} value={element.value}>
+            {element.inner}
+        </option>
+    ));
+}
+
 export function createForm(...elements: ElementCreatorNode[][]): ReactNode {
     const mainDiv = elements.map((element) =>
         createElement(

@@ -15,6 +15,14 @@
     position: relative;
 }
 
+.LeftBar__itens--selected {       
+    font-size: 12px;
+    font-weight: bold;    
+    background-image: linear-gradient(to right, rgb(133, 180, 57), rgb(111, 153, 44));
+    border-bottom: 1px solid  rgb(111, 153, 44);
+    position: relative;
+}
+
 .LeftBar__itens:hover {
     background-image: linear-gradient(to right, rgb(133, 180, 57), rgb(111, 153, 44));
     border-bottom: 1px solid  rgb(111, 153, 44);

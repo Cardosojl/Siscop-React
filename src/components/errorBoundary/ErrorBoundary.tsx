@@ -1,5 +1,5 @@
-import axios, { AxiosError } from 'axios';
 import React, { Component, ErrorInfo } from 'react';
+import axios from 'axios';
 import { ErrorBoundaryProps, ErrorBoundaryState } from 'src/config/types/types';
 import ErrorPage from 'src/views/errorPage/ErrorPage';
 

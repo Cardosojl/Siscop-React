@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import right from '../../assets/seta.png';
 import left from '../../assets/seta2.png';
-import './PageSelector.css';
 import { PageSelectorType } from 'src/config/types/types';
 import { connect } from 'react-redux';
 import useAsyncError from '../../hooks/useAsyncError/UseAsyncError';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { buttonActiveClass, leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
+import './PageSelector.css';
 
-function PageSelector({ path, setChangePage, index, limit, user, filter, dispatchUser }: PageSelectorType): JSX.Element {
+function PageSelector({ path, setChangePage, index, limit, user, filter, listener, dispatchUser }: PageSelectorType): JSX.Element {
     const [indexPage, setIndexPage] = useState<number>(1);
     const [length, setLength] = useState<number>(0);
     const [leftD, setLeftD] = useState<boolean>(true);
@@ -21,17 +21,17 @@ function PageSelector({ path, setChangePage, index, limit, user, filter, dispatc
     }, [index]);
 
     useEffect(() => {
-        // eslint-disable-next-line prettier/prettier
-        handleApiLength(path, user, filter).then((data) => {
+        handleApiLength(path, user, filter)
+            .then((data) => {
                 setLength(data);
                 setLeftD(leftArrowActive(indexPage));
-                // eslint-disable-next-line prettier/prettier
-            }).catch((error) => handleErros(error, dispatchUser, throwError, setLength));
-    }, [indexPage, path, filter]);
+            })
+            .catch((error) => handleErros(error, dispatchUser, throwError, setLength));
+    }, [indexPage, path, filter, listener]);
 
     useEffect(() => {
         setRightD(rightArrowActive(indexPage, limit, length));
-    }, [length, indexPage, path, filter]);
+    }, [length, indexPage, path, filter, listener]);
 
     return (
         <div className="PageSelector">

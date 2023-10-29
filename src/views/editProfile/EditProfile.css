@@ -1,0 +1,13 @@
+.EditProfile__error {
+    color: var(--ErrorColor);
+    margin-left: 15px;
+    margin-bottom: -25px;
+}
+
+.EditProfile__title {
+    cursor: pointer;
+}
+
+.EditProfile__title:hover {
+    color: var(--DarkGreyColor)
+}

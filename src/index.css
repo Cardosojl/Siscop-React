@@ -1,9 +1,10 @@
 :root {
     --LightColor: rgb(233, 236, 232);
     --GreyColor: rgb(212, 212, 212);
-    --BackgroundGreen: rgb(180, 230, 123);
+    --GreyBar: rgb(177, 175, 175);
+    --BackgroundGreen: rgb(168, 216, 113);
     --BackgroundRed: rgb(250, 138, 138);
-    --FluorescentColor: rgb(132, 235, 73);
+    --FluorescentColor: rgb(166, 233, 127);
     --LightGreyColor: rgb(226, 226, 226);
     --MediumGreyColor: rgb(223, 223, 223); 
     --DarkGreyColor:  rgb(141, 141, 141);
@@ -66,8 +67,20 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     padding-bottom: 20px;
 }
 
+.SmallWindow {
+    width: 600px;
+}
+
+.Window--small {
+    background-color:  var(--LightColor);   
+    border-radius: 3px;
+    box-shadow: 6px 6px 10px 1px rgb(24, 24, 24);
+    margin-bottom:30px;
+    padding-bottom: 30px;
+}
+
 hr {
-    border: solid 1px rgb(177, 175, 175);
+    border: solid 1px var(--GreyBar);
     margin: 10px 15px 20px 15px;
 }
 
@@ -119,7 +132,7 @@ textarea {
 }
 
 .Form {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .Form div {
@@ -127,8 +140,19 @@ textarea {
     margin-bottom: 10px;
 }
 
+.Form h4 {
+    color: var(--FontColorDefaultBlack);
+    font-weight: bolder;
+    margin-left: 15px;
+    padding-top: 20px;
+}
+
 .Form input[type=text] {
     width: 400px;
+}
+
+.Form--input__small {
+    max-width: 170px;
 }
 
 .Form select {
@@ -146,6 +170,7 @@ textarea {
 
 .Form label {
     margin-right: 10px;
+    color: var(--FontColorDefaultBlack);
 }
 
 .Link--default {

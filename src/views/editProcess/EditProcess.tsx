@@ -1,12 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { AcquisitionWay, Process, Section, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import { generateForm, handleAcquisitionWays, handleErros, handleForm, handleProcess, handleSections } from './EditProcessFunction';
+import { generateForm, handleAcquisitionWays, handleForm, handleProcess, handleSections } from './EditProcessFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { handleErros } from 'src/apis/siscopDB';
 
 function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     const [url] = useLocation().pathname.split('/').reverse();
@@ -14,7 +15,7 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     const [process, setProcess] = useState<Partial<Process>>({});
     const [acquisitionWays, setAcquisition] = useState<AcquisitionWay[]>([]);
     const [form, setForm] = useState<Partial<Process>>({});
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [errorMessage, setErrorMessage] = useState<ReactNode>('');
     const navigate = useNavigate();
     const throwError = useAsyncError();
 

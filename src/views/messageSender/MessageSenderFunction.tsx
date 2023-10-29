@@ -1,6 +1,60 @@
-import React, { ReactNode } from 'react';
-import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
-import { Process, Section, User } from 'src/config/types/types';
+import React, { ChangeEvent, FormEvent, ReactNode } from 'react';
+import { siscopCreate, siscopIndex, siscopShow } from 'src/apis/siscopDB';
+import { Message, Process, Section, User } from 'src/config/types/types';
+import { setInputs } from '../elementsCreator';
+
+async function validate(form: Partial<Message> & Partial<Process>, setErrorMessage: CallableFunction) {
+    setErrorMessage('');
+    let error = false;
+    const user = (await siscopShow('users/user', 0, { _id: form.sender as string })).data.response;
+    if (!user) {
+        setErrorMessage(<p className="MessageSender__message">{`Erro no Usuário`}</p>);
+        error = true;
+    }
+    if (!form.title) {
+        setErrorMessage(<p className="MessageSender__message">{`Título precisa ser preenchido`}</p>);
+        error = true;
+    }
+    if (!form.receiver && !form.section_receiver) {
+        setErrorMessage((curr: ReactNode) => (
+            <>
+                {curr} <p className="MessageSender__message">{`Destíno da mensagem deve ser selecionada`}</p>{' '}
+            </>
+        ));
+        error = true;
+    }
+    if (form.receiver) {
+        const receiver = (await siscopShow('users/user', 0, { _id: form.receiver })).data.response;
+        if (!receiver) {
+            setErrorMessage(<p className="MessageSender__message">{`Erro no Usuário escolhido`}</p>);
+            error = true;
+        }
+    }
+    if (form.section_receiver) {
+        const section = (await siscopShow('sections/section', 0, { _id: form.section_receiver })).data.response;
+        const users = (await siscopIndex('users', 0, 0, 0, { section: form.section_receiver })).data.response;
+        console.log(users);
+
+        if (!section) {
+            setErrorMessage(<p className="MessageSender__message">{`Erro na Seção escolhida`}</p>);
+            error = true;
+        }
+        if (!users) {
+            setErrorMessage(<p className="MessageSender__message">{`Esta seção não possuí nenhum usuário cadastrado`}</p>);
+            error = true;
+        }
+    }
+    return error;
+}
+
+// eslint-disable-next-line prettier/prettier
+export async function handleForm(e: FormEvent, form: Partial<Message> & Partial<Process>, navigate: CallableFunction, setErrorMessage: CallableFunction): Promise<void> {
+    e.preventDefault();
+    if (!(await validate(form, setErrorMessage))) {
+        await siscopCreate('messages', form);
+        navigate('/enviadas/0');
+    }
+}
 
 export async function handleUsers(user: User): Promise<User[] | null> {
     const users = await siscopIndex('users', 0, 0, 0, { select: '-password' });
@@ -36,8 +90,10 @@ export async function handleProcesses(user: User, processId?: string | null): Pr
     return processArray;
 }
 
-export function generateUserSelect(users: User[] | null): ReactNode {
+export function generateUserSelect(users: User[] | null, setForm: CallableFunction): ReactNode {
     if (users) {
+        setForm((current: Partial<Message>) => ({ ...current, section_receiver: undefined }));
+        const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
         const options = users
             .sort((a, b) => a.name.localeCompare(b.name))
             .filter((element) => element.name !== 'ADM')
@@ -45,7 +101,10 @@ export function generateUserSelect(users: User[] | null): ReactNode {
         return (
             <>
                 <label className="MessageSender__labels">Usuário:</label>
-                <select>{options}</select>
+                <select name="receiver" onChange={handleInput}>
+                    <option value={undefined}></option>
+                    {options}
+                </select>
             </>
         );
     } else {
@@ -53,8 +112,10 @@ export function generateUserSelect(users: User[] | null): ReactNode {
     }
 }
 
-export function generateSectionSelect(section: Section[] | null): ReactNode {
+export function generateSectionSelect(section: Section[] | null, setForm: CallableFunction): ReactNode {
     if (section) {
+        setForm((current: Partial<Message>) => ({ ...current, receiver: undefined }));
+        const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
         const options = section
             .sort((a, b) => a.name.localeCompare(b.name))
             .filter((element) => element.name !== 'ADM')
@@ -62,7 +123,10 @@ export function generateSectionSelect(section: Section[] | null): ReactNode {
         return (
             <>
                 <label className="MessageSender__labels">Seção:</label>
-                <select>{options}</select>
+                <select name="section_receiver" onChange={handleInput}>
+                    <option value={undefined}></option>
+                    {options}
+                </select>
             </>
         );
     } else {
@@ -70,15 +134,16 @@ export function generateSectionSelect(section: Section[] | null): ReactNode {
     }
 }
 
-export function generateProcessSelect(process: Process[] | null, processId?: string | null): ReactNode {
+export function generateProcessSelect(process: Process[] | null, processId: string | null, setForm: CallableFunction): ReactNode {
     if (process) {
+        const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
         if (processId) {
             const options = process
                 .sort((a, b) => a.title.localeCompare(b.title))
                 .map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
             return (
                 <>
-                    <select>{options}</select>
+                    <select name="process">{options}</select>
                 </>
             );
         } else {
@@ -87,7 +152,7 @@ export function generateProcessSelect(process: Process[] | null, processId?: str
                 .map((element, index) => <option key={index} value={`${element._id}`}>{`${element.title}`}</option>);
             return (
                 <>
-                    <select>
+                    <select name="process" onChange={handleInput}>
                         <option value=""></option>
                         {options}
                     </select>
@@ -97,8 +162,7 @@ export function generateProcessSelect(process: Process[] | null, processId?: str
     } else {
         return (
             <>
-                <label className="MessageSender__labels">Seção:</label>
-                <select>
+                <select name="process">
                     <option value=""></option>
                 </select>
             </>

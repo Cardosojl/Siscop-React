@@ -26,6 +26,13 @@
     border-left: solid 1.5px rgb(212, 212, 212);
 }
 
+.MessageSender__message {
+    margin-left: 15px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
 .Button--Message {
     padding: 10px;
     font-weight: bolder;

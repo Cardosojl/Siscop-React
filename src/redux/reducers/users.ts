@@ -1,16 +1,16 @@
 import { AnyAction } from '@reduxjs/toolkit';
-import { User } from 'src/config/types/types';
+import { Section, User } from 'src/config/types/types';
 
-const initialState: User = {
+const initialState: User<string, Section> = {
     _id: '',
     name: '',
     pg: '',
-    section: '',
+    section: { _id: '', name: '', level: '' },
     level: '',
     logged: false,
 };
 
-export default function userReducer(state = initialState, action: AnyAction): User {
+export default function userReducer(state = initialState, action: AnyAction): User<string, Section> {
     switch (action.type) {
         case 'LOG_USER':
             return (state = action.payload);

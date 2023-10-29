@@ -1,12 +1,12 @@
 .IndexSelectors {
-    display:flex;
-    justify-content: flex-start;
+    display:inline-block;
 }
 
 .IndexSelectors__selector {
     cursor: pointer;
     background-color: var(--GreyColor);
     margin-left: 15px;
+    margin-bottom: 10px;
     padding: 1px 5px 1px 5px;
     border-right: solid 12px var(--DarkGreyColor);
     min-width: 75px;
@@ -15,8 +15,7 @@
 
 .IndexSelectors__selector:hover {
     background-color: var(--MediumGreyColor);
-    border-right: solid 12px var(--FluorescentColor);
-    
+    border-right: solid 12px var(--FluorescentColor);    
 }
 
 .IndexSelectors__text {
@@ -24,4 +23,18 @@
     text-align: center;
     margin-top: 8px;    
     font-size: 13px;
+}
+
+.IndexSelectors__selector__selected {
+    cursor: pointer;
+    background-color: var(--MediumGreyColor);
+    margin-left: 15px;
+    padding: 1px 5px 1px 5px;
+    border-right: solid 12px var(--BackgroundGreen);
+    min-width: 75px;
+    height: 35px;
+}
+
+.IndexSelectors__selector__selected:hover {
+    border-right: solid 12px var(--FluorescentColor);    
 }

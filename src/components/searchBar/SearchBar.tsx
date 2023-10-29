@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './SearchBar.css';
 import searchImg from './images/lupa2.png';
-import { handleSearch } from './SearchBarFunctions';
+import { handleSearch, handleSearchOptions } from './SearchBarFunctions';
 import { SearchBarType } from 'src/config/types/types';
 
-export default function SearchBar({ setFilter, path }: SearchBarType): JSX.Element {
+export default function SearchBar({ setFilter, path, optionValues, apiValues }: SearchBarType): JSX.Element {
     const [search, setSearch] = useState<string>('');
     const filterRef = useRef<HTMLSelectElement | null>(null);
 
@@ -19,8 +19,7 @@ export default function SearchBar({ setFilter, path }: SearchBarType): JSX.Eleme
     return (
         <div className="SearchBar">
             <select className="SearchBar__select" ref={filterRef}>
-                <option value={'title'}>Mensagem</option>
-                <option value={'process_title'}>Processo</option>
+                {handleSearchOptions(optionValues, apiValues)}
             </select>
             <span className="SearchBar__itens">
                 <input className="SearchBar__input" type="text" value={`${search}`} onChange={(e) => setSearch(e.target.value)} />

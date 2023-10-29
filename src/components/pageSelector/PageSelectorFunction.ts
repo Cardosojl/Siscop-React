@@ -1,14 +1,18 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { siscopLenght } from 'src/apis/siscopDB';
-import { DispatchUser, ObjFilter, SiscopApiIndex, User } from 'src/config/types/types';
+import { DispatchUser, ObjFilter, Section, SiscopApiIndex, User } from 'src/config/types/types';
 
-export async function handleApiLength(path: string, user: User, filter?: ObjFilter | null): Promise<number> {
+export async function handleApiLength(path: string, user: User<string, Section>, filter?: ObjFilter | null): Promise<number> {
     let response: SiscopApiIndex = null;
+    const processPath = 'processes';
     if (path === 'messageSents') response = (await siscopLenght(path, { sender: user._id }, filter)).data.response;
-    if (path === 'messages') response = (await siscopLenght(path, { receiver: user._id, section: user.section }, filter)).data.response;
-    if (path === 'messageArchiveds') response = (await siscopLenght(path, { receiver: user._id, section: user.section }, filter)).data.response;
-    if (path === 'myProcess') response = (await siscopLenght('processes', { user: user._id }, filter)).data.response;
+    if (path === 'messages') response = (await siscopLenght(path, { receiver: user._id, section: user.section._id }, filter)).data.response;
+    if (path === 'messageArchiveds') response = (await siscopLenght(path, { receiver: user._id, section: user.section._id }, filter)).data.response;
+    if (path === 'myProcess') response = (await siscopLenght(processPath, { user: user._id }, filter)).data.response;
+    if (path === 'receivedProcess') response = (await siscopLenght(processPath, { receiver: user._id, section: user.section._id }, filter)).data.response;
+    if (path === 'processes') response = (await siscopLenght(processPath, {}, filter)).data.response;
+    //processDone---------*
     const length = response ? response.length : 1;
     return length;
 }
@@ -27,7 +31,6 @@ export function rightArrowActive(indexPage: number, limit: number, length: numbe
     return length > limit * indexPage ? false : true;
 }
 
-// eslint-disable-next-line prettier/prettier
 export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setLength: Dispatch<SetStateAction<number>>): void {
     if (axios.isAxiosError(error)) {
         if (error.response?.status === 401) dispatchUser.logoffRedux();

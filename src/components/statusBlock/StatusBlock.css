@@ -5,6 +5,7 @@
     padding: 20px;
     width: 330px;
     min-height: 180px;
+    border-radius: 5px;
 }
 
 .ProcessInformation__ptext {

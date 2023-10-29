@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent, createElement } from 'react';
-import { Process, ProcessState, User } from 'src/config/types/types';
+import { Process, ProcessState, Section, User } from 'src/config/types/types';
 import { generateOptions, setInputs } from '../elementsCreator';
 import { siscopCreate, siscopShow } from 'src/apis/siscopDB';
 
@@ -39,10 +39,10 @@ export function generateForm(form: Partial<ProcessState>, setForm: CallableFunct
     return createElement('div', { key: 7 }, [anotation, state, sendButton]);
 }
 
-export async function handleProcess(path: string, user: User, processId: string): Promise<Process> {
+export async function handleProcess(path: string, user: User<string, Section>, processId: string): Promise<Process> {
     const process = await siscopShow('processes/process', ['origin'], { _id: processId });
     const { response }: { response: Process | null } = process.data;
     if (path === 'myProcess' && response && response.user === user._id) return response;
-    if (path === 'receivedProcess' && response && (response.receiver === user._id || response.section_receiver === user.section)) return response;
-    else throw { isAxiosError: true, response: { data: null, status: 404, statusText: 'Not Found', headers: {} } };
+    if (path === 'receivedProcess' && response && (response.receiver === user._id || response.section_receiver === user.section._id)) return response;
+    else throw { statusCode: 404, message: '404 Não Encontrado' };
 }

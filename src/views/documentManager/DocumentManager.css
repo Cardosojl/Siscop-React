@@ -1,0 +1,53 @@
+.DocumentManager {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: min-content;
+}
+.DocumentManager__content {
+    flex: 1;
+    position: relative;
+    max-width: 40vw;
+    height: fit-content;    
+}
+
+.DocumentManager__details__topic {
+    display: inline;
+    font-weight: bold;
+    text-align:left;
+    color: var(--FontColorGrey);
+    margin-bottom: 9px;
+    padding-right: 0px;
+    font-size: 15px;
+}
+.DocumentManager__details {
+    margin-left: 15px;
+}
+
+.DocumentManager__details__text {
+    color: var(--FontColorGrey);
+    display: inline;
+    margin-left: 15px;
+}
+
+.DocumentManager__status {
+    flex: 0 0 380px; 
+    overflow-y: auto;
+    position: absolute;
+    right: 10px;
+    height: 100%;
+    border-left: 2px solid var(--GreyColor);
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    background-color: var(--LightColor);
+}
+
+.DocumentManager__link {
+    text-decoration: none;
+}
+.DocumentManager__files {
+    margin-top: 3px;
+    margin-left: 16px;
+}

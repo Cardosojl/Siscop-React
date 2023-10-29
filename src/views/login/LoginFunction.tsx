@@ -1,29 +1,21 @@
 /* eslint-disable prettier/prettier */
-import axios from 'axios';
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { siscopLoginCreate } from 'src/apis/siscopDB';
-import { DispatchUser, User } from 'src/config/types/types';
+import { handleErros, siscopLoginCreate } from 'src/apis/siscopDB';
+import { DispatchUser, Section, User } from 'src/config/types/types';
 
-async function handleLogin(navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User>): Promise<void> {
+async function handleLogin(navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User<string, Section>>): Promise<void> {
     navigate('/caixaDeEntrada/0');
     dispatchUser.loginRedux(await siscopLoginCreate(form));
     
 }
 
-// eslint-disable-next-line prettier/prettier
-function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setMessageError: Dispatch<SetStateAction<string>>): void {
-    if (axios.isAxiosError(error)) {
-        if (axios.isAxiosError(error)) setMessageError(error.message);
-    } else throwError(new Error((error as Error).message));
-}
-
-
-export async function handleUser(e: FormEvent<HTMLFormElement>, navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User>, throwError: CallableFunction, setMessageError: Dispatch<SetStateAction<string>>): Promise<void> {
+export async function handleUser(e: FormEvent<HTMLFormElement>, navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User<string, Section>>, throwError: CallableFunction, setMessageError: Dispatch<SetStateAction<string>>): Promise<void> {
     e.preventDefault();
     try {
         await handleLogin(navigate, dispatchUser, form);
     } catch (error) {
+        console.log(error);
         handleErros(error as Error, dispatchUser, throwError, setMessageError);
     }
 };

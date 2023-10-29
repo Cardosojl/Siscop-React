@@ -1,0 +1,5 @@
+.RegisterUser__error {
+    color: var(--ErrorColor);
+    margin-left: 15px;
+    margin-bottom: -25px;
+}

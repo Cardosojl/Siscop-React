@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
-import { DispatchUser, ObjFilter, User } from 'src/config/types/types';
+import { DispatchUser, ObjFilter, Section, SiscopApiForm, User } from 'src/config/types/types';
 import { ObjectToQueryString, generateIndexRequest, generateShowRequest } from './apiFunctions';
 
 const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_DB, withCredentials: true });
 
-export async function siscopLoginCreate(login: Partial<User>): Promise<User> {
+export async function siscopLoginCreate(login: Partial<User<string, Section>>): Promise<User<string, Section>> {
     const response = await axiosSiscopDB.post('/login', login);
     return { ...response.data.user, logged: true };
 }
@@ -41,12 +41,12 @@ export async function siscopDelete(baseUrl: string, parameters: ObjFilter, filte
     return response;
 }
 
-export async function siscopCreate(baseUrl: string, body: ObjFilter): Promise<AxiosResponse> {
+export async function siscopCreate(baseUrl: string, body: SiscopApiForm): Promise<AxiosResponse> {
     const response = await axiosSiscopDB.post(`/${baseUrl}`, body);
     return response;
 }
 
-export async function siscopUpdate(baseUrl: string, parameters: ObjFilter, body: ObjFilter): Promise<AxiosResponse> {
+export async function siscopUpdate(baseUrl: string, parameters: ObjFilter, body: SiscopApiForm): Promise<AxiosResponse> {
     const queryParameters = parameters ? ObjectToQueryString(parameters) : '';
     const response = await axiosSiscopDB.put(`/${baseUrl}?${queryParameters}`, body);
     return response;

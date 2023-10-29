@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { ReduxUser, User } from 'src/config/types/types';
+import { ReduxUser, Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import './Login.css';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
@@ -10,7 +10,7 @@ import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { handleInputs, handleUser } from './LoginFunction';
 
 function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
-    const [form, setForm] = useState<Partial<User>>({ name: '', password: '' });
+    const [form, setForm] = useState<Partial<User<string, Section>>>({ name: '', password: '' });
     const [errorMessage, setErrorMessage] = useState<string>('');
     const throwError = useAsyncError();
     const navigate = useNavigate();

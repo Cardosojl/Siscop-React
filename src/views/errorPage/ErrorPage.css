@@ -4,11 +4,25 @@
     height: 100vh;
     width: 100%;
     background-repeat: no-repeat;
-    background-position: bottom -200px right 15px;
+    background-position: bottom -70px right 15px;
 }
 
 .ErrorPage__text {
     text-align: center;
-    color: rgb(146, 146, 146);
+    color: var(--GreyColor);
+    font-weight: bolder;
     padding-top: 70px;
+    font-size: 50px;
+}
+
+.ErrorPage__buttons {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.ErrorPage__button {
+    padding: 15px;
+    font-weight: bolder;
+    font-size: 20px;
 }

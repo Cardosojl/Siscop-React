@@ -1,13 +1,20 @@
 import { ClassAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
 
-export type User<S = string, N = S | number, B = boolean> = {
+export type User<S = string, T = S | Section, N = S | number, B = boolean> = {
     _id: S;
     name: S;
     pg: S;
-    section: S;
+    section: T;
     level: N;
     logged: B;
     password?: S;
+};
+
+export type Profile<S = string> = {
+    pg: S;
+    password: S;
+    current: S;
+    confirm: S;
 };
 
 export type Process<S = string, N = S | number, B = boolean> = {
@@ -98,12 +105,12 @@ export type FileTypes<
 };
 
 export type DispatchUser = {
-    loginRedux: (newValue: User) => void;
+    loginRedux: (newValue: User<string, Section>) => void;
     logoffRedux: () => void;
 };
 
 export type UserRedux = {
-    user: User;
+    user: User<string, Section>;
 };
 
 export type DispatchUserRedux = {
@@ -123,6 +130,16 @@ export type TableType = {
     head: ReactNode | null;
     body: ReactNode | null;
 };
+
+export type TableItem<T> = {
+    element: T;
+    setRefresh: CallableFunction;
+    href?: string;
+    path?: string;
+    user: User<string, Section>;
+    dispatchUser: DispatchUser;
+};
+
 export type Searcher = {
     message?: string;
     process?: string;
@@ -130,7 +147,7 @@ export type Searcher = {
 };
 
 export type MessageReaderType = {
-    user: User;
+    user: User<string, Section>;
     dispatchUser: DispatchUser;
     path: string;
 };
@@ -160,18 +177,21 @@ export type PageSelectorType = {
     setChangePage: CallableFunction;
     index: number;
     limit: number;
-    user: User;
+    user: User<string, Section>;
     filter: ObjFilter | null;
+    listener: boolean;
     dispatchUser: DispatchUser;
 };
 
 export type SearchBarType = {
     path: string;
     setFilter: CallableFunction;
+    optionValues: string[];
+    apiValues: string[];
 };
 
 export type RootState = {
-    user: User;
+    user: User<string, Section>;
 };
 
 export type LeftBarItens = {
@@ -202,7 +222,9 @@ export type ErrorBoundaryState = {
     error: Error | null;
 };
 
-export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<FileTypes> & Partial<AcquisitionWay>;
+export type ObjFilter = Partial<User> & Partial<Message> & Partial<Process> & Partial<FileTypes> & Partial<AcquisitionWay> & Partial<Year>;
+
+export type SiscopApiForm = Partial<User> | Partial<Message> | Partial<Process> | Partial<FileTypes> | Partial<AcquisitionWay> | Partial<Year>;
 
 export type SiscopApiIndex = User[] | Process[] | Message[] | Year[] | Section[] | FileTypes[] | ProcessState[] | AcquisitionWay[] | null;
 
@@ -211,11 +233,6 @@ export type SiscopApiShow = User | Process | Message | Year | Section | FileType
 export type FilesList = {
     process: Process;
     files: FileTypes[] | null;
-};
-
-export type Listener = {
-    action: string | null;
-    itemId: string | null;
 };
 
 export type ElementCreatorNode = {

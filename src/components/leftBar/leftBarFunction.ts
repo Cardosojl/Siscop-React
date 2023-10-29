@@ -1,8 +1,5 @@
-import { useLocation } from 'react-router-dom';
-
-export function activeElement(values: string[]): boolean {
-    const path = useLocation().pathname.split('/');
-    return values.includes(path[1]);
+export function activeElement(values: string[], path: string): boolean {
+    return values.includes(path);
 }
 
 export function iconRotate(itemStatus: boolean) {

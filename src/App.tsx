@@ -14,8 +14,8 @@ function App(props: User) {
         setLogged(props.logged);
     }, [props]);
     return (
-        <ErrorBoundary>
-            <BrowserRouter>
+        <BrowserRouter>
+            <ErrorBoundary>
                 <div>
                     <Header />
                     <div className="d-flex flex-row">
@@ -23,8 +23,8 @@ function App(props: User) {
                         <Content />
                     </div>
                 </div>
-            </BrowserRouter>
-        </ErrorBoundary>
+            </ErrorBoundary>
+        </BrowserRouter>
     );
 }
 
