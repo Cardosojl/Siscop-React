@@ -71,11 +71,7 @@ function generateSentMessages(element: Message | null, listener: CallableFunctio
                 </Link>
             </td>
             <td className="col-3">{element.process ? `${(element.process as Process).title}` : <i>(Sem Processo)</i>}</td>
-            <td className="col-3">
-                {element.section_receiver
-                    ? `${(element.section_receiver as Section).name}`
-                    : `${(element.receiver as User).pg} ${(element.receiver as User).name}`}
-            </td>
+            <td className="col-3">{element.section_receiver ? `${(element.section_receiver as Section).name}` : `${(element.receiver as User).pg} ${(element.receiver as User).name}`}</td>
             <td className="col-3">{element.date}</td>
             {deleteButton(listener)}
         </tr>
@@ -116,13 +112,7 @@ async function handleDeleteMessage(path: string, element: Message, user: User<st
     }
 }
 
-export async function handleEvents(
-    listenerState: [string, Dispatch<SetStateAction<string>>],
-    setRefresh: CallableFunction,
-    element: Message,
-    user: User<string, Section>,
-    path: string
-) {
+export async function handleEvents(listenerState: [string, Dispatch<SetStateAction<string>>], setRefresh: CallableFunction, element: Message, user: User<string, Section>, path: string) {
     const [listener, setListener] = listenerState;
 
     if (listener === 'archive') {

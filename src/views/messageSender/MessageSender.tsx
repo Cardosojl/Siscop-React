@@ -3,15 +3,7 @@ import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import './MessageSender.css';
 import './jodit/jodit.css';
 import { Message, Process, SimpleView } from 'src/config/types/types';
-import {
-    generateProcessSelect,
-    generateSectionSelect,
-    generateUserSelect,
-    handleForm,
-    handleProcesses,
-    handleSections,
-    handleUsers,
-} from './MessageSenderFunction';
+import { generateProcessSelect, generateSectionSelect, generateUserSelect, handleForm, handleProcesses, handleSections, handleUsers } from './MessageSenderFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';

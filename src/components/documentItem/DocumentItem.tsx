@@ -15,9 +15,7 @@ function DocumentItem({ element, setRefresh, user, path, dispatchUser }: TableIt
     const throwError = useAsyncError();
 
     useEffect(() => {
-        handleEvents(formState, listenerState, setRefresh, element, path as string, user).catch((error) =>
-            handleErros(error as Error, dispatchUser, throwError)
-        );
+        handleEvents(formState, listenerState, setRefresh, element, path as string, user).catch((error) => handleErros(error as Error, dispatchUser, throwError));
     }, [listenerState[0]]);
 
     return <>{generateBody(filenameState, formState, listenerState, element, path as string)}</>;

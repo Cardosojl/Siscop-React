@@ -9,11 +9,7 @@ export async function handleFile(id: string): Promise<AxiosResponse> {
 export function openFile(fileBuffer: AxiosResponse) {
     const { headers } = fileBuffer;
     const { response } = fileBuffer.data;
-    if (
-        headers['content-type'] === 'image/jpeg; charset=utf-8' ||
-        headers['content-type'] === 'image/png; charset=utf-8' ||
-        headers['content-type'] === 'application/pdf; charset=utf-8'
-    ) {
+    if (headers['content-type'] === 'image/jpeg; charset=utf-8' || headers['content-type'] === 'image/png; charset=utf-8' || headers['content-type'] === 'application/pdf; charset=utf-8') {
         const blob = new Blob([new Uint8Array(response.file.data)], { type: headers['content-type'] });
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank') as Window;

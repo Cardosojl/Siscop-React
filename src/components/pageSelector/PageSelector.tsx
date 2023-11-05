@@ -39,11 +39,7 @@ function PageSelector({ path, setChangePage, index, limit, user, filter, listene
                 <img className="PageSelector__arrow" src={left} />
             </button>
             <p className="PageSelector__index">{indexPage}</p>
-            <button
-                className={`${buttonActiveClass('right', indexPage, limit, length)} PageSelector__button`}
-                onClick={() => setChangePage(index + 1)}
-                disabled={rightD}
-            >
+            <button className={`${buttonActiveClass('right', indexPage, limit, length)} PageSelector__button`} onClick={() => setChangePage(index + 1)} disabled={rightD}>
                 <img className="PageSelector__arrow" src={right} />
             </button>
         </div>

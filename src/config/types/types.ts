@@ -1,4 +1,4 @@
-import { ClassAttributes, HTMLAttributes, InputHTMLAttributes, ReactNode } from 'react';
+import { ClassAttributes, InputHTMLAttributes, ReactNode } from 'react';
 
 export type User<S = string, T = S | Section, N = S | number, B = boolean> = {
     _id: S;

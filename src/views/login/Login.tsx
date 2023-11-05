@@ -8,6 +8,7 @@ import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { handleInputs, handleUser } from './LoginFunction';
+import { Button } from 'src/components/style/Button';
 
 function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
     const [form, setForm] = useState<Partial<User<string, Section>>>({ name: '', password: '' });
@@ -36,7 +37,7 @@ function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
                     <label>Senha:</label>
                     <input type="password" name="password" value={form.password} onChange={userValues} />
                 </div>
-                <input className="Login__button Button--green" type="submit" value="Login" />
+                <Button background="green">Login</Button>
             </form>
         </div>
     );

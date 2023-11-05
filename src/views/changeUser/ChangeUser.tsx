@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { generateBody, handleFind, handleForm, handleSections } from './ChangeUserFunction';
+import { Button } from 'src/components/style/Button';
 
 function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
     const [user, setUser] = useState<User<string, Section> | null>(null);
@@ -51,7 +52,7 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
                     <div>
                         <label>Nome do Usuário:</label>
                         <input type="text" className="Form--input__small" value={name} onChange={(e) => setName(e.target.value)} />
-                        <button className="Button--green">Procurar</button>
+                        <Button background="green">Procurar</Button>
                     </div>
                 </form>
                 {errorMessage}

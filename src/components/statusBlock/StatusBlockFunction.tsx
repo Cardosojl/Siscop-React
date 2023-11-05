@@ -36,22 +36,13 @@ export function generateBody(stateState: [ProcessState, CallableFunction], liste
                 </div>
                 <div className="StatusBlock__information">
                     <small>
-                        <b>De:</b>{' '}
-                        {state.user ? `${(state as ProcessState<string, User>).user.pg} ${(state as ProcessState<string, User>).user.name}` : 'Sistema'}
+                        <b>De:</b> {state.user ? `${(state as ProcessState<string, User>).user.pg} ${(state as ProcessState<string, User>).user.name}` : 'Sistema'}
                         {' - '}
                         {state.date}
                     </small>
                 </div>
                 <div className="StatusBlock__delete">
-                    {state.user ? (
-                        (state as ProcessState<string, User>).user._id === user._id ? (
-                            <button onClick={() => setListener('Delete')}>Apagar</button>
-                        ) : (
-                            ''
-                        )
-                    ) : (
-                        ''
-                    )}
+                    {state.user ? (state as ProcessState<string, User>).user._id === user._id ? <button onClick={() => setListener('Delete')}>Apagar</button> : '' : ''}
                 </div>
             </div>
         );

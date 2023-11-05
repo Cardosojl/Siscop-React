@@ -8,15 +8,7 @@ import { activeElement } from './leftBarFunction';
 export default function LeftBar(): JSX.Element {
     const path = useLocation().pathname.split('/')[1];
     const [changedPath, setChangedPath] = useState(path);
-    const messageItens = [
-        'novaMensagem',
-        'caixaDeEntrada',
-        'enviadas',
-        'arquivadas',
-        'minhasMensagensRecebidas',
-        'minhasMensagensEnviadas',
-        'minhasMensagensArquivadas',
-    ];
+    const messageItens = ['novaMensagem', 'caixaDeEntrada', 'enviadas', 'arquivadas', 'minhasMensagensRecebidas', 'minhasMensagensEnviadas', 'minhasMensagensArquivadas'];
     const processItens = ['meusProcessos', 'processosRecebidos'];
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactNode, useState } from 'react';
 import { connect } from 'react-redux';
 import { Profile, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
