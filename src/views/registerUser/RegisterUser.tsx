@@ -1,26 +1,37 @@
 import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { Section, SimpleView, User } from 'src/config/types/types';
-import { generateBody, handleForm, handleSections } from './RegisterUserFunction';
+import { handleForm, handleSections } from './RegisterUserFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import './RegisterUser.css';
+import { setInputs } from '../elementsCreator';
+import { Select } from 'src/components/Select';
+import { FormField } from 'src/components/FormField';
+import { Window } from 'src/components/Window';
+import { Button } from 'src/components/Button';
+import Title from 'src/components/Title';
+import { InputForm } from 'src/components/InputForm';
 
 function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
     const [sections, setSections] = useState<Section[] | null>(null);
     const [form, setForm] = useState<Partial<User>>({});
-    const [errorMessage, setErrorMessage] = useState<ReactNode>('');
+    const [message, setMessage] = useState<ReactNode>('');
+    const sectionArray = sections ? sections.map((element) => element.name) : [];
+    const sectionArrayID = sections ? sections.map((element) => element._id) : [];
+    const level = Array.from({ length: 10 }, (_, index) => `${index + 1}`);
     const throwError = useAsyncError();
+
     const sendForm = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            await handleForm(e, form, setErrorMessage, sections);
+            await handleForm(e, form, setMessage, sections);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setErrorMessage);
+            handleErros(error as Error, dispatchUser, throwError, setMessage);
         }
     };
+
+    const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
 
     useEffect(() => {
         handleSections()
@@ -33,16 +44,26 @@ function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
     }, []);
 
     return (
-        <div className="SmallWindow container">
-            <div className="Window--small">
-                <WindowTitle title="Cadastrar Usuário" />
-                <hr />
-                {errorMessage}
-                <form className="Form" onSubmit={sendForm}>
-                    {generateBody(sections, form, setForm)}
-                </form>
-            </div>
-        </div>
+        <Window $small>
+            <Title title="Cadastrar Usuário" />
+            <hr />
+            <form onSubmit={sendForm}>
+                {message}
+                <FormField label="Nome:">
+                    <InputForm $small type="text" name="name" value={form.name} onChange={handleInput} />
+                </FormField>
+                <FormField label="Senha:">
+                    <InputForm $small type="password" name="password" value={form.password} onChange={handleInput} />
+                </FormField>
+                <FormField label="Seção:">
+                    <Select name="section" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
+                </FormField>
+                <FormField label="Level:">
+                    <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
+                </FormField>
+                <Button $green>Cadastrar</Button>
+            </form>
+        </Window>
     );
 }
 

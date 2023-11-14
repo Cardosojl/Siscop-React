@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { ObjFilter, Process, Section, SimpleView, TableType } from 'src/config/types/types';
-import { generateIndex, generatePageSelector, generateSectionTitle, handleProcesses, handleProcessesTable, handleSections } from './ProcessManagerFunction';
+import { generatePageSelector, generateSectionTitle, handleProcesses, handleProcessesTable, handleSections } from './ProcessManagerFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
-import Table from 'src/components/table/Table';
+import Table from 'src/components/Table';
 import { useLocation } from 'react-router-dom';
 import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
 import SearchBar from 'src/components/searchBar/SearchBar';
-import './ProcessManager.css';
+import { Window } from 'src/components/Window';
+import Title from 'src/components/Title';
+import { Wrapper } from 'src/components/Wrapper';
 
 function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
     const [numberPage] = useLocation().pathname.split('/').reverse();
@@ -52,21 +53,23 @@ function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
     }, [filter, sectionSelected, index]);
 
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title="Acompanhar processo" />
-                <hr />
-                {generateIndex(sections, sectionSelected, setSectionSelected)}
-                <IndexSelector index={'Busca Geral'} value={''} setFilter={setSectionSelected} filter={sectionSelected} />
-                <hr />
-                <div className="ProcessManager__processes__header">
-                    <h5 className="ProcessManager__section__title">{titleSelected}</h5>
-                    <SearchBar setFilter={setFilter} path={''} optionValues={['Titulo', 'Ano', 'F. Aquisição']} apiValues={['title', 'year', 'category']} />
-                </div>
-                <Table table={processesTable} />
-                {generatePageSelector(itensLimit, index, sectionSelected, filter, setIndex, listener)}
-            </div>
-        </div>
+        <Window $large>
+            <Title title="Acompanhar Process" />
+            <hr />
+            {sections?.map((element, index) => (
+                <IndexSelector key={index} index={element.name} value={element._id} setFilter={setSectionSelected} filter={sectionSelected} />
+            ))}
+            <Wrapper $paddingTop="25px">
+                <IndexSelector index="Busca Geral" value="" setFilter={setSectionSelected} filter={sectionSelected} />
+            </Wrapper>
+            <hr />
+            <Wrapper $displayFlex="space-between" $paddingLeft="15px" $paddingRight="15px">
+                <h5>{titleSelected}</h5>
+                <SearchBar setFilter={setFilter} path={''} optionValues={['Titulo', 'Ano', 'F. Aquisição']} apiValues={['title', 'year', 'category']} />
+            </Wrapper>
+            <Table table={processesTable} />
+            {generatePageSelector(itensLimit, index, sectionSelected, filter, setIndex, listener)}
+        </Window>
     );
 }
 

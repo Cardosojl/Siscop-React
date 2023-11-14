@@ -19,20 +19,7 @@
     --BlueButton: rgb(45, 133, 216);
     --jd-color-panel: #29b658;
 }
-
-body {
-    margin: 0;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: rgb(45, 47, 49);
-    font-size: 15px;
-  }
   
-code {
-font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
 
 @media (min-width: 1300px) {
     .MainWindow {
@@ -79,98 +66,12 @@ font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     padding-bottom: 30px;
 }
 
-hr {
-    border: solid 1px var(--GreyBar);
-    margin: 10px 15px 20px 15px;
-}
-
-select{
-    background-color: var(--InputBackground);
-    border-radius: 3px;
-    border: 1px solid var(--InputBorder);
-    margin-right: 10px;
-    padding: 1px;
-    color: rgb(70, 70, 70);
-    font-size: 13px;
-}
-
-input[type = text] {
-    margin-bottom: 15px;
-    margin-right: 10px;
-    background-color: var(--InputBackground);
-    color: rgb(70, 70, 70);
-    border: 1px solid var(--InputBorder);    
-    border-radius: 3px;
-    font-size: 13px;
-}
-
-input[type = text]:focus {
-    outline: none;
-}
-
-input[type = password] {
-    margin-bottom: 15px;
-    margin-right: 10px;
-    background-color: var(--InputBackground);
-    color: rgb(70, 70, 70);
-    border: 1px solid var(--InputBorder);
-    border-radius: 3px;
-    font-size: 13px;
-}
-
-textarea {
-    resize: none;
-    margin-bottom: 15px;
-    margin-right: 10px;
-    background-color: var(--InputBackground);
-    color: rgb(70, 70, 70);
-    border: 1px solid var(--InputBorder);
-    border-radius: 3px;
-    font-size: 13px;
-    width: 400px;
-    height: 150px;
-}
-
-.Form {
-    font-size: 14px;
-}
-
-.Form div {
-    margin-left: 15px;
-    margin-bottom: 10px;
-}
-
-.Form h4 {
-    color: var(--FontColorDefaultBlack);
-    font-weight: bolder;
-    margin-left: 15px;
-    padding-top: 20px;
-}
-
-.Form input[type=text] {
-    width: 400px;
-}
-
 .Form--input__small {
     max-width: 170px;
 }
 
-.Form select {
-    margin-bottom: 10px;
-}
-
-.Form textarea {
-    display:block;
-    margin-left: 20px;
-}
-
 .Form__textareaDiv {
     display: flex;
-}
-
-.Form label {
-    margin-right: 10px;
-    color: var(--FontColorDefaultBlack);
 }
 
 .Link--default {

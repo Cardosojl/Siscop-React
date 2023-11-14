@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './styles/Global';
+import { theme } from './styles/Theme';
 import { BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './App.css';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 import LeftBar from './components/leftBar/LeftBar';
@@ -14,17 +16,20 @@ function App(props: User) {
         setLogged(props.logged);
     }, [props]);
     return (
-        <BrowserRouter>
-            <ErrorBoundary>
-                <div>
-                    <Header />
-                    <div className="d-flex flex-row">
-                        {logged ? <LeftBar /> : null}
-                        <Content />
+        <ThemeProvider theme={theme}>
+            <GlobalStyles />
+            <BrowserRouter>
+                <ErrorBoundary>
+                    <div>
+                        <Header />
+                        <div className="d-flex flex-row">
+                            {logged ? <LeftBar /> : null}
+                            <Content />
+                        </div>
                     </div>
-                </div>
-            </ErrorBoundary>
-        </BrowserRouter>
+                </ErrorBoundary>
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }
 

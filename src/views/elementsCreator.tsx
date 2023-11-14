@@ -6,10 +6,10 @@ export function setInputs(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | 
     setForm((current: Partial<Process>) => ({ ...current, [name]: value ? value : undefined }));
 }
 
-export function generateOptions(optionValues: string[], elementValue: string, apiValues?: string[]): ReactNode {
+export function generateOptions(optionValues: string[], elementValue: string, alternativeValues?: string[]): ReactNode {
     let options;
-    if (apiValues) {
-        options = apiValues.length === optionValues.length ? apiValues.map((element, key) => ({ value: element, inner: optionValues[key] })) : null;
+    if (alternativeValues) {
+        options = alternativeValues.length === optionValues.length ? alternativeValues.map((element, key) => ({ value: element, inner: optionValues[key] })) : null;
         if (!options) throw new Error('Parametros incompatíveis para criação do select!');
     } else {
         options = optionValues.map((element) => ({ value: element, inner: element }));
@@ -25,10 +25,10 @@ export function generateOptions(optionValues: string[], elementValue: string, ap
     ));
 }
 
-export function generateOptionsWS(optionValues: string[], elementValue: string, apiValues?: string[]): ReactNode {
+export function generateOptionsWS(optionValues: string[], elementValue: string, alternativeValues?: string[]): ReactNode {
     let options;
-    if (apiValues) {
-        options = apiValues.length === optionValues.length ? apiValues.map((element, key) => ({ value: element, inner: optionValues[key] })) : null;
+    if (alternativeValues) {
+        options = alternativeValues.length === optionValues.length ? alternativeValues.map((element, key) => ({ value: element, inner: optionValues[key] })) : null;
         if (!options) throw new Error('Parametros incompatíveis para criação do select!');
     } else {
         options = optionValues.map((element) => ({ value: element, inner: element }));

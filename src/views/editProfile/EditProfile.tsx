@@ -3,39 +3,49 @@ import { connect } from 'react-redux';
 import { Profile, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import { generateChangeData, generateChangePassword, handleForm } from './EditProfileFunction';
-import './EditProfile.css';
+import { handleForm } from './EditProfileFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { useNavigate } from 'react-router-dom';
+import { Window } from 'src/components/Window';
+import { FormField } from 'src/components/FormField';
+import Title from 'src/components/Title';
+import { Button } from 'src/components/Button';
+import { setInputs } from '../elementsCreator';
+import { InputForm } from 'src/components/InputForm';
 
 function EditProfile({ user, dispatchUser }: SimpleView): JSX.Element {
-    const [passwordAction, setPasswordAction] = useState<boolean>(false);
-    const [dataAction, setDataAction] = useState<boolean>(false);
-    const [errorMessage, setErrorMessage] = useState<ReactNode>('');
+    const [message, setMessage] = useState<ReactNode>('');
     const [form, setForm] = useState<Partial<Profile>>({});
+    const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
     const navigate = useNavigate();
     const throwError = useAsyncError();
     const sendForm = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            await handleForm(e, form, user, setErrorMessage, navigate, dispatchUser);
+            await handleForm(e, form, user, setMessage, navigate, dispatchUser);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setErrorMessage);
+            handleErros(error as Error, dispatchUser, throwError, setMessage);
         }
     };
 
     return (
-        <div className="SmallWindow container">
-            <div className="Window--small">
-                <form className="Form" onSubmit={sendForm}>
-                    {generateChangeData(user, setDataAction, dataAction, setForm)}
-                </form>
-                <form className="Form" onSubmit={sendForm}>
-                    <div className="EditProfile__error">{errorMessage}</div>
-                    {generateChangePassword(setPasswordAction, passwordAction, setForm, form)}
-                </form>
-            </div>
-        </div>
+        <Window $small>
+            <Title title="Alterar Senha" />
+            <hr />
+            <form onSubmit={sendForm}>
+                {message}
+                <FormField label="Senha Atual:">
+                    <InputForm name="current" type="password" value={form.current || ''} onChange={handleInput} />
+                </FormField>
+                <FormField label="Senha Nova:">
+                    <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
+                </FormField>
+                <FormField label="Repetir Senha:">
+                    <InputForm name="confirm" type="password" value={form.confirm || ''} onChange={handleInput} />
+                </FormField>
+                <Button $green>Alterar</Button>
+            </form>
+        </Window>
     );
 }
 

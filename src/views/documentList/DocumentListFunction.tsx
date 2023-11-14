@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
+import { Wrapper } from 'src/components/Wrapper';
 import DocumentItem from 'src/components/documentItem/DocumentItem';
 import { FileTypes, Process, Section, TableType, User } from 'src/config/types/types';
 
@@ -33,10 +34,16 @@ function handleDocuments(path: string, files: FileTypes[] | null, setRefresh: Ca
         body = (
             <tr>
                 <td>
-                    <p className="DocumentList__text">Processo sem documentos</p>
+                    <Wrapper $paddingTop="10px" $paddingLeft="10px">
+                        <p>Processo sem documentos</p>
+                    </Wrapper>
                 </td>
             </tr>
         );
     }
-    return <tbody className="DocumentList__body">{body}</tbody>;
+    return (
+        <Wrapper $backgroundColor="lightGray">
+            <tbody>{body}</tbody>
+        </Wrapper>
+    );
 }

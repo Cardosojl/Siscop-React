@@ -1,24 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Process } from 'src/config/types/types';
 import { StatusBlockSmall } from '../statusBlockSmall/StatusBlockSmall';
+import { Td, Tr } from '../Table';
+import { LinkStyled } from '../LinkStyled';
 
 function generateContent(element: Process) {
     return (
-        <tr>
-            <td className="col-4">
-                <Link to={`/acompanharProcessos/processo/${element._id}`} className="Table__link">
+        <Tr>
+            <Td $size={5}>
+                <LinkStyled to={`/acompanharProcessos/processo/${element._id}`} className="Table__link">
                     <p className="Table__textP">{element.title}</p>
                     <small>inicio: {element.date}</small>
-                </Link>
-            </td>
-            <td className="col-4">
+                </LinkStyled>
+            </Td>
+            <Td $size={5}>
                 <small>{element.category}</small>
-            </td>
-            <td className="col-4">
+            </Td>
+            <Td $size={2}>
                 <StatusBlockSmall processState={element.processstates[0]} />
-            </td>
-        </tr>
+            </Td>
+        </Tr>
     );
 }
 

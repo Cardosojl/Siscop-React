@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Table from 'src/components/table/Table';
+import Table from 'src/components/Table';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { Process, SimpleView, TableType } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleFiles, handleProcess, handleTableFiles } from './DocumentListFunction';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './DocumentList.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import ProcessInformation from 'src/components/processInformation/ProcessInformation';
 import UploadFiles from 'src/components/uploadFiles/UploadFiles';
 import arrow from '../../assets/seta2.png';
 import mail from '../../assets/email.png';
+import Title from 'src/components/Title';
+import { Window } from 'src/components/Window';
+import { Wrapper } from 'src/components/Wrapper';
+import { RoundButton } from 'src/components/RoundButton';
 
 function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
     const [processId] = useLocation().pathname.split('/').reverse();
@@ -53,29 +55,21 @@ function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
     }, [process]);
 
     return (
-        <div className="MainWindow">
-            <div className="Window">
-                <WindowTitle title={process.title || ''}>
-                    <small className="Title__date">{process.date || ''}</small>
-                </WindowTitle>
-                <hr />
-                <div className="DocumentList__table">
-                    <Table table={table} />
-                </div>
-                <ProcessInformation process={process} />
-                <UploadFiles setRefresh={setRefresh} />
-                <div className="DocumentList__buttons__fild">
-                    <button className="Button--green DocumentList__button" onClick={() => navigate(-1)}>
-                        <img className="DocumentList__arrow" src={arrow} />
-                    </button>
-                    <button className="Button--blue DocumentList__button">
-                        <Link to={`/novaMensagem/${processId}`}>
-                            <img className="DocumentList__mail" src={mail} />
-                        </Link>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <Window $large>
+            <Title title={process.title || ''}>
+                <small>{process.date || ''}</small>
+            </Title>
+            <hr />
+            <Wrapper $paddingLeft="15px" $paddingRight="15px">
+                <Table table={table} />
+            </Wrapper>
+            <ProcessInformation process={process} />
+            <UploadFiles setRefresh={setRefresh} />
+            <Wrapper $displayFlex="space-between" $paddingLeft="15px" $paddingRight="15px">
+                <RoundButton $green src={arrow} onClick={() => navigate(-1)} />
+                <RoundButton $blue src={mail} link={`/novaMensagem/${processId}`} />
+            </Wrapper>
+        </Window>
     );
 }
 

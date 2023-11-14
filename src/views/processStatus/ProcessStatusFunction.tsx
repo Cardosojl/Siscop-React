@@ -1,13 +1,13 @@
-import React, { ChangeEvent, FormEvent, createElement } from 'react';
+import React, { FormEvent } from 'react';
 import { Process, ProcessState, Section, User } from 'src/config/types/types';
-import { generateOptions, setInputs } from '../elementsCreator';
 import { siscopCreate, siscopShow } from 'src/apis/siscopDB';
+import { Message } from 'src/components/Message';
 
 function validationForm(form: Partial<ProcessState>, setMessage: CallableFunction): boolean {
     const stateOptions = ['Coletando Orçamentos', 'Em Montagem', 'Montagem Finalizada', 'Em Análise', 'Outro'];
     let error = false;
     if (!form.state || form.state === '' || !stateOptions.includes(form.state)) {
-        setMessage('Valor do Estado é inválido');
+        setMessage(<Message $error>Valor do Estado é inválido</Message>);
         error = true;
     }
     return error;
@@ -19,23 +19,6 @@ export async function handleForm(e: FormEvent, form: Partial<ProcessState<string
         await siscopCreate('processStates', form);
         navigate(-1);
     }
-}
-
-export function generateForm(form: Partial<ProcessState>, setForm: CallableFunction) {
-    const stateOptions = ['Coletando Orçamentos', 'Em Montagem', 'Montagem Finalizada', 'Em Análise', 'Outro'];
-    const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
-
-    const anotation = createElement('div', { key: 0, className: 'Form__textareaDiv' }, [
-        createElement('label', { key: 1 }, 'Anotação:'),
-        createElement('textarea', { key: 2, name: 'anotation', value: form.anotation, onChange: handleInput }),
-    ]);
-    const state = createElement('div', { key: 3 }, [
-        createElement('label', { key: 4 }, 'Estato:'),
-        createElement('select', { key: 5, name: 'state', value: form.state, onChange: handleInput }, generateOptions(stateOptions, '')),
-    ]);
-    const sendButton = createElement('input', { key: 6, type: 'submit', className: 'Button--blue', value: 'Enviar' });
-
-    return createElement('div', { key: 7 }, [anotation, state, sendButton]);
 }
 
 export async function handleProcess(path: string, user: User<string, Section>, processId: string): Promise<Process> {

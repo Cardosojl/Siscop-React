@@ -31,7 +31,7 @@ function UserLogged({ user, dispatchUser }: ReduxUser): JSX.Element {
     return (
         <div className="Header__profile mt-5">
             <Link to="/editProfile" className="Header__text mt-2">
-                <p>{`${userOn.pg} ${userOn.name} - ${(userOn.section as Section).name}`}</p>
+                <p>{`${userOn.name} - ${(userOn.section as Section).name}`}</p>
             </Link>
             <p className="Header__text mt-2 ms-3 me-1">|</p>
             <Link to="/" className="Header__text mt-2">

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PageSelector from 'src/components/pageSelector/PageSelector';
-import Table from 'src/components/table/Table';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
+import Table from 'src/components/Table';
 import { ObjFilter, SimpleView, TableType, Year } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
@@ -10,6 +9,8 @@ import { handleProcesses, handleYears, handleProcessesTable, handleUrl, generate
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { Navigate, useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
+import { Window } from 'src/components/Window';
+import Title from 'src/components/Title';
 
 function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Element {
     const [numberPage] = useLocation().pathname.split('/').reverse();
@@ -57,18 +58,16 @@ function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Eleme
     }, [filter, index, refresh]);
 
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title={title || ''}>
-                    <h3>{filter.year !== '0000' ? filter.year : ''}</h3>
-                </WindowTitle>
-                <hr />
-                {generateIndex(yearIndex, filter, setFilter)}
-                <Table table={processesTable} />
-                <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} listener={refresh} />
-            </div>
+        <Window $large>
+            <Title title={title || ''}>
+                <h3>{filter.year !== '0000' ? filter.year : ''}</h3>
+            </Title>
+            <hr />
+            {generateIndex(yearIndex, filter, setFilter)}
+            <Table table={processesTable} />
+            <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} listener={refresh} />
             <Navigate to={`/${handleUrl(path as string)}/${index}`} />
-        </div>
+        </Window>
     );
 }
 

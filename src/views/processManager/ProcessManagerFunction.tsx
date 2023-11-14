@@ -3,6 +3,7 @@ import { siscopIndex } from 'src/apis/siscopDB';
 import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import ProcessItemManager from 'src/components/processItemManager/ProcessItemManager';
+import { Th } from 'src/components/Table';
 import { ObjFilter, Process, Section, SiscopApiIndex, TableType } from 'src/config/types/types';
 
 export async function handleSections(): Promise<Section[] | null> {
@@ -38,9 +39,9 @@ export function handleProcessesTable(processes: Process[] | null): TableType {
 function createHead(): ReactNode {
     return (
         <tr>
-            <th className="col-4">Process</th>
-            <th className="col-4">Forma de Aquisição</th>
-            <th className="col-4">Status</th>
+            <Th $size={5}>Process</Th>
+            <Th $size={5}>Forma de Aquisição</Th>
+            <Th $size={2}>Status</Th>
         </tr>
     );
 }

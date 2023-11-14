@@ -1,20 +1,22 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Message, MessageReaderType } from 'src/config/types/types';
+import { MessageType, MessageReaderType } from 'src/config/types/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './MessageReader.css';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleApiMessage, handleIcons, handleResponsible } from './MessageReaderFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import reader from 'src/views/messageReader/StringtoJSX';
 import { handleErros } from 'src/apis/siscopDB';
+import { Window } from 'src/components/Window';
+import Title from 'src/components/Title';
+import { MessageContent } from 'src/components/MessageContent';
+import { Wrapper } from 'src/components/Wrapper';
 
 function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Element {
     const url = useLocation().pathname.split('/');
     const [messageID] = url.reverse();
-    const [message, setMessage] = useState<Message | null>(null);
+    const [message, setMessage] = useState<MessageType | null>(null);
     const [content, setContent] = useState<ReactNode>();
     const navigate = useNavigate();
     const throwError = useAsyncError();
@@ -31,24 +33,24 @@ function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Ele
 
     if (message)
         return (
-            <div className="MainWindow container">
-                <div className="Window">
-                    <WindowTitle title={message.title}>
-                        <small className="Title__date">{message.date}</small>
-                    </WindowTitle>
-                    <hr />
-                    <div className="MessageReader__content">
-                        <div className="MessageReader__text">{content}</div>
-                    </div>
-                    {handleResponsible(path, message)}
-                    <div className="MessageReader__footer">
-                        <p className="MessageReader__text">
+            <Window $large>
+                <Title title={message.title}>
+                    <small>{message.date}</small>
+                </Title>
+                <hr />
+                <MessageContent>
+                    <span>{content}</span>
+                </MessageContent>
+                {handleResponsible(path, message)}
+                <Wrapper $displayFlex="space-between">
+                    <Wrapper $paddingLeft="10px" $paddingTop="10px">
+                        <p>
                             Processo: <u>{message.process_title}</u>
                         </p>
-                        {handleIcons(user, path, message, navigate, dispatchUser, throwError)}
-                    </div>
-                </div>
-            </div>
+                    </Wrapper>
+                    {handleIcons(user, path, message, navigate, dispatchUser, throwError)}
+                </Wrapper>
+            </Window>
         );
     else return <></>;
 }

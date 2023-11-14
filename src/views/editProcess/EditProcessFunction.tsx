@@ -1,7 +1,7 @@
-import React, { ChangeEvent, ReactNode, createElement } from 'react';
+import React, { ChangeEvent } from 'react';
 import { siscopIndex, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AcquisitionWay, Process, Section, User } from 'src/config/types/types';
-import { generateOptions, setInputs } from '../elementsCreator';
+import { Message } from 'src/components/Message';
 
 async function updateProcess(process: Partial<Process>, form: Partial<Process>): Promise<void> {
     await siscopUpdate('processes', { _id: process._id }, form);
@@ -13,13 +13,13 @@ function formvalidator(form: Partial<Process>, setMessage: CallableFunction, sec
     const acquisitionValues = acquisitionWays.map((element) => element.name);
     setMessage('');
     if (!form.title || form.title.length < 4) {
-        setMessage(<p>Nome precisa ter mais do que 3 caracteres</p>);
+        setMessage(<Message $error>Nome precisa ter mais do que 3 caracteres</Message>);
         error = true;
     }
     if (!form.origin || typeof form.origin !== 'string' || !sectionsValues.includes(form.origin)) {
         setMessage((current: string) => (
             <>
-                {current} <p>Origem inválida</p>
+                {current} <Message $error>Origem inválida</Message>
             </>
         ));
         error = true;
@@ -27,7 +27,7 @@ function formvalidator(form: Partial<Process>, setMessage: CallableFunction, sec
     if (form.category && !acquisitionValues.includes(form.category)) {
         setMessage((current: string) => (
             <>
-                {current} <p>Forma de Aquisição inválida</p>
+                {current} <Message $error>Forma de Aquisição inválida</Message>
             </>
         ));
         error = true;
@@ -69,34 +69,4 @@ export async function handleForm(
         await updateProcess(process, form);
         navigate(-1);
     }
-}
-
-export function generateForm(acquisitionWays: AcquisitionWay[], sections: Section[], process: Partial<Process>, form: Partial<Process>, setForm: CallableFunction): ReactNode {
-    const sectionArray = sections.map((element) => element.name);
-    const sectionArrayID = sections.map((element) => element._id);
-    const acquisitionArray = acquisitionWays.map((element) => element.name);
-    const processOrigin = process.origin ? (process.origin as Section).name : '';
-    const processCategory = process.category || '';
-    const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
-
-    const nameDiv = createElement('div', { key: '0' }, [
-        createElement('label', null, 'Nome:'),
-        createElement('input', { type: 'text', name: 'title', onChange: handleInput, value: form.title || '' }),
-    ]);
-    const nupDiv = createElement('div', { key: '1' }, [createElement('label', null, 'Nup:'), createElement('input', { type: 'text', name: 'nup', onChange: handleInput, value: form.nup || '' })]);
-    const originDiv = createElement('div', { key: '2' }, [
-        createElement('label', null, 'Origem:'),
-        createElement('select', { name: 'origin', onChange: handleInput }, generateOptions(sectionArray, processOrigin, sectionArrayID)),
-    ]);
-    const aquisitionWayDiv = createElement('div', { key: '3' }, [
-        createElement('label', null, 'Forma de Aquisição:'),
-        createElement('select', { name: 'category', onChange: handleInput }, generateOptions(acquisitionArray, processCategory)),
-    ]);
-    const descriptionDiv = createElement('div', { className: 'Form__textareaDiv', key: '4' }, [
-        createElement('label', null, 'Descrição:'),
-        createElement('textarea', { name: 'description', onChange: handleInput, value: form.description }),
-    ]);
-    const sendButton = createElement('input', { type: 'submit', className: 'Button--blue', value: 'Enviar' });
-
-    return createElement('div', null, [nameDiv, nupDiv, originDiv, aquisitionWayDiv, descriptionDiv, sendButton]);
 }

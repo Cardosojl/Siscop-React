@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex } from 'src/apis/siscopDB';
-import { Message, ObjFilter, Section, TableType, User } from 'src/config/types/types';
+import { MessageType, ObjFilter, Section, TableType, User } from 'src/config/types/types';
 import MessageItem from 'src/components/messageItem/MessageItem';
+import { Th, Tr } from 'src/components/Table';
 
-async function indexMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<Message[] | null> {
+async function indexMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<MessageType[] | null> {
     if (path === 'messages') {
         const messages = (await siscopIndex(path, limit, index, ['sender', 'process'], { receiver: user._id, section: user.section._id }, filter)).data.response;
         if (messages) return messages;
@@ -19,23 +20,23 @@ async function indexMessages(path: string, limit: number, index: number, user: U
 
 function thMessage(path: string): JSX.Element {
     return (
-        <tr>
-            <th className="col-3">Mensagem:</th>
-            <th className="col-3">Processo:</th>
-            <th className="col-3">{path === 'messageSents' ? 'Destinatário:' : 'Remetente:'}</th>
-            <th className="col-3">Data:</th>
-            {path === 'messages' ? <th className="MessageTable__table--th_archived">Arquivar:</th> : ''}
-            <th>Apagar:</th>
-        </tr>
+        <Tr>
+            <Th $size={3}>Mensagem:</Th>
+            <Th $size={3}>Processo:</Th>
+            <Th $size={3}>{path === 'messageSents' ? 'Destinatário:' : 'Remetente:'}</Th>
+            <Th $size={3}>Data:</Th>
+            {path === 'messages' ? <Th>Arquivar:</Th> : ''}
+            <Th>Apagar:</Th>
+        </Tr>
     );
 }
 
-export async function handleMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<Message[] | null> {
-    const messages = (await indexMessages(path, limit, index, user, filter)) as Message[] | null;
+export async function handleMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<MessageType[] | null> {
+    const messages = (await indexMessages(path, limit, index, user, filter)) as MessageType[] | null;
     return messages;
 }
 
-export function handleMessageTable(path: string, messages: Message[] | null, listener: CallableFunction): TableType {
+export function handleMessageTable(path: string, messages: MessageType[] | null, listener: CallableFunction): TableType {
     const head = thMessage(path);
     const body: ReactNode = <tbody>{messages ? messages.map((element, index) => <MessageItem key={index} path={path} setRefresh={listener} element={element} />) : <tr></tr>}</tbody>;
     return { head, body };

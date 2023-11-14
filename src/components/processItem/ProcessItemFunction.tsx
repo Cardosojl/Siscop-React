@@ -2,6 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { siscopDelete, siscopShow } from 'src/apis/siscopDB';
 import { Process, Section, User } from 'src/config/types/types';
+import { Tr, Td } from '../Table';
+import { LinkStyled } from '../LinkStyled';
+import { Button } from '../Button';
 
 async function validationEvents(path: string, processId: string, user: User<string, Section>): Promise<boolean> {
     let error = false;
@@ -19,49 +22,49 @@ async function validationEvents(path: string, processId: string, user: User<stri
 function generateContent(element: Process, setListener: CallableFunction, path: string) {
     const href = setHref(path);
     return (
-        <tr>
-            <td className="col-9">
-                <Link to={`${href}${element._id}`} className="Table__link">
+        <Tr>
+            <Td $size={9}>
+                <LinkStyled to={`${href}${element._id}`} className="Table__link">
                     <p className="Table__textP">{element.title}</p>
                     <small>{element.date}</small>
-                </Link>
-            </td>
-            <td className="col-1">
+                </LinkStyled>
+            </Td>
+            <Td $size={1}>
                 <Link to={`${href}editar/${element._id}`}>
-                    <button key={2} value="editar" className="Button--green col-1">
+                    <Button $green key={2} value="editar">
                         Editar
-                    </button>
+                    </Button>
                 </Link>
-            </td>
-            <td className="col-1">
+            </Td>
+            <Td $size={1}>
                 <Link to={`${href}anotar/${element._id}`}>
-                    <button key={3} value="anotação" className="Button--green col-1">
+                    <Button $green key={3} value="anotação">
                         Anotação
-                    </button>
+                    </Button>
                 </Link>
-            </td>
-            <td className="col-1">
-                <button key={4} value="deletar" className="Button--red col-1" onClick={() => setListener('delete')}>
+            </Td>
+            <Td $size={1}>
+                <Button $red key={4} value="deletar" onClick={() => setListener('delete')}>
                     Deletar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 
 function generateDelete(element: Process, setListener: CallableFunction) {
     return (
-        <tr className="Table__tr--red">
-            <td colSpan={4}>
+        <Tr $delete>
+            <Td $size={4}>
                 <p className="Table__item__text ">{`Tem certeza que deseja apagar o processo: "${element.title}"`}</p>
-                <button type="submit" value="deletar" onClick={() => setListener('deleteItem')} className="Button--green">
+                <Button $green type="submit" value="deletar" onClick={() => setListener('deleteItem')}>
                     Ok
-                </button>
-                <button type="submit" value="cancel" onClick={() => setListener('')} className="Button--red">
+                </Button>
+                <Button $red type="submit" value="cancel" onClick={() => setListener('')}>
                     Cancelar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 

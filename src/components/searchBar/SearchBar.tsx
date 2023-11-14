@@ -1,8 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './SearchBar.css';
-import searchImg from './images/lupa2.png';
+import styled from 'styled-components';
+import searchImg from '../../assets/lupa2.png';
 import { handleSearch, handleSearchOptions } from './SearchBarFunctions';
 import { SearchBarType } from 'src/config/types/types';
+
+const InputStyle = styled.input`
+    font-size: 13px;
+    height: 22px;
+    border: none;
+
+    &:focus {
+        outline: none;
+    }
+`;
+
+const SpanStyle = styled.span`
+    margin-left: -5px;
+    background-color: rgb(224, 230, 228);
+    padding-top: 1px;
+    padding-bottom: 3px;
+    border-radius: 3px;
+    border: 1px solid rgb(185, 184, 184);
+`;
+
+const ImageStyle = styled.img`
+    height: 21px;
+    margin-left: -12px;
+
+    &:hover {
+        filter: brightness(5);
+        cursor: pointer;
+    }
+`;
 
 export default function SearchBar({ setFilter, path, optionValues, apiValues }: SearchBarType): JSX.Element {
     const [search, setSearch] = useState<string>('');
@@ -17,14 +46,12 @@ export default function SearchBar({ setFilter, path, optionValues, apiValues }: 
     }, [path]);
 
     return (
-        <div className="SearchBar">
-            <select className="SearchBar__select" ref={filterRef}>
-                {handleSearchOptions(optionValues, apiValues)}
-            </select>
-            <span className="SearchBar__itens">
-                <input className="SearchBar__input" type="text" value={`${search}`} onChange={(e) => setSearch(e.target.value)} />
-                <img src={searchImg} className="SearchBar__image" />
-            </span>
+        <div>
+            <select ref={filterRef}>{handleSearchOptions(optionValues, apiValues)}</select>
+            <SpanStyle>
+                <InputStyle type="text" value={`${search}`} onChange={(e) => setSearch(e.target.value)} />
+                <ImageStyle src={searchImg} />
+            </SpanStyle>
         </div>
     );
 }

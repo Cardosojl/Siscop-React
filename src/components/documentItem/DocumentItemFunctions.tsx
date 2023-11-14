@@ -3,6 +3,9 @@ import { FileComponent } from '../fileComponent/FileComponent';
 import { FileTypes, Section, User } from 'src/config/types/types';
 import { siscopDelete, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AxiosResponse } from 'axios';
+import { Tr, Td } from '../Table';
+import { InputForm } from '../InputForm';
+import { Button } from '../Button';
 
 function formValidator(form: Partial<FileTypes>): boolean {
     let error = false;
@@ -21,7 +24,6 @@ async function validationEvents(file: FileTypes, path: string, user: User<string
         const process = (await siscopShow('processes', 0, { receiver: user._id, section: user.section._id, _id: file.process })).data.response;
         if (!process) error = true;
     }
-    //else if (path === 'doneProcess') await siscopDelete('processes', { sender: user._id });
     return error;
 }
 
@@ -33,69 +35,69 @@ function generateContent(filename: Partial<FileTypes>, element: FileTypes, setLi
 
 function generateUnfinished(filename: Partial<FileTypes>, element: FileTypes, setListener: CallableFunction) {
     return (
-        <tr>
-            <td className="col-10">
+        <Tr>
+            <Td $size={10}>
                 <FileComponent name={`${filename.filename}${element.extension}`} id={element._id} />
-            </td>
-            <td className="col-1">
-                <button type="submit" value="renomear" onClick={() => setListener('edit')} className="Button--green">
+            </Td>
+            <Td $size={1}>
+                <Button $green type="submit" value="renomear" onClick={() => setListener('edit')}>
                     Renomear
-                </button>
-            </td>
-            <td className="col-1">
-                <button type="submit" value="deletar" onClick={() => setListener('delete')} className="Button--red">
+                </Button>
+            </Td>
+            <Td $size={1}>
+                <Button $red type="submit" value="deletar" onClick={() => setListener('delete')}>
                     Deletar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 
 function generateDone(filename: Partial<FileTypes>, element: FileTypes, setListener: CallableFunction): ReactNode {
     return (
-        <tr>
-            <td className="col-11">
+        <Tr>
+            <Td $size={11}>
                 <FileComponent name={`${filename.filename}${element.extension}`} id={element._id} />
-            </td>
-            <td className="col-1">
-                <button type="submit" value="retificar" className="Button--red col-1">
+            </Td>
+            <Td $size={1}>
+                <Button $red type="submit" value="retificar">
                     Retificar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 
 function generateEdit(value: Partial<FileTypes>, setValue: CallableFunction, setListener: CallableFunction) {
     return (
-        <tr className="Table__tr--green">
-            <td colSpan={3}>
+        <Tr $edit>
+            <Td $size={3}>
                 <p className="Table__item__text">Renomear:</p>
-                <input className="DocumentItem__input" type="text" value={value.filename} onChange={(e) => setValue({ filename: e.target.value })} />
-                <button type="submit" value="deletar" onClick={() => setListener('editItem')} className="Button--green col-1">
+                <InputForm className="DocumentItem__input" type="text" value={value.filename} onChange={(e) => setValue({ filename: e.target.value })} />
+                <Button $green type="submit" value="deletar" onClick={() => setListener('editItem')}>
                     Ok
-                </button>
-                <button type="submit" value="cancel" onClick={() => setListener('')} className="Button--red col-1">
+                </Button>
+                <Button $red type="submit" value="cancel" onClick={() => setListener('')}>
                     Cancelar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 
 function generateDelete(element: FileTypes, setListener: CallableFunction) {
     return (
-        <tr className="Table__tr--red">
-            <td colSpan={3}>
+        <Tr $delete>
+            <Td $size={3}>
                 <p className="Table__item__text">{`Tem certeza que deseja apagar o arquivo: "${element.filename + element.extension}"`}</p>
-                <button type="submit" value="deletar" onClick={() => setListener('deleteItem')} className="Button--green">
+                <Button $green type="submit" value="deletar" onClick={() => setListener('deleteItem')}>
                     Ok
-                </button>
-                <button type="submit" value="cancel" onClick={() => setListener('')} className="Button--red">
+                </Button>
+                <Button $red type="submit" value="cancel" onClick={() => setListener('')}>
                     Cancelar
-                </button>
-            </td>
-        </tr>
+                </Button>
+            </Td>
+        </Tr>
     );
 }
 

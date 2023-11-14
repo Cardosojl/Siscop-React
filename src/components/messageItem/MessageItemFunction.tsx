@@ -1,11 +1,13 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
-import { Message, Process, Section, User } from 'src/config/types/types';
+import { MessageType, Process, Section, User } from 'src/config/types/types';
 import { siscopCreate, siscopDelete, siscopShow } from 'src/apis/siscopDB';
-import archived from './images/archive.png';
-import trash from './images/trash.png';
-import { Link } from 'react-router-dom';
+import archived from '../../assets/archive.png';
+import trash from '../../assets/trash.png';
+import { Td, Tr } from '../Table';
+import { ImageIcon } from '../ImageIcon';
+import { LinkStyled } from '../LinkStyled';
 
-async function validationEvents(element: Message, path: string, user: User<string, Section>): Promise<boolean> {
+async function validationEvents(element: MessageType, path: string, user: User<string, Section>): Promise<boolean> {
     let error = false;
     if (path === 'messages' || path === 'messageArchiveds') {
         const message = (await siscopShow(path, 0, { _id: element._id, receiver: user._id })).data.response;
@@ -18,63 +20,63 @@ async function validationEvents(element: Message, path: string, user: User<strin
     return error;
 }
 
-function generateContent(element: Message, setListener: CallableFunction, path: string) {
+function generateContent(element: MessageType, setListener: CallableFunction, path: string) {
     if (path === 'messages' || path === 'messageArchiveds') return generateMyMessages(element, path, setListener);
     else if (path === 'messageSents') return generateSentMessages(element, setListener);
     else return <></>;
 }
 
-function generateMyMessages(element: Message | null, path: string, listener: CallableFunction): ReactNode {
+function generateMyMessages(element: MessageType | null, path: string, listener: CallableFunction): ReactNode {
     const href = setHref(path);
     const body = element ? (
-        <tr>
-            <td className="col-3">
-                <Link to={`${href}${element._id}`} className="Table__link">
+        <Tr>
+            <Td $size={3}>
+                <LinkStyled to={`${href}${element._id}`}>
                     <p className="Table__textP">{element.title}</p>
-                </Link>
-            </td>
-            <td className="col-3">{element.process ? `${(element.process as Process).title}` : <i>(Sem Processo)</i>}</td>
-            <td className="col-3">{`${(element.sender as User).pg} ${(element.sender as User).name}`}</td>
-            <td className="col-3">{element.date}</td>
+                </LinkStyled>
+            </Td>
+            <Td $size={3}>{element.process ? `${(element.process as Process).title}` : <i>(Sem Processo)</i>}</Td>
+            <Td $size={3}>{`${(element.sender as User).name}`}</Td>
+            <Td $size={3}>{element.date}</Td>
             {path === 'messages' ? archiveButton(listener) : ''}
             {deleteButton(listener)}
-        </tr>
+        </Tr>
     ) : null;
     return body;
 }
 
 function archiveButton(listener: CallableFunction) {
-    const archiveEvent = () => listener('archive');
+    const handleArchive = () => listener('archive');
     return (
-        <td>
-            <img className="Table__icon Button--yellow" src={archived} onClick={() => archiveEvent()} />
-        </td>
+        <Td>
+            <ImageIcon $yellow src={archived} onClick={() => handleArchive()} />
+        </Td>
     );
 }
 
 function deleteButton(listener: CallableFunction) {
-    const deleteEvent = () => listener('deleteItem');
+    const handleDelete = () => listener('deleteItem');
     return (
-        <td>
-            <img className="Table__icon Button--red" src={trash} onClick={() => deleteEvent()} />
-        </td>
+        <Td>
+            <ImageIcon $red src={trash} onClick={() => handleDelete()} />
+        </Td>
     );
 }
 
-function generateSentMessages(element: Message | null, listener: CallableFunction): ReactNode {
+function generateSentMessages(element: MessageType | null, listener: CallableFunction): ReactNode {
     const href = '/minhasMensagensEnviadas/';
     const body = element ? (
-        <tr>
-            <td className="col-3">
-                <Link to={`${href}${element._id}`} className="Table__link">
+        <Tr>
+            <Td $size={3}>
+                <LinkStyled to={`${href}${element._id}`}>
                     <p className="Table__textP">{element.title}</p>
-                </Link>
-            </td>
-            <td className="col-3">{element.process ? `${(element.process as Process).title}` : <i>(Sem Processo)</i>}</td>
-            <td className="col-3">{element.section_receiver ? `${(element.section_receiver as Section).name}` : `${(element.receiver as User).pg} ${(element.receiver as User).name}`}</td>
-            <td className="col-3">{element.date}</td>
+                </LinkStyled>
+            </Td>
+            <Td $size={3}>{element.process ? `${(element.process as Process).title}` : <i>(Sem Processo)</i>}</Td>
+            <Td $size={3}>{element.section_receiver ? `${(element.section_receiver as Section).name}` : `${(element.receiver as User).name}`}</Td>
+            <Td $size={3}>{element.date}</Td>
             {deleteButton(listener)}
-        </tr>
+        </Tr>
     ) : null;
     return body;
 }
@@ -93,7 +95,7 @@ function generateLoading() {
     );
 }
 
-async function handleArchiveMessage(path: string, element: Message, user: User<string, Section>) {
+async function handleArchiveMessage(path: string, element: MessageType, user: User<string, Section>) {
     if (!(await validationEvents(element, path, user))) {
         await siscopCreate('messageArchiveds', { message: element._id });
     }
@@ -106,13 +108,13 @@ function setHref(path: string): string {
     else return '/null/';
 }
 
-async function handleDeleteMessage(path: string, element: Message, user: User<string, Section>): Promise<void> {
+async function handleDeleteMessage(path: string, element: MessageType, user: User<string, Section>): Promise<void> {
     if (!(await validationEvents(element, path, user))) {
         await siscopDelete(path, { _id: element._id });
     }
 }
 
-export async function handleEvents(listenerState: [string, Dispatch<SetStateAction<string>>], setRefresh: CallableFunction, element: Message, user: User<string, Section>, path: string) {
+export async function handleEvents(listenerState: [string, Dispatch<SetStateAction<string>>], setRefresh: CallableFunction, element: MessageType, user: User<string, Section>, path: string) {
     const [listener, setListener] = listenerState;
 
     if (listener === 'archive') {
@@ -134,7 +136,7 @@ export async function handleEvents(listenerState: [string, Dispatch<SetStateActi
     }
 }
 
-export function generateBody(listenerState: [string, Dispatch<SetStateAction<string>>], element: Message, path: string) {
+export function generateBody(listenerState: [string, Dispatch<SetStateAction<string>>], element: MessageType, path: string) {
     const [listener, setListener] = listenerState;
     if (listener === '' && !element) return '';
     else if (listener === '') return generateContent(element, setListener, path);

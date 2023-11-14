@@ -3,14 +3,15 @@ import { Navigate, useLocation } from 'react-router-dom';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import SearchBar from 'src/components/searchBar/SearchBar';
 import { ObjFilter, SimpleView, TableType } from 'src/config/types/types';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
-import Table from 'src/components/table/Table';
+import Table from 'src/components/Table';
 import { handleMessageTable, handleMessages, handleUrl } from './MessageListFunctions';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { connect } from 'react-redux';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
+import { Window } from 'src/components/Window';
+import Title from 'src/components/Title';
 
 function MessageList({ title, path, user, dispatchUser }: SimpleView): JSX.Element {
     const [numberPage] = useLocation().pathname.split('/').reverse();
@@ -39,16 +40,14 @@ function MessageList({ title, path, user, dispatchUser }: SimpleView): JSX.Eleme
     }, [index, filter, changedPath, refresh]);
 
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title={title || ''} className="dark">
-                    <SearchBar setFilter={setFilter} path={changedPath} optionValues={['Mensagem', 'Processo']} apiValues={['title', 'process_title']} />
-                </WindowTitle>
-                <Table table={messageTable} />
-                <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={itensLimit} filter={filter} listener={refresh} />
-            </div>
+        <Window $large>
+            <Title title={title || ''} $dark>
+                <SearchBar setFilter={setFilter} path={changedPath} optionValues={['Mensagem', 'Processo']} apiValues={['title', 'process_title']} />
+            </Title>
+            <Table table={messageTable} />
+            <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={itensLimit} filter={filter} listener={refresh} />
             <Navigate to={`/${handleUrl(path as string)}/${index}`} />
-        </div>
+        </Window>
     );
 }
 

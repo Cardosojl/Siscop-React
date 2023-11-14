@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
-import { FileTypes, Process, ProcessState, Section, SimpleView } from 'src/config/types/types';
+import { FileTypes, Process, ProcessState, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { generateContent, generateFiles, generateStates, handleFiles, handleProcess, handleStates } from './DocumentManagerFunction';
 import { useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
-import './DocumentManager.css';
+import Title from 'src/components/Title';
+import { Window } from 'src/components/Window';
+import { Wrapper } from 'src/components/Wrapper';
+import { ManagerInfo } from 'src/components/ManagerInfo';
 
 function DocumentManager({ user, dispatchUser }: SimpleView): JSX.Element {
     const [processId] = useLocation().pathname.split('/').reverse();
@@ -42,22 +44,15 @@ function DocumentManager({ user, dispatchUser }: SimpleView): JSX.Element {
     }, []);
 
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title={process?.title || ''}>
-                    <h3>{process?.year || ''}</h3>
-                </WindowTitle>
-                <hr />
-                <div className="DocumentManager">
-                    <div className="DocumentManager__content">
-                        {generateContent(process)}
-                        <hr />
-                        {generateFiles(files)}
-                    </div>
-                    <div className="DocumentManager__status">{generateStates(states)}</div>
-                </div>
-            </div>
-        </div>
+        <Window $large>
+            <Title title={process?.title || ''}>
+                <h3>{process?.year || ''}</h3>
+            </Title>
+            <hr />
+            <Wrapper $displayFlex="flex-start" $position="relative" width="100%" height="min-content">
+                <ManagerInfo infos={generateContent(process)} documents={generateFiles(files)} states={generateStates(states)} />
+            </Wrapper>
+        </Window>
     );
 }
 

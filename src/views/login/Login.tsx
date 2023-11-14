@@ -3,19 +3,21 @@ import { connect } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ReduxUser, Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
-import './Login.css';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { handleInputs, handleUser } from './LoginFunction';
-import { Button } from 'src/components/style/Button';
+import { Button } from 'src/components/Button';
+import { Window } from 'src/components/Window';
+import { FormField } from 'src/components/FormField';
+import Title from 'src/components/Title';
+import { InputForm } from 'src/components/InputForm';
 
 function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
     const [form, setForm] = useState<Partial<User<string, Section>>>({ name: '', password: '' });
-    const [errorMessage, setErrorMessage] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const throwError = useAsyncError();
     const navigate = useNavigate();
-    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, dispatchUser, form, throwError, setErrorMessage);
+    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, dispatchUser, form, throwError, setMessage);
     const userValues = (e: ChangeEvent<HTMLInputElement>) => handleInputs(e, setForm, form);
 
     if (user.logged) {
@@ -23,23 +25,19 @@ function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
     }
 
     return (
-        <div className="Login--size container">
-            <form className="Login" onSubmit={sendForm}>
-                <WindowTitle title="Login">
-                    <label className="Login__error">{errorMessage}</label>
-                </WindowTitle>
-                <hr />
-                <div className="Login__fields">
-                    <label>Nome:</label>
-                    <input type="text" name="name" value={form.name} onChange={userValues} />
-                </div>
-                <div className="Login__fields">
-                    <label>Senha:</label>
-                    <input type="password" name="password" value={form.password} onChange={userValues} />
-                </div>
-                <Button background="green">Login</Button>
+        <Window $login>
+            <Title title="Login">{message}</Title>
+            <hr />
+            <form onSubmit={sendForm}>
+                <FormField label="Nome:">
+                    <InputForm name="name" type="text" value={form.name} onChange={userValues} />
+                </FormField>
+                <FormField label="Senha:">
+                    <InputForm name="password" type="password" value={form.password} onChange={userValues} />
+                </FormField>
+                <Button $green>Login</Button>
             </form>
-        </div>
+        </Window>
     );
 }
 

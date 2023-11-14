@@ -1,13 +1,19 @@
 import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
 import { AcquisitionWay, Process, Section, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import { generateForm, handleAcquisitionWays, handleForm, handleProcess, handleSections } from './EditProcessFunction';
+import { handleAcquisitionWays, handleForm, handleProcess, handleSections } from './EditProcessFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
+import { Window } from 'src/components/Window';
+import { FormField } from 'src/components/FormField';
+import { setInputs } from '../elementsCreator';
+import { Select } from 'src/components/Select';
+import { Button } from 'src/components/Button';
+import Title from 'src/components/Title';
+import { InputForm } from 'src/components/InputForm';
 
 function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     const [url] = useLocation().pathname.split('/').reverse();
@@ -15,15 +21,19 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     const [process, setProcess] = useState<Partial<Process>>({});
     const [acquisitionWays, setAcquisition] = useState<AcquisitionWay[]>([]);
     const [form, setForm] = useState<Partial<Process>>({});
-    const [errorMessage, setErrorMessage] = useState<ReactNode>('');
+    const [message, setMessage] = useState<ReactNode>('');
+    const sectionArray = sections.map((element) => element.name);
+    const sectionArrayID = sections.map((element) => element._id);
+    const acquisitionArray = acquisitionWays.map((element) => element.name);
+    const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
     const navigate = useNavigate();
     const throwError = useAsyncError();
 
     const sendForm = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            await handleForm(e, process, form, sections, acquisitionWays, setErrorMessage, navigate);
+            await handleForm(e, process, form, sections, acquisitionWays, setMessage, navigate);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setErrorMessage);
+            handleErros(error as Error, dispatchUser, throwError, setMessage);
         }
     };
 
@@ -57,17 +67,31 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
                 handleErros(error as Error, dispatchUser, throwError);
             });
     }, []);
+
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title={process?.title || ''} />
-                <hr />
-                <form className="Form" onSubmit={sendForm}>
-                    <div>{errorMessage}</div>
-                    {generateForm(acquisitionWays, sections, process, form, setForm)}
-                </form>
-            </div>
-        </div>
+        <Window $medium>
+            <Title title={process.title || ''} />
+            <hr />
+            <form onSubmit={sendForm}>
+                {message}
+                <FormField label="Nome:">
+                    <InputForm $medium name="title" type="text" value={form.title || ''} onChange={handleInput} />
+                </FormField>
+                <FormField label="Nup:">
+                    <InputForm name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
+                </FormField>
+                <FormField label="Origem:">
+                    <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section).name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />
+                </FormField>
+                <FormField label="Forma de Aquisição:">
+                    <Select sort={false} name="category" optionValues={acquisitionArray} elementValue={process.category || ''} onChange={handleInput} />
+                </FormField>
+                <FormField label="Descrição">
+                    <textarea name="description" value={form.description} onChange={handleInput} />
+                </FormField>
+                <Button $green>Enviar</Button>
+            </form>
+        </Window>
     );
 }
 

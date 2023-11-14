@@ -1,8 +1,6 @@
 import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
-import WindowTitle from 'src/components/windowTitle/WindowTitle';
-import './MessageSender.css';
 import './jodit/jodit.css';
-import { Message, Process, SimpleView } from 'src/config/types/types';
+import { MessageType, Process, SimpleView } from 'src/config/types/types';
 import { generateProcessSelect, generateSectionSelect, generateUserSelect, handleForm, handleProcesses, handleSections, handleUsers } from './MessageSenderFunction';
 import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
@@ -13,16 +11,26 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 import joditConfig from './jodit/joditConfig';
 import { setInputs } from '../elementsCreator';
+import { Window } from 'src/components/Window';
+import Title from 'src/components/Title';
+import { InputForm } from 'src/components/InputForm';
+import { Select } from 'src/components/Select';
+import { Wrapper } from 'src/components/Wrapper';
+import { FormField } from 'src/components/FormField';
+import { FormMessageButton } from 'src/components/FormMessageButton';
 
 function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
     const [urlId] = useLocation().pathname.split('/').reverse();
     const processId = urlId !== '0' ? urlId : null;
-    const [form, setForm] = useState<Partial<Message> & Partial<Process>>({ title: undefined, sender: undefined, content: undefined });
+    const [form, setForm] = useState<Partial<MessageType> & Partial<Process>>({ title: undefined, sender: undefined, content: undefined });
     const [destination, setDestination] = useState<string>('');
     const [selectDestination, setSelectDestination] = useState<ReactNode>('');
     const [selectProcess, setSelectProcess] = useState<ReactNode>('');
     const [errorMessage, setErrorMessage] = useState<ReactNode>();
+    const destinationArrayValue = ['', 'section', 'user'];
+    const destinationArray = ['', 'Seção', 'Usuário'];
     const editor = useRef(null);
+    const handleSelect = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setDestination(e.target.value);
     const navigate = useNavigate();
     const throwError = useAsyncError();
     const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
@@ -67,34 +75,28 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
     }, [destination]);
 
     return (
-        <div className="MainWindow container">
-            <div className="Window">
-                <WindowTitle title="Nova Mensagem" className="dark" />
-                {errorMessage}
-                <div className="MessageSender__labelField">
-                    <label className="MessageSender__labels">Titulo:</label>
-                    <input type="text" name="title" value={form?.title || ''} onChange={handleInput} />
-                    <label className="MessageSender__labels">Destinatário:</label>
-                    <select name="receiver" onChange={(e) => setDestination(e.target.value)}>
-                        <option value=""></option>
-                        <option value="section">Seção</option>
-                        <option value="user">Usuário</option>
-                    </select>
-                    {selectDestination}
-                </div>
-                <div className="MessageSender__sendFild">
-                    <span>
-                        <label className="MessageSender__labels">Processo:</label>
-                        {selectProcess}
-                    </span>
-                    <form className="MessageSender__sender" onSubmit={send}>
-                        <button className="Button--blue Button--Message">Enviar</button>
-                    </form>
-                </div>
-                <br></br>
-                <JoditEditor ref={editor} value={form?.content || ''} config={joditConfig} onChange={(e) => setForm((curr) => ({ ...curr, content: e }))} />
-            </div>
-        </div>
+        <Window $large>
+            <Title title="Nova Mensagem" $dark />
+            {errorMessage}
+            <Wrapper $displayFlex="space-between">
+                <Wrapper>
+                    <Wrapper $paddingLeft="15px" $paddingTop="20px" $displayFlex="flex-start">
+                        <FormField label="Título:">
+                            <InputForm type="text" name="title" value={form?.title || ''} onChange={handleInput} />
+                        </FormField>
+                        <FormField label="Destinatário:">
+                            <Select name="receiver" onChange={handleSelect} optionValues={destinationArray} elementValue="" alternativeValues={destinationArrayValue} sort={false} />
+                        </FormField>
+                        {selectDestination}
+                    </Wrapper>
+                    <Wrapper $paddingLeft="15px" $paddingTop="5px" $displayFlex="space-between" $paddingRight="50px">
+                        <FormField label="Processo:">{selectProcess}</FormField>
+                    </Wrapper>
+                </Wrapper>
+                <FormMessageButton onSubmit={send} />
+            </Wrapper>
+            <JoditEditor ref={editor} value={form?.content || ''} config={joditConfig} onChange={(e) => setForm((curr) => ({ ...curr, content: e }))} />
+        </Window>
     );
 }
 

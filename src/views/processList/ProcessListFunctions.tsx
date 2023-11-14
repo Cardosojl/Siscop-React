@@ -4,6 +4,8 @@ import { siscopDelete, siscopIndex } from 'src/apis/siscopDB';
 import ProcessItem from 'src/components/processItem/ProcessItem';
 import { ObjFilter, Process, Section, SiscopApiIndex, TableType, User, Year } from 'src/config/types/types';
 import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
+import { Tr, Td } from 'src/components/Table';
+import { Button } from 'src/components/Button';
 
 export function generateIndex(elements: SiscopApiIndex | null, filter: ObjFilter, setFilter: CallableFunction): ReactNode {
     return elements?.map((element, index) => <IndexSelector key={index} index={(element as Year).year as string} value={(element as Year).year as string} setFilter={setFilter} filter={filter} />);
@@ -19,7 +21,6 @@ export async function handleProcesses(path: string, limit: number, index: number
     let process: AxiosResponse;
     if (path === 'myProcess') process = await siscopIndex('processes', limit, index, 0, { user: user._id }, filter);
     else if (path === 'receivedProcess') process = await siscopIndex('processes', limit, index, 0, { receiver: user._id, section: user.section._id }, filter);
-    //else if (path === 'doneProcess') process = await siscopIndex('processes', limit, index, [], { sender: user._id }, filter);
     else return null;
     const { response }: { response: Process[] | null } = process.data;
     return response;
@@ -44,17 +45,17 @@ function generateMyProcess(processes: Process[] | null, path: string, setRefresh
 function generateDonedProcess(processes: Process[] | null): ReactNode {
     const body = processes
         ? processes.map((element, index) => (
-              <tr key={index}>
-                  <td className="col-11">
+              <Tr key={index}>
+                  <Td $size={11}>
                       <p>{element.title}</p>
                       <small>{element.date}</small>
-                  </td>
-                  <td className="col-1">
-                      <button key={4} type="submit" value="retificar" className="Button--red col-1">
+                  </Td>
+                  <Td $size={1}>
+                      <Button $red key={4} type="submit" value="retificar">
                           Retificar
-                      </button>
-                  </td>
-              </tr>
+                      </Button>
+                  </Td>
+              </Tr>
           ))
         : processes;
     return <tbody>{body}</tbody>;

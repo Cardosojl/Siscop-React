@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
+import { Wrapper } from 'src/components/Wrapper';
 import { FileComponent } from 'src/components/fileComponent/FileComponent';
 import StatusBlock from 'src/components/statusBlock/StatusBlock';
 import { FileTypes, Process, ProcessState, Section } from 'src/config/types/types';
@@ -26,29 +27,29 @@ export function generateContent(process: Process | null): ReactNode {
     if (process) {
         return (
             <>
-                <div className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Nup:</h5>
-                    <p className="DocumentManager__details__text">{process.nup}</p>
-                </div>
-                <div className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Forma de Aquisição:</h5>
-                    <p className="DocumentManager__details__text">{process.category}</p>
-                </div>
-                <div className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Origem:</h5>
-                    <p className="DocumentManager__details__text">{(process?.origin as Section).name}</p>
-                </div>
-                <div className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Data de Inicio:</h5>
-                    <p className="DocumentManager__details__text">{process?.date || ''}</p>
-                </div>
+                <Wrapper $spaceRight="15px" $paddingLeft="15px" $displayFlex="flex-start" $aling="baseline">
+                    <h6>Nup:</h6>
+                    <p>{process.nup}</p>
+                </Wrapper>
+                <Wrapper $spaceRight="15px" $paddingLeft="15px" $displayFlex="flex-start" $aling="baseline">
+                    <h6>Forma de Aquisição:</h6>
+                    <p>{process.category}</p>
+                </Wrapper>
+                <Wrapper $spaceRight="15px" $paddingLeft="15px" $displayFlex="flex-start" $aling="baseline">
+                    <h6>Origem:</h6>
+                    <p>{(process?.origin as Section).name}</p>
+                </Wrapper>
+                <Wrapper $spaceRight="15px" $paddingLeft="15px" $displayFlex="flex-start" $aling="baseline">
+                    <h6>Data de Inicio:</h6>
+                    <p>{process?.date || ''}</p>
+                </Wrapper>
                 <hr />
-                <span className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Descrição:</h5>
+                <Wrapper $spaceRight="15px" $paddingLeft="15px" $aling="baseline">
+                    <h6>Descrição:</h6>
                     <div>
-                        <p className="DocumentManager__details__text">{process?.description || ''}</p>
+                        <p>{process?.description || ''}</p>
                     </div>
-                </span>
+                </Wrapper>
             </>
         );
     } else return '';
@@ -57,27 +58,27 @@ export function generateContent(process: Process | null): ReactNode {
 export function generateFiles(files: FileTypes[] | null): ReactNode {
     if (files) {
         const file = files.map((element, index) => (
-            <div key={index} className="DocumentManager__files">
+            <Wrapper key={index} $paddingTop="3px" $paddingLeft="16px">
                 <FileComponent name={`${element.filename}${element.extension}`} id={element._id} />
-            </div>
+            </Wrapper>
         ));
         return (
             <>
-                <span className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Documentos:</h5>
+                <Wrapper $paddingLeft="15px">
+                    <h6>Documentos:</h6>
                     {file}
-                </span>
+                </Wrapper>
             </>
         );
     } else {
         return (
             <>
-                <span className="DocumentManager__details">
-                    <h5 className="DocumentManager__details__topic">Documentos:</h5>
+                <Wrapper $paddingLeft="15px">
+                    <h6>Documentos:</h6>
                     <div>
-                        <p className="DocumentManager__details__text">Nenhum arquivo carregado neste processo</p>
+                        <p>Nenhum arquivo carregado neste processo</p>
                     </div>
-                </span>
+                </Wrapper>
             </>
         );
     }
@@ -88,7 +89,7 @@ export function generateStates(states: ProcessState[] | null): ReactNode {
         const state = states.map((element, index) => <StatusBlock key={index} processState={element} />);
         return (
             <>
-                <h5 className="DocumentManager__details__topic">Anotações:</h5>
+                <h5>Anotações:</h5>
                 {state}
             </>
         );
