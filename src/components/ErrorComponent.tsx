@@ -5,7 +5,7 @@ import { Wrapper } from './Wrapper';
 
 const PageStyle = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
-    background-image: url(${require('../../assets/errorBackground.png')});
+    background-image: url(${require('../assets/errorBackground.png')});
     height: 100vh;
     width: 100%;
     background-repeat: no-repeat;
