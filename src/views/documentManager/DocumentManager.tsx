@@ -6,7 +6,7 @@ import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { generateContent, generateFiles, generateStates, handleFiles, handleProcess, handleStates } from './DocumentManagerFunction';
 import { useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import Title from 'src/components/Title';
 import { Window } from 'src/components/Window';
 import { Wrapper } from 'src/components/Wrapper';

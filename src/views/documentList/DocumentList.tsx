@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Table from 'src/components/Table';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { Process, SimpleView, TableType } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';

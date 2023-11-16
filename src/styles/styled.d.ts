@@ -8,6 +8,7 @@ declare module 'styled-components' {
             tertiary: 'rgb(64, 69, 73)';
             fluorescent: 'rgb(174, 240, 107)';
             lightGray: 'rgb(223, 223, 223)';
+            darkness: 'rgb(59, 62, 65)';
             gray: 'rgb(212, 212, 212)';
             grey: 'rgb(177, 175, 175)';
             blue: 'rgb(45, 133, 216)';

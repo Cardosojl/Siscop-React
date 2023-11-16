@@ -1,6 +1,6 @@
 import React from 'react';
 import { Process } from 'src/config/types/types';
-import { StatusBlockSmall } from '../statusBlockSmall/StatusBlockSmall';
+import { StatusBlockSmall } from '../StatusBlockSmall';
 import { Td, Tr } from '../Table';
 import { LinkStyled } from '../LinkStyled';
 
@@ -8,8 +8,8 @@ function generateContent(element: Process) {
     return (
         <Tr>
             <Td $size={5}>
-                <LinkStyled to={`/acompanharProcessos/processo/${element._id}`} className="Table__link">
-                    <p className="Table__textP">{element.title}</p>
+                <LinkStyled to={`/acompanharProcessos/processo/${element._id}`}>
+                    <p>{element.title}</p>
                     <small>inicio: {element.date}</small>
                 </LinkStyled>
             </Td>

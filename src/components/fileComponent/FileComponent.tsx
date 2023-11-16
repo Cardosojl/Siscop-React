@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import './FileComponent.css';
 import { handleFile, openFile } from './FileComponentFunction';
 

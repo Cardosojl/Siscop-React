@@ -5,7 +5,7 @@ import { Process, ProcessState, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleForm, handleProcess } from './ProcessStatusFunction';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';
 import { FormField } from 'src/components/FormField';

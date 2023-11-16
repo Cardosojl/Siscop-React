@@ -27,7 +27,6 @@ const TableStyle = styled.table`
 `;
 
 export const Tr = styled.tr<ElementsTableProps>`
-    flex: 1;
     &:hover {
         background-color: rgba(0, 0, 0, 0.075);
     }

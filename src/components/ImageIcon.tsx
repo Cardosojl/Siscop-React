@@ -3,12 +3,13 @@ import styled, { css } from 'styled-components';
 type ImageIconProps = {
     $red?: boolean;
     $yellow?: boolean;
+    $green?: boolean;
+    $width: string;
 };
 
 export const ImageIcon = styled.img<ImageIconProps>`
     margin-top: -5px;
-    height: 28px;
-    width: 28px;
+    width: ${(props) => props.$width};
     padding: 5px;
     background-color: ${({ theme }) => theme.colors.disable};
     border: 0px;
@@ -30,6 +31,15 @@ export const ImageIcon = styled.img<ImageIconProps>`
             background-color: ${({ theme }) => theme.colors.red};
             &:hover {
                 background-color: ${({ theme }) => theme.colors.lightRed};
+            }
+        `}
+
+        ${(props) =>
+        props.$green &&
+        css`
+            background-color: ${({ theme }) => theme.colors.green};
+            &:hover {
+                background-color: ${({ theme }) => theme.colors.lightGreen};
             }
         `}
 `;

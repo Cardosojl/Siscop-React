@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Process, ProcessState, SimpleView } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import down from './images/down.png';
-import './ProcessInformation.css';
+import down from '../../assets/down.png';
 import { handleDescription, handleStatus } from './ProcessInformationFunction';
+import { Wrapper } from '../Wrapper';
+import { ImageIcon } from '../ImageIcon';
 
 function ProcessInformation({ process }: { process: Partial<Process> } & SimpleView): JSX.Element {
     const descriptionArrow = useState<string>(down);
@@ -20,19 +21,15 @@ function ProcessInformation({ process }: { process: Partial<Process> } & SimpleV
         setDescription(process.description || '');
     }, [process.processstates, process.description]);
     return (
-        <div>
-            <div className="ProcessInformation__buttons">
+        <>
+            <Wrapper $displayFlex="flex-end" $paddingRight="15px" $aling="center">
                 <small>Descrição:</small>
-                <button className="Button--green ProcessInforation__button" onClick={() => handleDescription(descriptionArrow, statusArrow, setContent, descriptionState)}>
-                    <img className="ProcessInformation__image" src={descriptionArrow[0]} />
-                </button>
+                <ImageIcon $green $width="22px" onClick={() => handleDescription(descriptionArrow, statusArrow, setContent, descriptionState)} src={descriptionArrow[0]} />
                 <small>Status:</small>
-                <button className="Button--green ProcessInforation__button" onClick={() => handleStatus(process, descriptionArrow, statusArrow, setContent, processstatesStates)}>
-                    <img className="ProcessInformation__image" src={statusArrow[0]} />
-                </button>
-            </div>
+                <ImageIcon $green $width="22px" onClick={() => handleStatus(process, descriptionArrow, statusArrow, setContent, processstatesStates)} src={statusArrow[0]} />
+            </Wrapper>
             <div>{content}</div>
-        </div>
+        </>
     );
 }
 

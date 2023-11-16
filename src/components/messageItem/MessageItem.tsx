@@ -3,7 +3,7 @@ import { MessageType, TableItem } from 'src/config/types/types';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { generateBody, handleEvents } from './MessageItemFunction';
 

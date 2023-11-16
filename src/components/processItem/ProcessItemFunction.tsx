@@ -24,8 +24,8 @@ function generateContent(element: Process, setListener: CallableFunction, path: 
     return (
         <Tr>
             <Td $size={9}>
-                <LinkStyled to={`${href}${element._id}`} className="Table__link">
-                    <p className="Table__textP">{element.title}</p>
+                <LinkStyled to={`${href}${element._id}`}>
+                    <p>{element.title}</p>
                     <small>{element.date}</small>
                 </LinkStyled>
             </Td>
@@ -56,7 +56,7 @@ function generateDelete(element: Process, setListener: CallableFunction) {
     return (
         <Tr $delete>
             <Td $size={4}>
-                <p className="Table__item__text ">{`Tem certeza que deseja apagar o processo: "${element.title}"`}</p>
+                <p>{`Tem certeza que deseja apagar o processo: "${element.title}"`}</p>
                 <Button $green type="submit" value="deletar" onClick={() => setListener('deleteItem')}>
                     Ok
                 </Button>

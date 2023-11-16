@@ -1,15 +1,17 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
-import { Process, ProcessState, User } from 'src/config/types/types';
-import up from './images/up.png';
-import down from './images/down.png';
+import { Process, ProcessState } from 'src/config/types/types';
+import up from '../../assets/up.png';
+import down from '../../assets/down.png';
 import StatusBlock from '../statusBlock/StatusBlock';
 import { Link } from 'react-router-dom';
+import { ProcessInfo } from '../ProcessInfo';
+import { Button } from '../Button';
 
 export function generateDescription(description: string): ReactNode {
     return (
-        <div className="ProcessInformation__window">
-            <p className="ProcessInformation__ptext">{description}</p>
-        </div>
+        <ProcessInfo>
+            <p>{description}</p>
+        </ProcessInfo>
     );
 }
 
@@ -17,14 +19,14 @@ export function generateStates(process: Partial<Process>, processstates: Process
     const [, ...path] = window.location.pathname.split('/').reverse();
     const href = path.reverse().join('/');
     return (
-        <div className="ProcessInformation__window">
+        <ProcessInfo>
             {processstates.map((element, index) => (
                 <StatusBlock key={index} processState={element} />
             ))}
             <Link to={`${href}/anotar/${process._id}`}>
-                <button className="Button--blue ProcessInforation__statusButton">Novo Status</button>
+                <Button $blue>Novo Status</Button>
             </Link>
-        </div>
+        </ProcessInfo>
     );
 }
 

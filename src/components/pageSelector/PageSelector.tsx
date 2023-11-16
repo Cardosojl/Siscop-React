@@ -3,17 +3,20 @@ import right from '../../assets/seta.png';
 import left from '../../assets/seta2.png';
 import { PageSelectorType } from 'src/config/types/types';
 import { connect } from 'react-redux';
-import useAsyncError from '../../hooks/useAsyncError/UseAsyncError';
+import useAsyncError from '../../hooks/useAsyncError';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import { buttonActiveClass, leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
-import './PageSelector.css';
+import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
+import { Wrapper } from '../Wrapper';
+import { RoundButton } from '../RoundButton';
 
 function PageSelector({ path, setChangePage, index, limit, user, filter, listener, dispatchUser }: PageSelectorType): JSX.Element {
     const [indexPage, setIndexPage] = useState<number>(1);
     const [length, setLength] = useState<number>(0);
     const [leftD, setLeftD] = useState<boolean>(true);
     const [rightD, setRightD] = useState<boolean>(true);
+    const back = () => (leftD ? setChangePage(index - 1) : null);
+    const next = () => (rightD ? setChangePage(index + 1) : null);
     const throwError = useAsyncError();
 
     useEffect(() => {
@@ -34,15 +37,11 @@ function PageSelector({ path, setChangePage, index, limit, user, filter, listene
     }, [length, indexPage, path, filter, listener]);
 
     return (
-        <div className="PageSelector">
-            <button className={`${buttonActiveClass('left', indexPage, limit)} PageSelector__button`} onClick={() => setChangePage(index - 1)} disabled={leftD}>
-                <img className="PageSelector__arrow" src={left} />
-            </button>
-            <p className="PageSelector__index">{indexPage}</p>
-            <button className={`${buttonActiveClass('right', indexPage, limit, length)} PageSelector__button`} onClick={() => setChangePage(index + 1)} disabled={rightD}>
-                <img className="PageSelector__arrow" src={right} />
-            </button>
-        </div>
+        <Wrapper $displayFlex="space-around" $aling="baseline">
+            <RoundButton $green={leftD} src={left} onClick={back} />
+            <p>{indexPage}</p>
+            <RoundButton $green={rightD} src={right} onClick={next} />
+        </Wrapper>
     );
 }
 

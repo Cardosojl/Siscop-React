@@ -6,7 +6,7 @@ import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleAcquisitionWays, handleForm, handleSections } from './processCreatorFunction';
 import { handleErros } from 'src/apis/siscopDB';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { Window } from 'src/components/Window';
 import { FormField } from 'src/components/FormField';
 import { Select } from 'src/components/Select';

@@ -71,7 +71,7 @@ function generateDone(filename: Partial<FileTypes>, element: FileTypes, setListe
 function generateEdit(value: Partial<FileTypes>, setValue: CallableFunction, setListener: CallableFunction) {
     return (
         <Tr $edit>
-            <Td $size={3}>
+            <Td $size={12} colSpan={3}>
                 <p className="Table__item__text">Renomear:</p>
                 <InputForm className="DocumentItem__input" type="text" value={value.filename} onChange={(e) => setValue({ filename: e.target.value })} />
                 <Button $green type="submit" value="deletar" onClick={() => setListener('editItem')}>
@@ -88,7 +88,7 @@ function generateEdit(value: Partial<FileTypes>, setValue: CallableFunction, set
 function generateDelete(element: FileTypes, setListener: CallableFunction) {
     return (
         <Tr $delete>
-            <Td $size={3}>
+            <Td $size={12} colSpan={3}>
                 <p className="Table__item__text">{`Tem certeza que deseja apagar o arquivo: "${element.filename + element.extension}"`}</p>
                 <Button $green type="submit" value="deletar" onClick={() => setListener('deleteItem')}>
                     Ok

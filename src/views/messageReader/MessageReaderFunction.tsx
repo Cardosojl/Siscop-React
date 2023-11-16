@@ -87,7 +87,7 @@ export function handleIcons(user: User<string, Section>, path: string, element: 
     const archive =
         path === 'messages' ? (
             <>
-                <ImageIcon $yellow src={archived} onClick={handleArchive} />
+                <ImageIcon $width="28px" $yellow src={archived} onClick={handleArchive} />
                 <small>Arquivar</small>
             </>
         ) : (
@@ -96,7 +96,7 @@ export function handleIcons(user: User<string, Section>, path: string, element: 
 
     const trashDelete = (
         <>
-            <ImageIcon $red src={trash} onClick={handleDelete} />
+            <ImageIcon $width="28px" $red src={trash} onClick={handleDelete} />
             <small>Apagar</small>
         </>
     );

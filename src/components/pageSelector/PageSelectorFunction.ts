@@ -17,18 +17,12 @@ export async function handleApiLength(path: string, user: User<string, Section>,
     return length;
 }
 
-export function buttonActiveClass(direction: string, index: number, limit: number, length?: number): string {
-    if (direction === 'left') return index > 1 ? 'Button--green' : 'Button--disabled';
-    else if (direction === 'right' && length) return length > limit * index ? 'Button--green' : 'Button--disabled';
-    else return 'Button--disabled';
-}
-
 export function leftArrowActive(indexPage: number): boolean {
-    return indexPage > 1 ? false : true;
+    return indexPage > 1 ? true : false;
 }
 
 export function rightArrowActive(indexPage: number, limit: number, length: number): boolean {
-    return length > limit * indexPage ? false : true;
+    return length > limit * indexPage ? true : false;
 }
 
 export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setLength: Dispatch<SetStateAction<number>>): void {

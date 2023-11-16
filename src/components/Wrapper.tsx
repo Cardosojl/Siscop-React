@@ -16,7 +16,7 @@ type WrapperProps = {
     $paddingRight?: string;
     width?: string;
     height?: string;
-    $displayFlex?: 'space-between' | 'flex-start' | 'flex-end';
+    $displayFlex?: 'space-between' | 'flex-start' | 'flex-end' | 'space-around';
 };
 
 export const Wrapper = styled.div<WrapperProps>`

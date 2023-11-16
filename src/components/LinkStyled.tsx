@@ -3,8 +3,12 @@ import styled from 'styled-components';
 
 export const LinkStyled = styled(Link)`
     text-decoration: none;
-    font-weight: bold;
     color: ${({ theme }) => theme.colors.primaryText};
+
+    p {
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
     &:hover {
         color: ${({ theme }) => theme.colors.lightGrayText};
     }

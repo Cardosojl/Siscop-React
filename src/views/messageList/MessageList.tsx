@@ -8,7 +8,7 @@ import { handleMessageTable, handleMessages, handleUrl } from './MessageListFunc
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { connect } from 'react-redux';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';
 import Title from 'src/components/Title';

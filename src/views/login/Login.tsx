@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { connect } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { ReduxUser, Section, User } from 'src/config/types/types';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleInputs, handleUser } from './LoginFunction';

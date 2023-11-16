@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleApiMessage, handleIcons, handleResponsible } from './MessageReaderFunction';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import reader from 'src/views/messageReader/StringtoJSX';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';

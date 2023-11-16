@@ -5,7 +5,7 @@ import './DocumentItem.css';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 
 function DocumentItem({ element, setRefresh, user, path, dispatchUser }: TableItem<FileTypes>): JSX.Element {

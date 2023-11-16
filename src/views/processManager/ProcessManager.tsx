@@ -5,7 +5,7 @@ import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import Table from 'src/components/Table';
 import { useLocation } from 'react-router-dom';
 import { IndexSelector } from 'src/components/indexSelector/IndexSelector';

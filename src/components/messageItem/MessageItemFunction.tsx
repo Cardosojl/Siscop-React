@@ -49,7 +49,7 @@ function archiveButton(listener: CallableFunction) {
     const handleArchive = () => listener('archive');
     return (
         <Td>
-            <ImageIcon $yellow src={archived} onClick={() => handleArchive()} />
+            <ImageIcon $width="28px" $yellow src={archived} onClick={() => handleArchive()} />
         </Td>
     );
 }
@@ -58,7 +58,7 @@ function deleteButton(listener: CallableFunction) {
     const handleDelete = () => listener('deleteItem');
     return (
         <Td>
-            <ImageIcon $red src={trash} onClick={() => handleDelete()} />
+            <ImageIcon $width="28px" $red src={trash} onClick={() => handleDelete()} />
         </Td>
     );
 }

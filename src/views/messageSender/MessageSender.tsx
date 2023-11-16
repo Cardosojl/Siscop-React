@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useRef, useState }
 import './jodit/jodit.css';
 import { MessageType, Process, SimpleView } from 'src/config/types/types';
 import { generateProcessSelect, generateSectionSelect, generateUserSelect, handleForm, handleProcesses, handleSections, handleUsers } from './MessageSenderFunction';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
 import { Section, SimpleView, User } from 'src/config/types/types';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';

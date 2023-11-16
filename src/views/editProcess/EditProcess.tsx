@@ -4,7 +4,7 @@ import { AcquisitionWay, Process, Section, SimpleView } from 'src/config/types/t
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleAcquisitionWays, handleForm, handleProcess, handleSections } from './EditProcessFunction';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';

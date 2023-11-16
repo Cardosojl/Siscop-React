@@ -6,7 +6,7 @@ import { ObjFilter, SimpleView, TableType, Year } from 'src/config/types/types';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleProcesses, handleYears, handleProcessesTable, handleUrl, generateIndex } from './ProcessListFunctions';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { Navigate, useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';

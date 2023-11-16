@@ -95,4 +95,9 @@ export const GlobalStyles = createGlobalStyle`
             cursor: auto;
         }
     }
+
+    small {
+        font-size: 11.5px;
+        text-decoration: none;
+    }
 `;

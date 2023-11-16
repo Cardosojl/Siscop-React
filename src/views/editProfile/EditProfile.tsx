@@ -5,7 +5,7 @@ import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleForm } from './EditProfileFunction';
 import { handleErros } from 'src/apis/siscopDB';
-import useAsyncError from 'src/hooks/useAsyncError/UseAsyncError';
+import useAsyncError from 'src/hooks/useAsyncError';
 import { useNavigate } from 'react-router-dom';
 import { Window } from 'src/components/Window';
 import { FormField } from 'src/components/FormField';
