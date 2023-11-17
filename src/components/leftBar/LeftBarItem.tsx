@@ -20,8 +20,8 @@ type LeftBarItemProps = {
 const LeftBarItemStyle = styled.div<LeftBarItemProps>`
     padding-left: 15px;
     font-size: 12px;
-    padding-top: 30px;
-    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     font-weight: bold;
     border-bottom: 1px solid rgb(49, 49, 49);
     position: relative;
@@ -40,7 +40,7 @@ const LeftBarImageStyle = styled.img<LeftBarImageProps>`
     width: 25px;
     position: absolute;
     right: 25px;
-    top: 25px;
+    top: 30px;
 
     ${(props) =>
         props.$position == 'up' &&

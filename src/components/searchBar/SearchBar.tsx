@@ -6,7 +6,6 @@ import { SearchBarType } from 'src/config/types/types';
 
 const InputStyle = styled.input`
     font-size: 13px;
-    height: 22px;
     border: none;
 
     &:focus {
@@ -24,6 +23,7 @@ const SpanStyle = styled.span`
 `;
 
 const ImageStyle = styled.img`
+    margin-bottom: -7px;
     height: 21px;
     margin-left: -12px;
 

@@ -10,7 +10,8 @@ type LeftBarSubitemProps = {
 const LeftBarSubitemStyle = styled.div<LeftBarSubitemProps>`
     font-size: 10px;
     padding-left: 15px;
-    padding-top: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
     background-size: 250px, auto;
     background-color: ${({ theme }) => theme.colors.tertiary};
     font-weight: bold;

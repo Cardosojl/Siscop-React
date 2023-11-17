@@ -1,6 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+    *,
+    *::before,
+    *::after {
+    box-sizing: border-box;
+}
+
     body {
     margin: 0;
     font-family: ${({ theme }) => theme.fonts.sans_serif}, ${({ theme }) => theme.fonts.tahoma};
@@ -11,14 +17,42 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
     color: ${({ theme }) => theme.colors.primaryText};
     font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+  }
+
+  h6 {
+    font-size: 1rem;
   }
 
 
     hr {
         border: solid 1px ${({ theme }) => theme.colors.grey};
         margin: 10px 15px 20px 15px;
+        opacity: .25;
     }
 
     textArea {
@@ -43,7 +77,18 @@ export const GlobalStyles = createGlobalStyle`
         }
     }
 
+    th {
+        text-align: inherit;
+    }
+
+    td {
+        text-align: inherit;
+    }
+
     input {
+        box-sizing: border-box;
+        line-height: inherit;
+        font-family: inherit;
         margin-bottom: 15px;
         margin-left: 10px;
         margin-right: 10px;

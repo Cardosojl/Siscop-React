@@ -25,6 +25,7 @@ const LinkStyle = styled(Link)`
 
 const ImgStyle = styled.img`
     width: 60px;
+    padding-bottom: 20px;
 `;
 
 const H3Style = styled.h3`

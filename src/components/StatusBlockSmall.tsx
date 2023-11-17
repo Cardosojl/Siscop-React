@@ -6,7 +6,7 @@ const DivStatusStyle = styled.div`
     width: 330px;
     background-color: ${({ theme }) => theme.colors.fluorescent};
     color: ${({ theme }) => theme.colors.primaryText};
-    padding: 4px;
+    padding: 1px 10px 0px 10px;
     height: 100px;
 `;
 

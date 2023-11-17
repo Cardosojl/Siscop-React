@@ -9,6 +9,7 @@ import Header from './components/header/Header';
 import LeftBar from './components/leftBar/LeftBar';
 import { RootState, User } from './config/types/types';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
+import { Wrapper } from './components/Wrapper';
 
 function App(props: User) {
     const [logged, setLogged] = useState(false);
@@ -22,10 +23,10 @@ function App(props: User) {
                 <ErrorBoundary>
                     <div>
                         <Header />
-                        <div className="d-flex flex-row">
+                        <Wrapper $displayFlex="flex-start">
                             {logged ? <LeftBar /> : null}
                             <Content />
-                        </div>
+                        </Wrapper>
                     </div>
                 </ErrorBoundary>
             </BrowserRouter>
