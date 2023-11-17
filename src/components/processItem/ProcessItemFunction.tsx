@@ -82,7 +82,7 @@ function generateLoading() {
     );
 }
 
-function setHref(path: string): string {
+export function setHref(path: string): string {
     if (path === 'myProcess') return `/meusProcessos/processo/`;
     else if (path === 'receivedProcess') return `/processosRecebidos/processo/`;
     else return '/null/';

@@ -16,11 +16,11 @@ const InputStyle = styled.input`
 
 const SpanStyle = styled.span`
     margin-left: -5px;
-    background-color: rgb(224, 230, 228);
+    background-color: ${({ theme }) => theme.colors.inputBackground};
     padding-top: 1px;
     padding-bottom: 3px;
     border-radius: 3px;
-    border: 1px solid rgb(185, 184, 184);
+    border: 1px solid ${({ theme }) => theme.colors.inputBorder};
 `;
 
 const ImageStyle = styled.img`

@@ -13,20 +13,20 @@ type StatusBlockProps = {
 };
 
 const DivStatusStyle = styled.div<StatusBlockProps>`
-    background-color: rgb(174, 240, 107);
+    background-color: ${({ theme }) => theme.colors.fluorescent};
     margin-left: 20px;
     margin-top: 20px;
     padding: 20px;
     width: 330px;
     min-height: 180px;
     border-radius: 5px;
-    color: rgb(114, 114, 114);
+    color: ${({ theme }) => theme.colors.primaryText};
 
     ${(props) =>
         props.$small &&
         css`
             width: 330px;
-            background-color: rgb(174, 240, 107);
+            background-color: ${({ theme }) => theme.colors.fluorescent};
             padding: 4px;
             height: 100px;
         `}
@@ -43,9 +43,9 @@ const ButtonStatusStyle = styled.div`
     button {
         background: none;
         border: none;
-        color: rgb(114, 114, 114);
+        color: ${({ theme }) => theme.colors.primaryText};
         &:hover {
-            color: rgb(134, 134, 134);
+            color: ${({ theme }) => theme.colors.lightGrayText};
         }
     }
 `;

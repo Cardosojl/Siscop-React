@@ -35,7 +35,7 @@ export const Window = styled.div<WindowProps>`
     background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 3px;
     min-height: 180px;
-    box-shadow: 6px 6px 10px 1px rgb(24, 24, 24);
+    box-shadow: 6px 6px 10px 1px ${({ theme }) => theme.colors.darkness};
     margin-bottom: 30px;
     padding-bottom: 20px;
     color: ${({ theme }) => theme.colors.primaryText};

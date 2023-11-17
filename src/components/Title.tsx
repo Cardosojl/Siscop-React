@@ -11,7 +11,7 @@ const DivStyle = styled.div<TitleProps>`
     padding: 20px 0px 0px 0px;
     display: flex;
     justify-content: space-between;
-    background-color: ${(props) => (props.$dark ? ({ theme }) => theme.colors.secondary : '')};
+    background-color: ${({ theme, $dark }) => ($dark ? theme.colors.secondary : '')};
 `;
 
 const TitleStyle = styled.h4<TitleProps>`

@@ -1,6 +1,6 @@
 import React from 'react';
 import { siscopDelete } from 'src/apis/siscopDB';
-import { ProcessState, User } from 'src/config/types/types';
+import { ProcessState } from 'src/config/types/types';
 
 export async function DeleteState(id: string): Promise<void> {
     await siscopDelete('processStates', { _id: id });

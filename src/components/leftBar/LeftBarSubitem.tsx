@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { LeftBarSubitens } from 'src/config/types/types';
+import useColorVariation from 'src/hooks/useColorVariation';
 
 type LeftBarSubitemProps = {
     $selected: boolean;
@@ -11,27 +12,27 @@ const LeftBarSubitemStyle = styled.div<LeftBarSubitemProps>`
     padding-left: 15px;
     padding-top: 15px;
     background-size: 250px, auto;
-    background-color: rgb(70, 74, 78);
+    background-color: ${({ theme }) => theme.colors.tertiary};
     font-weight: bold;
-    border-top: 1px solid rgb(76, 76, 77);
-    border-bottom: 1px solid rgb(62, 63, 63);
-    border-right: solid 8px rgb(133, 180, 57);
+    border-top: 1px solid ${({ theme }) => useColorVariation(theme.colors.tertiary, [12, 7, 4])};
+    border-bottom: 1px solid ${({ theme }) => useColorVariation(theme.colors.tertiary, [-5, -14, -18])};
+    border-right: solid 8px ${({ theme }) => theme.colors.green};
     border-radius: 0px 6px 6px 0px;
 
     &:hover {
-        background-image: linear-gradient(to right, rgb(183, 190, 178), rgb(170, 173, 168));
-        border-bottom: 1px solid rgb(170, 173, 168);
-        border-right: solid 8px rgb(172, 211, 111);
+        background-image: linear-gradient(to right, ${({ theme }) => `${useColorVariation(theme.colors.grey, [6, 15, 3])}, ${theme.colors.grey}`});
+        border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
+        border-right: solid 8px ${({ theme }) => theme.colors.fluorescent};
         cursor: pointer;
     }
 
     ${(props) =>
         props.$selected &&
         css`
-            background-color: rgb(133, 180, 57);
-            border-bottom: solid 1px rgb(133, 180, 57);
-            border-top: 1px solid rgb(63, 63, 65);
-            border-right: solid 8px rgb(133, 180, 57);
+            background-color: ${({ theme }) => theme.colors.green};
+            border-bottom: solid 1px ${({ theme }) => theme.colors.green};
+            border-top: 1px solid ${({ theme }) => useColorVariation(theme.colors.tertiary, [-5, -14, -18])};
+            border-right: solid 8px ${({ theme }) => theme.colors.green};
         `}
 `;
 

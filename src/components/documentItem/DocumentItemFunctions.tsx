@@ -1,11 +1,11 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
-import { FileComponent } from '../fileComponent/FileComponent';
 import { FileTypes, Section, User } from 'src/config/types/types';
 import { siscopDelete, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AxiosResponse } from 'axios';
 import { Tr, Td } from '../Table';
 import { InputForm } from '../InputForm';
 import { Button } from '../Button';
+import { FileComponentClean } from '../fileComponent/FileComponentClean';
 
 function formValidator(form: Partial<FileTypes>): boolean {
     let error = false;
@@ -37,7 +37,7 @@ function generateUnfinished(filename: Partial<FileTypes>, element: FileTypes, se
     return (
         <Tr>
             <Td $size={10}>
-                <FileComponent name={`${filename.filename}${element.extension}`} id={element._id} />
+                <FileComponentClean name={`${filename.filename}${element.extension}`} id={element._id} />
             </Td>
             <Td $size={1}>
                 <Button $green type="submit" value="renomear" onClick={() => setListener('edit')}>
@@ -57,7 +57,7 @@ function generateDone(filename: Partial<FileTypes>, element: FileTypes, setListe
     return (
         <Tr>
             <Td $size={11}>
-                <FileComponent name={`${filename.filename}${element.extension}`} id={element._id} />
+                <FileComponentClean name={`${filename.filename}${element.extension}`} id={element._id} />
             </Td>
             <Td $size={1}>
                 <Button $red type="submit" value="retificar">
@@ -72,8 +72,8 @@ function generateEdit(value: Partial<FileTypes>, setValue: CallableFunction, set
     return (
         <Tr $edit>
             <Td $size={12} colSpan={3}>
-                <p className="Table__item__text">Renomear:</p>
-                <InputForm className="DocumentItem__input" type="text" value={value.filename} onChange={(e) => setValue({ filename: e.target.value })} />
+                <p>Renomear:</p>
+                <InputForm $medium type="text" value={value.filename} onChange={(e) => setValue({ filename: e.target.value })} />
                 <Button $green type="submit" value="deletar" onClick={() => setListener('editItem')}>
                     Ok
                 </Button>
@@ -89,7 +89,7 @@ function generateDelete(element: FileTypes, setListener: CallableFunction) {
     return (
         <Tr $delete>
             <Td $size={12} colSpan={3}>
-                <p className="Table__item__text">{`Tem certeza que deseja apagar o arquivo: "${element.filename + element.extension}"`}</p>
+                <p>{`Tem certeza que deseja apagar o arquivo: "${element.filename + element.extension}"`}</p>
                 <Button $green type="submit" value="deletar" onClick={() => setListener('deleteItem')}>
                     Ok
                 </Button>

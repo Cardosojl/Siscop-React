@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import LeftBarItem from './LeftBarItem';
 import LeftBarSubitem from './LeftBarSubitem';
 import { Link, useLocation } from 'react-router-dom';
+import useColorVariation from 'src/hooks/useColorVariation';
 
 const LeftBarStyle = styled.div`
     color: ${({ theme }) => theme.colors.secondaryText};
     width: 250px;
-    background-image: linear-gradient(to right, ${({ theme }) => theme.colors.secondary}, ${({ theme }) => theme.colors.darkness});
+    background-image: linear-gradient(to right, ${({ theme }) => `${theme.colors.secondary}, ${useColorVariation(theme.colors.secondary, [1, 1, 4])}`});
     background-repeat: repeat-y;
     background-size: auto;
     min-height: 100vh;

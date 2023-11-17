@@ -5,7 +5,7 @@ import { ProcessState } from 'src/config/types/types';
 const DivStatusStyle = styled.div`
     width: 330px;
     background-color: ${({ theme }) => theme.colors.fluorescent};
-    color: ${({ theme }) => theme.colors.lightGrayText};
+    color: ${({ theme }) => theme.colors.primaryText};
     padding: 4px;
     height: 100px;
 `;

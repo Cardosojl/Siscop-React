@@ -4,7 +4,6 @@ import { Section, User } from 'src/config/types/types';
 const initialState: User<string, Section> = {
     _id: '',
     name: '',
-    pg: '',
     section: { _id: '', name: '', level: '' },
     level: '',
     logged: false,

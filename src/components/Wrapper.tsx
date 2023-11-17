@@ -20,9 +20,7 @@ type WrapperProps = {
 };
 
 export const Wrapper = styled.div<WrapperProps>`
-    background-color: ${({ theme }) =>
-        (props) =>
-            props.$backgroundColor ? theme.colors[props.$backgroundColor] : ''};
+    background-color: ${({ theme, $backgroundColor }) => ($backgroundColor ? theme.colors[$backgroundColor] : '')};
     align-items: ${(props) => props.$aling};
     display: ${(props) => (props.$displayFlex ? 'flex' : '')};
     position: ${(props) => props.$position};

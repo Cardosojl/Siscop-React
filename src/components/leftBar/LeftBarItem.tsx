@@ -5,6 +5,7 @@ import { SimpleView } from 'src/config/types/types';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';
+import useColorVariation from 'src/hooks/useColorVariation';
 
 type PositionTypes = 'up' | 'down';
 
@@ -29,8 +30,8 @@ const LeftBarItemStyle = styled.div<LeftBarItemProps>`
     ${(props) =>
         props.$green &&
         css`
-            background-image: linear-gradient(to right, rgb(133, 180, 57), rgb(111, 153, 44));
-            border-bottom: 1px solid rgb(111, 153, 44);
+            background-image: linear-gradient(to right, ${({ theme }) => `${theme.colors.green}, ${useColorVariation(theme.colors.green, [-22, -27, -13])}`});
+            border-bottom: 1px solid ${({ theme }) => useColorVariation(theme.colors.green, [-22, -27, -13])};
         `}
 `;
 

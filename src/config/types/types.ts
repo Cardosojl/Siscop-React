@@ -3,7 +3,6 @@ import { ClassAttributes, InputHTMLAttributes, ReactNode } from 'react';
 export type User<S = string, T = S | Section, N = S | number, B = boolean> = {
     _id: S;
     name: S;
-    pg: S;
     section: T;
     level: N;
     logged: B;

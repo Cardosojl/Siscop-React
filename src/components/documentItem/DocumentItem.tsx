@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FileTypes, TableItem } from 'src/config/types/types';
 import { generateBody, handleEvents } from './DocumentItemFunctions';
-import './DocumentItem.css';
 import { connect } from 'react-redux';
 import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import mapDispatchToProps from 'src/redux/actions/actionUsers';

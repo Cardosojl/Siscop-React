@@ -34,8 +34,8 @@ function App(props: User) {
 }
 
 function mapStateToProps(state: RootState) {
-    const { _id, name, pg, section, level, logged } = state.user;
-    return { _id, name, pg, section, level, logged };
+    const { _id, name, section, level, logged } = state.user;
+    return { _id, name, section, level, logged };
 }
 
 export default connect(mapStateToProps)(App);

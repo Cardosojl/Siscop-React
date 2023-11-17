@@ -9,22 +9,22 @@ type SelectorProps = {
 const SelectorDiv = styled.div<SelectorProps>`
     display: inline-block;
     cursor: pointer;
-    background-color: ${(props) => (props.$selected ? 'rgb(223, 223, 223)' : 'rgb(212, 212, 212)')};
+    background-color: ${({ theme, $selected }) => ($selected ? theme.colors.lightGray : theme.colors.gray)};
     margin-left: 15px;
     margin-bottom: 10px;
     padding: 1px 5px 1px 5px;
-    border-right: solid 12px ${(props) => (props.$selected ? 'rgb(168, 216, 113)' : 'rgb(141, 141, 141)')};
+    border-right: solid 12px ${({ theme, $selected }) => ($selected ? theme.colors.fluorescent : theme.colors.darkGray)};
     min-width: 75px;
     height: 35px;
 
     &:hover {
-        background-color: rgb(223, 223, 223);
-        border-right: solid 12px rgb(166, 233, 127);
+        background-color: ${({ theme }) => theme.colors.lightGray};
+        border-right: solid 12px ${({ theme }) => theme.colors.darkFluorescent};
     }
 `;
 
 const SelctorText = styled.p`
-    color: rgb(105, 105, 105);
+    color: ${({ theme }) => theme.colors.primaryText};
     text-align: center;
     margin-top: 8px;
     font-size: 13px;

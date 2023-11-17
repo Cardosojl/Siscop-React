@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Login from 'src/views/login/Login';
@@ -14,14 +15,19 @@ import MessageSender from 'src/views/messageSender/MessageSender';
 import ProcessCreator from 'src/views/processCreator/ProcessCreator';
 import ProcessManager from 'src/views/processManager/ProcessManager';
 import DocumentManager from 'src/views/documentManager/DocumentManager';
-import './Content.css';
 import EditProfile from 'src/views/editProfile/EditProfile';
 import RegisterUser from 'src/views/registerUser/RegisterUser';
 import ChangeUser from 'src/views/changeUser/ChangeUser';
 
+const ContentStyle = styled.main`
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+`;
+
 function Content({ user }: UserRedux): JSX.Element {
     const login = <Login />;
-    const messages = <MessageList title={'Recebidas T'} path="messages" />;
+    const messages = <MessageList title={'Menssagens Recebidas'} path="messages" />;
     const messagesSent = <MessageList title="Menssagens Enviadas" path="messageSents" />;
     const messagesArchived = <MessageList title="Menssagens Arquivadas" path="messageArchiveds" />;
     const messagesReaderR = <MessageReader path="messages" />;
@@ -44,7 +50,7 @@ function Content({ user }: UserRedux): JSX.Element {
     const changeUser = <ChangeUser />;
 
     return (
-        <main className="Content">
+        <ContentStyle>
             <Routes>
                 <Route path="/" element={login} />
                 <Route path="/minhasMensagensRecebidas/:id" element={user.logged ? messagesReaderR : login} />
@@ -69,7 +75,7 @@ function Content({ user }: UserRedux): JSX.Element {
                 <Route path="/cadastrarUsuario" element={user.logged ? registerUser : login} />
                 <Route path="/alterarUsuario" element={user.logged ? changeUser : login} />
             </Routes>
-        </main>
+        </ContentStyle>
     );
 }
 
