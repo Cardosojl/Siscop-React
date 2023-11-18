@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import SearchBar from 'src/components/searchBar/SearchBar';
-import { ObjFilter, SimpleView, TableType } from 'src/config/types/types';
+import { ObjFilter, TableType } from 'src/config/types/types';
 import Table from 'src/components/Table';
 import { handleMessageTable, handleMessages, handleUrl } from './MessageListFunctions';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import { connect } from 'react-redux';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';
 import Title from 'src/components/Title';
+import DataContext from 'src/data/DataContext';
 
-function MessageList({ title, path, user, dispatchUser }: SimpleView): JSX.Element {
+function MessageList({ title, path }: { title: string | undefined; path: string | undefined }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [numberPage] = useLocation().pathname.split('/').reverse();
     const [index, setIndex] = useState(+numberPage);
     const [changedPath, setChangedPath] = useState<string>(path as string);
@@ -35,7 +34,7 @@ function MessageList({ title, path, user, dispatchUser }: SimpleView): JSX.Eleme
                 setMessageTable(handleMessageTable(changedPath, data, setRefresh));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, [index, filter, changedPath, refresh]);
 
@@ -51,4 +50,4 @@ function MessageList({ title, path, user, dispatchUser }: SimpleView): JSX.Eleme
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
+export default MessageList;

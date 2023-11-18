@@ -1,4 +1,4 @@
-import { ClassAttributes, InputHTMLAttributes, ReactNode } from 'react';
+import { ClassAttributes, Dispatch, InputHTMLAttributes, ReactNode, SetStateAction } from 'react';
 
 export type User<S = string, T = S | Section, N = S | number, B = boolean> = {
     _id: S;
@@ -103,10 +103,7 @@ export type FileTypes<
     page: N;
 };
 
-export type DispatchUser = {
-    loginRedux: (newValue: User<string, Section>) => void;
-    logoffRedux: () => void;
-};
+export type DispatchUser = Dispatch<SetStateAction<User<string, Section>>>;
 
 export type UserRedux = {
     user: User<string, Section>;
@@ -135,8 +132,6 @@ export type TableItem<T> = {
     setRefresh: CallableFunction;
     href?: string;
     path?: string;
-    user: User<string, Section>;
-    dispatchUser: DispatchUser;
 };
 
 export type Searcher = {
@@ -176,10 +171,8 @@ export type PageSelectorType = {
     setChangePage: CallableFunction;
     index: number;
     limit: number;
-    user: User<string, Section>;
     filter: ObjFilter | null;
     listener: boolean;
-    dispatchUser: DispatchUser;
 };
 
 export type SearchBarType = {

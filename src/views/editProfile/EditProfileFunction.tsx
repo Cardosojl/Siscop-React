@@ -47,7 +47,7 @@ export async function handleForm(e: ChangeEvent<HTMLFormElement>, form: Partial<
         await updateUser(user, form);
         const profile = await handleProfile(user);
         if (profile) {
-            dispatchUser.loginRedux({ ...profile, logged: true });
+            dispatchUser({ ...profile, logged: true });
             navigate('/caixaDeEntrada/0');
         }
     }

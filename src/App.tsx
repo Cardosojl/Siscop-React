@@ -1,42 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import DataContext, { dataUser } from './data/DataContext';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './styles/Global';
 import { theme } from './styles/Theme';
 import { BrowserRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Content from './components/content/Content';
 import Header from './components/header/Header';
 import LeftBar from './components/leftBar/LeftBar';
-import { RootState, User } from './config/types/types';
+import { Section, User } from './config/types/types';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
 import { Wrapper } from './components/Wrapper';
 
-function App(props: User) {
-    const [logged, setLogged] = useState(false);
-    useEffect(() => {
-        setLogged(props.logged);
-    }, [props]);
+function App() {
+    const [user, setUser] = useState<User<string, Section>>(dataUser.user);
+    dataUser.setUser = setUser;
     return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyles />
-            <BrowserRouter>
-                <ErrorBoundary>
-                    <div>
-                        <Header />
-                        <Wrapper $displayFlex="flex-start">
-                            {logged ? <LeftBar /> : null}
-                            <Content />
-                        </Wrapper>
-                    </div>
-                </ErrorBoundary>
-            </BrowserRouter>
-        </ThemeProvider>
+        <DataContext.Provider value={{ user, setUser }}>
+            <ThemeProvider theme={theme}>
+                <GlobalStyles />
+                <BrowserRouter>
+                    <ErrorBoundary>
+                        <div>
+                            <Header />
+                            <Wrapper $displayFlex="flex-start">
+                                {user.logged ? <LeftBar /> : null}
+                                <Content />
+                            </Wrapper>
+                        </div>
+                    </ErrorBoundary>
+                </BrowserRouter>
+            </ThemeProvider>
+        </DataContext.Provider>
     );
 }
 
-function mapStateToProps(state: RootState) {
-    const { _id, name, section, level, logged } = state.user;
-    return { _id, name, section, level, logged };
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

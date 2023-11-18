@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { connect } from 'react-redux';
-import { ProcessState, SimpleView, User } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { ProcessState, User } from 'src/config/types/types';
 import { handleEvents } from './StatusBlockFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
+import DataContext from 'src/data/DataContext';
 
 type StatusBlockProps = {
     $small?: boolean;
@@ -50,13 +48,14 @@ const ButtonStatusStyle = styled.div`
     }
 `;
 
-function StatusBlock({ $small, processState, user, dispatchUser }: { $small?: boolean; processState: ProcessState } & SimpleView): JSX.Element {
+function StatusBlock({ $small, processState }: { $small?: boolean; processState: ProcessState }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [state, setState] = useState<ProcessState>(processState);
     const [listenerState, setListenerState] = useState<string>('');
     const throwError = useAsyncError();
 
     useEffect(() => {
-        handleEvents([listenerState, setListenerState], [state, setState]).catch((error) => handleErros(error as Error, dispatchUser, throwError));
+        handleEvents([listenerState, setListenerState], [state, setState]).catch((error) => handleErros(error as Error, setUser, throwError));
     }, [listenerState[0]]);
 
     return (
@@ -87,4 +86,4 @@ function StatusBlock({ $small, processState, user, dispatchUser }: { $small?: bo
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StatusBlock);
+export default StatusBlock;

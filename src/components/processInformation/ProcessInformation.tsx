@@ -1,14 +1,11 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Process, ProcessState, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { Process, ProcessState } from 'src/config/types/types';
 import down from '../../assets/down.png';
 import { handleDescription, handleStatus } from './ProcessInformationFunction';
 import { Wrapper } from '../Wrapper';
 import { ImageIcon } from '../ImageIcon';
 
-function ProcessInformation({ process }: { process: Partial<Process> } & SimpleView): JSX.Element {
+function ProcessInformation({ process }: { process: Partial<Process> }): JSX.Element {
     const descriptionArrow = useState<string>(down);
     const statusArrow = useState<string>(down);
     const descriptionState = useState<string>(process.description || '');
@@ -33,4 +30,4 @@ function ProcessInformation({ process }: { process: Partial<Process> } & SimpleV
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessInformation);
+export default ProcessInformation;

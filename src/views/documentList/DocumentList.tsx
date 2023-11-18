@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
 import Table from 'src/components/Table';
 import useAsyncError from 'src/hooks/useAsyncError';
-import { Process, SimpleView, TableType } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { Process, TableType } from 'src/config/types/types';
 import { handleFiles, handleProcess, handleTableFiles } from './DocumentListFunction';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
@@ -16,8 +13,10 @@ import Title from 'src/components/Title';
 import { Window } from 'src/components/Window';
 import { Wrapper } from 'src/components/Wrapper';
 import { RoundButton } from 'src/components/RoundButton';
+import DataContext from 'src/data/DataContext';
 
-function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
+function DocumentList({ path }: { path: string | undefined }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [processId] = useLocation().pathname.split('/').reverse();
     const [table, setTable] = useState<TableType>({ head: null, body: null });
     const [process, setProcess] = useState<Partial<Process>>({});
@@ -36,7 +35,7 @@ function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
                 setProcess(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         setRefresh(false);
         setTable({ head: null, body: null });
@@ -49,7 +48,7 @@ function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
                     setTable(handleTableFiles(changedPath, data, setRefresh));
                 })
                 .catch((error) => {
-                    handleErros(error as Error, dispatchUser, throwError);
+                    handleErros(error as Error, setUser, throwError);
                 });
         }
     }, [process]);
@@ -73,4 +72,4 @@ function DocumentList({ path, dispatchUser, user }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentList);
+export default DocumentList;

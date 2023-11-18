@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import DataContext, { dataUser } from './data/DataContext';
 import ReactDOM from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
 import App from './App';
-import { store, persistor } from './redux/storeConfig/storeConfig';
+import { Section, User } from './config/types/types';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <React.StrictMode>
-                <App />
-            </React.StrictMode>
-        </PersistGate>
-    </Provider>
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
 );

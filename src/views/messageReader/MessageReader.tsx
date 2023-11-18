@@ -1,9 +1,6 @@
-import React, { ReactNode, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { MessageType, MessageReaderType } from 'src/config/types/types';
+import React, { ReactNode, useContext, useEffect, useState } from 'react';
+import { MessageType } from 'src/config/types/types';
 import { useLocation, useNavigate } from 'react-router-dom';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleApiMessage, handleIcons, handleResponsible } from './MessageReaderFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import reader from 'src/views/messageReader/StringtoJSX';
@@ -12,8 +9,10 @@ import { Window } from 'src/components/Window';
 import Title from 'src/components/Title';
 import { MessageContent } from 'src/components/MessageContent';
 import { Wrapper } from 'src/components/Wrapper';
+import DataContext from 'src/data/DataContext';
 
-function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Element {
+function MessageReader({ path }: { path: string }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const url = useLocation().pathname.split('/');
     const [messageID] = url.reverse();
     const [message, setMessage] = useState<MessageType | null>(null);
@@ -24,7 +23,7 @@ function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Ele
     useEffect(() => {
         handleApiMessage(`${path}/message`, user, messageID)
             .then((data) => setMessage(data))
-            .catch((error) => handleErros(error as Error, dispatchUser, throwError));
+            .catch((error) => handleErros(error as Error, setUser, throwError));
     }, []);
 
     useEffect(() => {
@@ -48,11 +47,11 @@ function MessageReader({ user, dispatchUser, path }: MessageReaderType): JSX.Ele
                             Processo: <u>{message.process_title}</u>
                         </p>
                     </Wrapper>
-                    {handleIcons(user, path, message, navigate, dispatchUser, throwError)}
+                    {handleIcons(user, path, message, navigate, setUser, throwError)}
                 </Wrapper>
             </Window>
         );
     else return <></>;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageReader);
+export default MessageReader;

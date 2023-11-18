@@ -1,8 +1,5 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { AcquisitionWay, Process, Section, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
+import { AcquisitionWay, Process, Section } from 'src/config/types/types';
 import { handleAcquisitionWays, handleForm, handleProcess, handleSections } from './EditProcessFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -14,8 +11,10 @@ import { Select } from 'src/components/Select';
 import { Button } from 'src/components/Button';
 import Title from 'src/components/Title';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
+function EditProcess({ path }: { path: string | undefined }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [url] = useLocation().pathname.split('/').reverse();
     const [sections, setSections] = useState<Section[]>([]);
     const [process, setProcess] = useState<Partial<Process>>({});
@@ -33,7 +32,7 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
         try {
             await handleForm(e, process, form, sections, acquisitionWays, setMessage, navigate);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setMessage);
+            handleErros(error as Error, setUser, throwError, setMessage);
         }
     };
 
@@ -50,21 +49,21 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
                 });
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         handleAcquisitionWays()
             .then((data) => {
                 if (data) setAcquisition(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         handleSections()
             .then((data) => {
                 if (data) setSections(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -95,4 +94,4 @@ function EditProcess({ user, dispatchUser, path }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProcess);
+export default EditProcess;

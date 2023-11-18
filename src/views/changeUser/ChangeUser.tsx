@@ -1,10 +1,7 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
-import { Section, SimpleView, User } from 'src/config/types/types';
+import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
+import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { connect } from 'react-redux';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { handleFind, handleForm, handleSections } from './ChangeUserFunction';
 import { Button } from 'src/components/Button';
 import { Window } from 'src/components/Window';
@@ -13,9 +10,11 @@ import { Select } from 'src/components/Select';
 import { setInputs } from '../elementsCreator';
 import Title from 'src/components/Title';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
-    const [user, setUser] = useState<User<string, Section> | null>(null);
+function ChangeUser(): JSX.Element {
+    const { setUser } = useContext(DataContext);
+    const [profile, setProfile] = useState<User<string, Section> | null>(null);
     const [sections, setSections] = useState<Section[] | null>(null);
     const [name, setName] = useState<string>('');
     const [form, setForm] = useState<Partial<User>>({});
@@ -28,17 +27,17 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
 
     const findUser = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            handleFind(e, name, setMessage, setUser, setForm);
+            handleFind(e, name, setMessage, setProfile, setForm);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError);
+            handleErros(error as Error, setUser, throwError);
         }
     };
 
     const sendForm = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            if (user) await handleForm(e, form, setMessage, sections, user);
+            if (profile) await handleForm(e, form, setMessage, sections, profile);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setMessage);
+            handleErros(error as Error, setUser, throwError, setMessage);
         }
     };
 
@@ -48,7 +47,7 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
                 setSections(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -62,7 +61,7 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
                     <Button $green>Procurar</Button>
                 </FormField>
             </form>
-            {user ? (
+            {profile ? (
                 <form onSubmit={sendForm}>
                     {message}
                     <hr />
@@ -73,7 +72,7 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
                         <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
                     </FormField>
                     <FormField label="Seção:">
-                        <Select name="section" sort={true} optionValues={sectionArray} elementValue={(user.section as Section).name} alternativeValues={sectionArrayID} onChange={handleInput} />
+                        <Select name="section" sort={true} optionValues={sectionArray} elementValue={(profile.section as Section).name} alternativeValues={sectionArrayID} onChange={handleInput} />
                     </FormField>
                     <FormField label="Level:">
                         <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
@@ -87,4 +86,4 @@ function ChangeUser({ dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChangeUser);
+export default ChangeUser;

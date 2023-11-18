@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { FileTypes, Process, ProcessState, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import React, { useContext, useEffect, useState } from 'react';
+import { FileTypes, Process, ProcessState } from 'src/config/types/types';
 import { generateContent, generateFiles, generateStates, handleFiles, handleProcess, handleStates } from './DocumentManagerFunction';
 import { useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
@@ -11,8 +8,10 @@ import Title from 'src/components/Title';
 import { Window } from 'src/components/Window';
 import { Wrapper } from 'src/components/Wrapper';
 import { ManagerInfo } from 'src/components/ManagerInfo';
+import DataContext from 'src/data/DataContext';
 
-function DocumentManager({ user, dispatchUser }: SimpleView): JSX.Element {
+function DocumentManager(): JSX.Element {
+    const { setUser } = useContext(DataContext);
     const [processId] = useLocation().pathname.split('/').reverse();
     const [process, setProcess] = useState<Process | null>(null);
     const [files, setFiles] = useState<FileTypes[] | null>(null);
@@ -25,21 +24,21 @@ function DocumentManager({ user, dispatchUser }: SimpleView): JSX.Element {
                 setProcess(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         handleFiles(processId)
             .then((data) => {
                 setFiles(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         handleStates(processId)
             .then((data) => {
                 setStates(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -56,4 +55,4 @@ function DocumentManager({ user, dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentManager);
+export default DocumentManager;

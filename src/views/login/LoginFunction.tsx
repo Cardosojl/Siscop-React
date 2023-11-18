@@ -5,7 +5,7 @@ import { DispatchUser, Section, User } from 'src/config/types/types';
 
 async function handleLogin(navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User<string, Section>>): Promise<void> {
     navigate('/caixaDeEntrada/0');
-    dispatchUser.loginRedux(await siscopLoginCreate(form));
+    dispatchUser(await siscopLoginCreate(form));
 }
 
 export async function handleUser(

@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import right from '../../assets/seta.png';
 import left from '../../assets/seta2.png';
 import { PageSelectorType } from 'src/config/types/types';
-import { connect } from 'react-redux';
 import useAsyncError from '../../hooks/useAsyncError';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
 import { Wrapper } from '../Wrapper';
 import { RoundButton } from '../RoundButton';
+import DataContext from 'src/data/DataContext';
 
-function PageSelector({ path, setChangePage, index, limit, user, filter, listener, dispatchUser }: PageSelectorType): JSX.Element {
+function PageSelector({ path, setChangePage, index, limit, filter, listener }: PageSelectorType): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [indexPage, setIndexPage] = useState<number>(1);
     const [length, setLength] = useState<number>(0);
     const [leftD, setLeftD] = useState<boolean>(true);
@@ -29,7 +28,7 @@ function PageSelector({ path, setChangePage, index, limit, user, filter, listene
                 setLength(data);
                 setLeftD(leftArrowActive(indexPage));
             })
-            .catch((error) => handleErros(error, dispatchUser, throwError, setLength));
+            .catch((error) => handleErros(error, setUser, throwError, setLength));
     }, [indexPage, path, filter, listener]);
 
     useEffect(() => {
@@ -45,4 +44,4 @@ function PageSelector({ path, setChangePage, index, limit, user, filter, listene
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageSelector);
+export default PageSelector;

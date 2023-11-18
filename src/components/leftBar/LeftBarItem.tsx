@@ -1,11 +1,8 @@
-import React, { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
+import React, { MouseEventHandler, ReactNode, useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import arrow from '../../assets/leftbararrow.png';
-import { SimpleView } from 'src/config/types/types';
-import { connect } from 'react-redux';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import useColorVariation from 'src/hooks/useColorVariation';
+import DataContext from 'src/data/DataContext';
 
 type PositionTypes = 'up' | 'down';
 
@@ -74,14 +71,8 @@ const LeftBarImageStyle = styled.img<LeftBarImageProps>`
         `}
 `;
 
-function LeftBarItem({
-    user,
-    title,
-    active,
-    itemLevel,
-    children,
-    onClick,
-}: { title: string; children?: ReactNode; itemLevel?: number; active: boolean; onClick?: MouseEventHandler } & SimpleView): JSX.Element {
+function LeftBarItem({ title, active, itemLevel, children, onClick }: { title: string; children?: ReactNode; itemLevel?: number; active: boolean; onClick?: MouseEventHandler }): JSX.Element {
+    const { user } = useContext(DataContext);
     const [position, setPosition] = useState<PositionTypes>('down');
     const [background, setBackground] = useState<boolean>(false);
 
@@ -114,4 +105,4 @@ function LeftBarItem({
     else return <></>;
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LeftBarItem);
+export default LeftBarItem;

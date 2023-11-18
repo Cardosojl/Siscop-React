@@ -1,11 +1,8 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
-import { Section, SimpleView, User } from 'src/config/types/types';
+import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
+import { Section, User } from 'src/config/types/types';
 import { handleForm, handleSections } from './RegisterUserFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { connect } from 'react-redux';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { setInputs } from '../elementsCreator';
 import { Select } from 'src/components/Select';
 import { FormField } from 'src/components/FormField';
@@ -13,8 +10,10 @@ import { Window } from 'src/components/Window';
 import { Button } from 'src/components/Button';
 import Title from 'src/components/Title';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
+function RegisterUser(): JSX.Element {
+    const { setUser } = useContext(DataContext);
     const [sections, setSections] = useState<Section[] | null>(null);
     const [form, setForm] = useState<Partial<User>>({});
     const [message, setMessage] = useState<ReactNode>('');
@@ -27,7 +26,7 @@ function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
         try {
             await handleForm(e, form, setMessage, sections);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setMessage);
+            handleErros(error as Error, setUser, throwError, setMessage);
         }
     };
 
@@ -39,7 +38,7 @@ function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
                 setSections(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -67,4 +66,4 @@ function RegisterUser({ dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterUser);
+export default RegisterUser;

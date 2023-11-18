@@ -1,12 +1,9 @@
-import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import './jodit/jodit.css';
-import { MessageType, Process, SimpleView } from 'src/config/types/types';
+import { MessageType, Process } from 'src/config/types/types';
 import { generateProcessSelect, generateSectionSelect, generateUserSelect, handleForm, handleProcesses, handleSections, handleUsers } from './MessageSenderFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { connect } from 'react-redux';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 import joditConfig from './jodit/joditConfig';
@@ -18,8 +15,10 @@ import { Select } from 'src/components/Select';
 import { Wrapper } from 'src/components/Wrapper';
 import { FormField } from 'src/components/FormField';
 import { FormMessageButton } from 'src/components/FormMessageButton';
+import DataContext from 'src/data/DataContext';
 
-function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
+function MessageSender(): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [urlId] = useLocation().pathname.split('/').reverse();
     const processId = urlId !== '0' ? urlId : null;
     const [form, setForm] = useState<Partial<MessageType> & Partial<Process>>({ title: undefined, sender: undefined, content: undefined });
@@ -38,7 +37,7 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
         try {
             await handleForm(e, form, navigate, setErrorMessage);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setErrorMessage);
+            handleErros(error as Error, setUser, throwError, setErrorMessage);
         }
     };
 
@@ -49,7 +48,7 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
                 setSelectProcess(generateProcessSelect(data, processId, setForm));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -60,7 +59,7 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
                     setSelectDestination(generateUserSelect(data, setForm));
                 })
                 .catch((error) => {
-                    handleErros(error as Error, dispatchUser, throwError);
+                    handleErros(error as Error, setUser, throwError);
                 });
         }
         if (destination === 'section') {
@@ -69,7 +68,7 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
                     setSelectDestination(generateSectionSelect(data, setForm));
                 })
                 .catch((error) => {
-                    handleErros(error as Error, dispatchUser, throwError);
+                    handleErros(error as Error, setUser, throwError);
                 });
         } else setSelectDestination('');
     }, [destination]);
@@ -100,4 +99,4 @@ function MessageSender({ user, dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageSender);
+export default MessageSender;

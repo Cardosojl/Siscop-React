@@ -1,23 +1,22 @@
-import React, { ChangeEvent, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { ReduxUser, Section, User } from 'src/config/types/types';
+import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleInputs, handleUser } from './LoginFunction';
 import { Button } from 'src/components/Button';
 import { Window } from 'src/components/Window';
 import { FormField } from 'src/components/FormField';
 import Title from 'src/components/Title';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
+function Login(): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [form, setForm] = useState<Partial<User<string, Section>>>({ name: '', password: '' });
     const [message, setMessage] = useState<string>('');
     const throwError = useAsyncError();
     const navigate = useNavigate();
-    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, dispatchUser, form, throwError, setMessage);
+    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, setUser, form, throwError, setMessage);
     const userValues = (e: ChangeEvent<HTMLInputElement>) => handleInputs(e, setForm, form);
 
     if (user.logged) {
@@ -41,4 +40,4 @@ function Login({ user, dispatchUser }: ReduxUser): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;

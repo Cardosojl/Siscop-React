@@ -1,9 +1,6 @@
-import React, { ChangeEvent, FormEvent, ReactNode, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEvent, FormEvent, ReactNode, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Process, ProcessState, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { Process, ProcessState } from 'src/config/types/types';
 import { handleForm, handleProcess } from './ProcessStatusFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
@@ -13,8 +10,10 @@ import { Select } from 'src/components/Select';
 import { Button } from 'src/components/Button';
 import { setInputs } from '../elementsCreator';
 import Title from 'src/components/Title';
+import DataContext from 'src/data/DataContext';
 
-function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
+function ProcessStatus({ path }: { path: string | undefined }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [url] = useLocation().pathname.split('/').reverse();
     const [process, setProcess] = useState<Partial<Process>>({});
     const [message, setMessage] = useState<ReactNode>();
@@ -28,7 +27,7 @@ function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
         try {
             await handleForm(e, form, setMessage, navigate);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError);
+            handleErros(error as Error, setUser, throwError);
         }
     };
 
@@ -39,7 +38,7 @@ function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
                 setForm((current) => ({ ...current, process: data._id, user: user._id }));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -61,4 +60,4 @@ function ProcessStatus({ user, dispatchUser, path }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessStatus);
+export default ProcessStatus;

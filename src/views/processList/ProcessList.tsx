@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { useContext, useEffect, useState } from 'react';
 import PageSelector from 'src/components/pageSelector/PageSelector';
 import Table from 'src/components/Table';
-import { ObjFilter, SimpleView, TableType, Year } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { ObjFilter, TableType, Year } from 'src/config/types/types';
 import { handleProcesses, handleYears, handleProcessesTable, handleUrl, generateIndex } from './ProcessListFunctions';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Navigate, useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/Window';
 import Title from 'src/components/Title';
+import DataContext from 'src/data/DataContext';
 
-function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Element {
+function ProcessList({ path, title }: { path: string | undefined; title: string | undefined }): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [numberPage] = useLocation().pathname.split('/').reverse();
     const [index, setIndex] = useState(+numberPage || 0);
     const [changedPath, setChangedPath] = useState('');
@@ -29,7 +28,7 @@ function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Eleme
                 setYearIndex(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -53,7 +52,7 @@ function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Eleme
                 setProcessesTable(handleProcessesTable(changedPath, data, setRefresh));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, [filter, index, refresh]);
 
@@ -71,4 +70,4 @@ function ProcessList({ user, dispatchUser, path, title }: SimpleView): JSX.Eleme
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessList);
+export default ProcessList;

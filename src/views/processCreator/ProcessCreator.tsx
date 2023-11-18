@@ -1,9 +1,6 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AcquisitionWay, Process, Section, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import { AcquisitionWay, Process, Section } from 'src/config/types/types';
 import { handleAcquisitionWays, handleForm, handleSections } from './processCreatorFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
@@ -14,8 +11,10 @@ import { setInputs } from '../elementsCreator';
 import { Button } from 'src/components/Button';
 import Title from 'src/components/Title';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function ProcessCreator({ user, dispatchUser }: SimpleView): JSX.Element {
+function ProcessCreator(): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [sections, setSections] = useState<Section[]>([]);
     const [acquisitionWays, setAcquisition] = useState<AcquisitionWay[]>([]);
     const [form, setForm] = useState<Partial<Process>>({});
@@ -31,7 +30,7 @@ function ProcessCreator({ user, dispatchUser }: SimpleView): JSX.Element {
         try {
             await handleForm(e, form, sections, acquisitionWays, setMessage, navigate);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setMessage);
+            handleErros(error as Error, setUser, throwError, setMessage);
         }
     };
 
@@ -42,14 +41,14 @@ function ProcessCreator({ user, dispatchUser }: SimpleView): JSX.Element {
                 if (data) setSections(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
         handleAcquisitionWays()
             .then((data) => {
                 if (data) setAcquisition(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -80,4 +79,4 @@ function ProcessCreator({ user, dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessCreator);
+export default ProcessCreator;

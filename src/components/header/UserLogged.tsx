@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { ReduxUser, Section } from 'src/config/types/types';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
+import { Section } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { siscopLogoffDelete } from 'src/apis/siscopDB';
 import { Wrapper } from 'src/components/Wrapper';
+import DataContext, { initialUser } from 'src/data/DataContext';
 
 const LinkStyle = styled(Link)`
     text-decoration: none;
@@ -20,7 +18,8 @@ const TextStyle = styled.p`
     font-size: 12px;
 `;
 
-function UserLogged({ user, dispatchUser }: ReduxUser): JSX.Element {
+function UserLogged(): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [userOn, setUserOn] = useState(user);
     const throwError = useAsyncError();
     const navigate = useNavigate();
@@ -31,7 +30,7 @@ function UserLogged({ user, dispatchUser }: ReduxUser): JSX.Element {
 
     const handleLogoff = async (): Promise<void> => {
         try {
-            dispatchUser.logoffRedux();
+            setUser(initialUser);
             await siscopLogoffDelete();
             navigate('/');
             setUserOn(user);
@@ -53,4 +52,4 @@ function UserLogged({ user, dispatchUser }: ReduxUser): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogged);
+export default UserLogged;

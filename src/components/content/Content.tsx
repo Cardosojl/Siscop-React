@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Routes, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
 import Login from 'src/views/login/Login';
-import { UserRedux } from 'src/config/types/types';
 import MessageReader from 'src/views/messageReader/MessageReader';
 import MessageList from 'src/views/messageList/MessageList';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import ProcessList from 'src/views/processList/ProcessList';
 import DocumentList from 'src/views/documentList/DocumentList';
 import EditProcess from 'src/views/editProcess/EditProcess';
@@ -18,6 +15,7 @@ import DocumentManager from 'src/views/documentManager/DocumentManager';
 import EditProfile from 'src/views/editProfile/EditProfile';
 import RegisterUser from 'src/views/registerUser/RegisterUser';
 import ChangeUser from 'src/views/changeUser/ChangeUser';
+import DataContext from 'src/data/DataContext';
 
 const ContentStyle = styled.main`
     margin-left: auto;
@@ -25,7 +23,8 @@ const ContentStyle = styled.main`
     margin-top: 30px;
 `;
 
-function Content({ user }: UserRedux): JSX.Element {
+function Content(): JSX.Element {
+    const { user } = useContext(DataContext);
     const login = <Login />;
     const messages = <MessageList title={'Menssagens Recebidas'} path="messages" />;
     const messagesSent = <MessageList title="Menssagens Enviadas" path="messageSents" />;
@@ -79,4 +78,4 @@ function Content({ user }: UserRedux): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps)(Content);
+export default Content;

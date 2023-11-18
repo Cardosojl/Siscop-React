@@ -1,8 +1,5 @@
-import React, { ChangeEvent, ReactNode, useState } from 'react';
-import { connect } from 'react-redux';
-import { Profile, SimpleView } from 'src/config/types/types';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
+import React, { ChangeEvent, ReactNode, useContext, useState } from 'react';
+import { Profile } from 'src/config/types/types';
 import { handleForm } from './EditProfileFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
@@ -13,8 +10,10 @@ import Title from 'src/components/Title';
 import { Button } from 'src/components/Button';
 import { setInputs } from '../elementsCreator';
 import { InputForm } from 'src/components/InputForm';
+import DataContext from 'src/data/DataContext';
 
-function EditProfile({ user, dispatchUser }: SimpleView): JSX.Element {
+function EditProfile(): JSX.Element {
+    const { user, setUser } = useContext(DataContext);
     const [message, setMessage] = useState<ReactNode>('');
     const [form, setForm] = useState<Partial<Profile>>({});
     const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
@@ -22,9 +21,9 @@ function EditProfile({ user, dispatchUser }: SimpleView): JSX.Element {
     const throwError = useAsyncError();
     const sendForm = async (e: ChangeEvent<HTMLFormElement>) => {
         try {
-            await handleForm(e, form, user, setMessage, navigate, dispatchUser);
+            await handleForm(e, form, user, setMessage, navigate, setUser);
         } catch (error) {
-            handleErros(error as Error, dispatchUser, throwError, setMessage);
+            handleErros(error as Error, setUser, throwError, setMessage);
         }
     };
 
@@ -49,4 +48,4 @@ function EditProfile({ user, dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);
+export default EditProfile;

@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { ObjFilter, Process, Section, SimpleView, TableType } from 'src/config/types/types';
+import React, { useContext, useEffect, useState } from 'react';
+import { ObjFilter, Process, Section, TableType } from 'src/config/types/types';
 import { generatePageSelector, generateSectionTitle, handleProcesses, handleProcessesTable, handleSections } from './ProcessManagerFunction';
 import { handleErros } from 'src/apis/siscopDB';
-import { connect } from 'react-redux';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
 import useAsyncError from 'src/hooks/useAsyncError';
 import Table from 'src/components/Table';
 import { useLocation } from 'react-router-dom';
@@ -13,8 +10,10 @@ import SearchBar from 'src/components/searchBar/SearchBar';
 import { Window } from 'src/components/Window';
 import Title from 'src/components/Title';
 import { Wrapper } from 'src/components/Wrapper';
+import DataContext from 'src/data/DataContext';
 
-function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
+function ProcessManager(): JSX.Element {
+    const { setUser } = useContext(DataContext);
     const [numberPage] = useLocation().pathname.split('/').reverse();
     const [index, setIndex] = useState(+numberPage || 0);
     const [sections, setSections] = useState<Section[] | null>(null);
@@ -32,7 +31,7 @@ function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
                 setSections(data);
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, []);
 
@@ -48,7 +47,7 @@ function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
                 setProcessesTable(handleProcessesTable(data));
             })
             .catch((error) => {
-                handleErros(error as Error, dispatchUser, throwError);
+                handleErros(error as Error, setUser, throwError);
             });
     }, [filter, sectionSelected, index]);
 
@@ -73,4 +72,4 @@ function ProcessManager({ dispatchUser }: SimpleView): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProcessManager);
+export default ProcessManager;

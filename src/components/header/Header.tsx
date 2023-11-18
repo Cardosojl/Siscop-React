@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
-import { UserRedux } from 'src/config/types/types';
 import UserLogged from './UserLogged';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { Wrapper } from '../Wrapper';
+import DataContext from 'src/data/DataContext';
 
 const HeaderStyle = styled.div`
     padding-top: 10px;
@@ -35,7 +33,8 @@ const H3Style = styled.h3`
     font-size: 19px;
 `;
 
-function Header({ user }: UserRedux): JSX.Element {
+function Header(): JSX.Element {
+    const { user } = useContext(DataContext);
     const logged = user.logged ? <UserLogged /> : '';
     return (
         <HeaderStyle>
@@ -50,4 +49,4 @@ function Header({ user }: UserRedux): JSX.Element {
     );
 }
 
-export default connect(mapStateToProps)(Header);
+export default Header;

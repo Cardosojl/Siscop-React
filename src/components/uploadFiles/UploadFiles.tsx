@@ -1,14 +1,11 @@
-import React, { ChangeEvent, ReactNode, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import mapDispatchToProps from 'src/redux/actions/actionUsers';
-import mapStateToProps from 'src/redux/selectors/selectorUsers';
 import { handleFileForm, handleFilename, setFiles } from './UploadFilesFunction';
 import { useLocation } from 'react-router-dom';
-import { SimpleView } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Wrapper } from '../Wrapper';
 import { Button } from '../Button';
+import DataContext from 'src/data/DataContext';
 
 const LabelButtonStyle = styled.label`
     padding: 5px;
@@ -41,7 +38,8 @@ const InputStyle = styled.input`
     display: none;
 `;
 
-function UploadFiles({ dispatchUser, setRefresh }: SimpleView & { setRefresh: CallableFunction }): JSX.Element {
+function UploadFiles({ setRefresh }: { setRefresh: CallableFunction }): JSX.Element {
+    const { setUser } = useContext(DataContext);
     const [process] = useLocation().pathname.split('/').reverse();
     const [filename, setFilename] = useState<string>('');
     const [sendComponent, setSendComponent] = useState<ReactNode>('');
@@ -52,7 +50,7 @@ function UploadFiles({ dispatchUser, setRefresh }: SimpleView & { setRefresh: Ca
     const throwError = useAsyncError();
 
     const sendForm = (e: ChangeEvent<HTMLFormElement>) => {
-        handleFileForm(e, setLoad, setRefresh, dispatchUser, formStates, throwError, setErrorMessage);
+        handleFileForm(e, setLoad, setRefresh, setUser, formStates, throwError, setErrorMessage);
     };
 
     useEffect(() => {
@@ -92,4 +90,4 @@ function UploadFiles({ dispatchUser, setRefresh }: SimpleView & { setRefresh: Ca
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UploadFiles);
+export default UploadFiles;
