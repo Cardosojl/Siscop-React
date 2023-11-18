@@ -16,6 +16,10 @@ const TextStyle = styled.p`
     color: ${({ theme }) => theme.colors.secondaryText};
     margin-left: 7px;
     font-size: 12px;
+
+    &:hover {
+        color: ${({ theme }) => theme.colors.lightGrayText};
+    }
 `;
 
 function UserLogged(): JSX.Element {

@@ -20,7 +20,7 @@ const LeftBarItemStyle = styled.div<LeftBarItemProps>`
     padding-top: 20px;
     padding-bottom: 20px;
     font-weight: bold;
-    border-bottom: 1px solid rgb(49, 49, 49);
+    border-bottom: 1px solid ${({ theme }) => useColorVariation(theme.colors.secondary, [-9, -12, -12])};
     position: relative;
     cursor: pointer;
 

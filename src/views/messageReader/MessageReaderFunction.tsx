@@ -86,19 +86,19 @@ export function handleIcons(user: User<string, Section>, path: string, element: 
     };
     const archive =
         path === 'messages' ? (
-            <>
+            <Wrapper $displayFlex="flex-start" $aling="center">
                 <ImageIcon $width="28px" $yellow src={archived} onClick={handleArchive} />
                 <small>Arquivar</small>
-            </>
+            </Wrapper>
         ) : (
             <></>
         );
 
     const trashDelete = (
-        <>
+        <Wrapper $displayFlex="flex-start" $aling="center">
             <ImageIcon $width="28px" $red src={trash} onClick={handleDelete} />
             <small>Apagar</small>
-        </>
+        </Wrapper>
     );
     return (
         <Wrapper $paddingRight="15px">
