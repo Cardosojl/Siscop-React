@@ -1,9 +1,9 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { Process, ProcessState } from 'src/config/types/types';
-import down from '../../assets/down.png';
+import down from '../../../../assets/down.png';
 import { handleDescription, handleStatus } from './ProcessInformationFunction';
-import { Wrapper } from '../Wrapper';
-import { ImageIcon } from '../ImageIcon';
+import { Wrapper } from '../../../common/Wrapper';
+import { ImageIcon } from '../../../common/ImageIcon';
 
 function ProcessInformation({ process }: { process: Partial<Process> }): JSX.Element {
     const descriptionArrow = useState<string>(down);

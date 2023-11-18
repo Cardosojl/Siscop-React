@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex } from 'src/apis/siscopDB';
-import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
-import PageSelector from 'src/components/pageSelector/PageSelector';
-import ProcessItemManager from 'src/components/processItemManager/ProcessItemManager';
-import { Th } from 'src/components/Table';
+import { IndexSelector } from 'src/components/common/indexSelector/IndexSelector';
+import PageSelector from 'src/components/common/pageSelector/PageSelector';
+import ProcessItemManager from 'src/components/ProcessManager/processItemManager/ProcessItemManager';
+import { Th } from 'src/components/common/Table';
 import { ObjFilter, Process, Section, SiscopApiIndex, TableType } from 'src/config/types/types';
 
 export async function handleSections(): Promise<Section[] | null> {

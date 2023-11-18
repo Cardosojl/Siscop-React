@@ -3,11 +3,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleInputs, handleUser } from './LoginFunction';
-import { Button } from 'src/components/Button';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { Button } from 'src/components/common/Button';
+import { Window } from 'src/components/common/Window';
+import { FormField } from 'src/components/common/FormField';
+import Title from 'src/components/common/Title';
+import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
 
 function Login(): JSX.Element {

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import right from '../../assets/seta.png';
-import left from '../../assets/seta2.png';
+import right from '../../../assets/seta.png';
+import left from '../../../assets/seta2.png';
 import { PageSelectorType } from 'src/config/types/types';
-import useAsyncError from '../../hooks/useAsyncError';
+import useAsyncError from '../../../hooks/useAsyncError';
 import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunction';
 import { Wrapper } from '../Wrapper';
 import { RoundButton } from '../RoundButton';

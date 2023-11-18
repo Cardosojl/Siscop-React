@@ -3,13 +3,13 @@ import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { handleFind, handleForm, handleSections } from './ChangeUserFunction';
-import { Button } from 'src/components/Button';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import { Select } from 'src/components/Select';
+import { Button } from 'src/components/common/Button';
+import { Window } from 'src/components/common/Window';
+import { FormField } from 'src/components/common/FormField';
+import { Select } from 'src/components/common/Select';
 import { setInputs } from '../elementsCreator';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import Title from 'src/components/common/Title';
+import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
 
 function ChangeUser(): JSX.Element {

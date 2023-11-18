@@ -3,13 +3,13 @@ import { ObjFilter, Process, Section, TableType } from 'src/config/types/types';
 import { generatePageSelector, generateSectionTitle, handleProcesses, handleProcessesTable, handleSections } from './ProcessManagerFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
-import Table from 'src/components/Table';
+import Table from 'src/components/common/Table';
 import { useLocation } from 'react-router-dom';
-import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
-import SearchBar from 'src/components/searchBar/SearchBar';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { Wrapper } from 'src/components/Wrapper';
+import { IndexSelector } from 'src/components/common/indexSelector/IndexSelector';
+import SearchBar from 'src/components/common/searchBar/SearchBar';
+import { Window } from 'src/components/common/Window';
+import Title from 'src/components/common/Title';
+import { Wrapper } from 'src/components/common/Wrapper';
 import DataContext from 'src/data/DataContext';
 
 function ProcessManager(): JSX.Element {

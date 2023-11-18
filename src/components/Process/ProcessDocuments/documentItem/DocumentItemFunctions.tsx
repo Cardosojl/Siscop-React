@@ -2,10 +2,10 @@ import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 import { FileTypes, Section, User } from 'src/config/types/types';
 import { siscopDelete, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AxiosResponse } from 'axios';
-import { Tr, Td } from '../Table';
-import { InputForm } from '../InputForm';
-import { Button } from '../Button';
-import { FileComponentClean } from '../fileComponent/FileComponentClean';
+import { Tr, Td } from '../../../common/Table';
+import { InputForm } from '../../../common/InputForm';
+import { Button } from '../../../common/Button';
+import { FileComponentClean } from '../../../common/fileComponent/FileComponentClean';
 
 function formValidator(form: Partial<FileTypes>): boolean {
     let error = false;

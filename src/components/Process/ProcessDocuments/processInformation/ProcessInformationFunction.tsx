@@ -1,11 +1,11 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 import { Process, ProcessState } from 'src/config/types/types';
-import up from '../../assets/up.png';
-import down from '../../assets/down.png';
-import StatusBlock from '../statusBlock/StatusBlock';
+import up from '../../../../assets/up.png';
+import down from '../../../../assets/down.png';
+import StatusBlock from '../../../common/statusBlock/StatusBlock';
 import { Link } from 'react-router-dom';
-import { ProcessInfo } from '../ProcessInfo';
-import { Button } from '../Button';
+import { ProcessInfo } from './ProcessInfo';
+import { Button } from '../../../common/Button';
 
 export function generateDescription(description: string): ReactNode {
     return (

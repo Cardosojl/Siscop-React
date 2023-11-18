@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopCreate, siscopIndex } from 'src/apis/siscopDB';
 import { AcquisitionWay, Process, Section } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/common/Message';
 
 function formvalidator(form: Partial<Process>, setMessage: CallableFunction, sections: Section[], acquisitionWays: AcquisitionWay[]): boolean {
     let error = false;

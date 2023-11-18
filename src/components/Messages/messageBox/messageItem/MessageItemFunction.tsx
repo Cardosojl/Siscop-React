@@ -1,11 +1,11 @@
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 import { MessageType, Process, Section, User } from 'src/config/types/types';
 import { siscopCreate, siscopDelete, siscopShow } from 'src/apis/siscopDB';
-import archived from '../../assets/archive.png';
-import trash from '../../assets/trash.png';
-import { Td, Tr } from '../Table';
-import { ImageIcon } from '../ImageIcon';
-import { LinkStyled } from '../LinkStyled';
+import archived from '../../../../assets/archive.png';
+import trash from '../../../../assets/trash.png';
+import { Td, Tr } from '../../../common/Table';
+import { ImageIcon } from '../../../common/ImageIcon';
+import { LinkStyled } from '../../../common/LinkStyled';
 
 async function validationEvents(element: MessageType, path: string, user: User<string, Section>): Promise<boolean> {
     let error = false;

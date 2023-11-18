@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
-import { Wrapper } from 'src/components/Wrapper';
-import { FileComponent } from 'src/components/fileComponent/FileComponent';
-import StatusBlock from 'src/components/statusBlock/StatusBlock';
+import { Wrapper } from 'src/components/common/Wrapper';
+import { FileComponent } from 'src/components/common/fileComponent/FileComponent';
+import StatusBlock from 'src/components/common/statusBlock/StatusBlock';
 import { FileTypes, Process, ProcessState, Section } from 'src/config/types/types';
 
 export async function handleProcess(parameter: Partial<Process>): Promise<Process | null> {

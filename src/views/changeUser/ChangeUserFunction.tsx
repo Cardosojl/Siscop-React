@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopIndex, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/common/Message';
 
 async function handleUser(name: string) {
     const user = await siscopShow('users/user', ['section'], { name, select: '-password' });

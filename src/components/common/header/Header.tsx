@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+import logo from '../../../assets/logo.png';
 import UserLogged from './UserLogged';
 import { Wrapper } from '../Wrapper';
 import DataContext from 'src/data/DataContext';

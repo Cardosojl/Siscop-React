@@ -4,12 +4,12 @@ import { handleForm } from './EditProfileFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { useNavigate } from 'react-router-dom';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import Title from 'src/components/Title';
-import { Button } from 'src/components/Button';
+import { Window } from 'src/components/common/Window';
+import { FormField } from 'src/components/common/FormField';
+import Title from 'src/components/common/Title';
+import { Button } from 'src/components/common/Button';
 import { setInputs } from '../elementsCreator';
-import { InputForm } from 'src/components/InputForm';
+import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
 
 function EditProfile(): JSX.Element {

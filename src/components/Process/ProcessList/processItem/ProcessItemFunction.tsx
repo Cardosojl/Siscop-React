@@ -2,9 +2,9 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { siscopDelete, siscopShow } from 'src/apis/siscopDB';
 import { Process, Section, User } from 'src/config/types/types';
-import { Tr, Td } from '../Table';
-import { LinkStyled } from '../LinkStyled';
-import { Button } from '../Button';
+import { Tr, Td } from '../../../common/Table';
+import { LinkStyled } from '../../../common/LinkStyled';
+import { Button } from '../../../common/Button';
 
 async function validationEvents(path: string, processId: string, user: User<string, Section>): Promise<boolean> {
     let error = false;

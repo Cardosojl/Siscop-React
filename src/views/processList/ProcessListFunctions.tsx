@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import { AxiosResponse } from 'axios';
 import { siscopDelete, siscopIndex } from 'src/apis/siscopDB';
-import ProcessItem from 'src/components/processItem/ProcessItem';
+import ProcessItem from 'src/components/Process/ProcessList/processItem/ProcessItem';
 import { ObjFilter, Process, Section, SiscopApiIndex, TableType, User, Year } from 'src/config/types/types';
-import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
-import { Tr, Td } from 'src/components/Table';
-import { Button } from 'src/components/Button';
+import { IndexSelector } from 'src/components/common/indexSelector/IndexSelector';
+import { Tr, Td } from 'src/components/common/Table';
+import { Button } from 'src/components/common/Button';
 
 export function generateIndex(elements: SiscopApiIndex | null, filter: ObjFilter, setFilter: CallableFunction): ReactNode {
     return elements?.map((element, index) => <IndexSelector key={index} index={(element as Year).year as string} value={(element as Year).year as string} setFilter={setFilter} filter={filter} />);

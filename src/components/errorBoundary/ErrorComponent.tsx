@@ -1,11 +1,11 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
-import { Button } from './Button';
-import { Wrapper } from './Wrapper';
+import { Button } from '../common/Button';
+import { Wrapper } from '../common/Wrapper';
 
 const PageStyle = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
-    background-image: url(${require('../assets/errorBackground.png')});
+    background-image: url(${require('../../assets/errorBackground.png')});
     height: 100vh;
     width: 100%;
     background-repeat: no-repeat;

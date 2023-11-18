@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Section } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { siscopLogoffDelete } from 'src/apis/siscopDB';
-import { Wrapper } from 'src/components/Wrapper';
+import { Wrapper } from 'src/components/common/Wrapper';
 import DataContext, { initialUser } from 'src/data/DataContext';
 
 const LinkStyle = styled(Link)`

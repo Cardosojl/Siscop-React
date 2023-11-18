@@ -4,8 +4,8 @@ import { DispatchUser, MessageType, Section, User } from 'src/config/types/types
 import archived from '../../assets/archive.png';
 import trash from '../../assets/trash.png';
 import { NavigateFunction } from 'react-router-dom';
-import { ImageIcon } from 'src/components/ImageIcon';
-import { Wrapper } from 'src/components/Wrapper';
+import { ImageIcon } from 'src/components/common/ImageIcon';
+import { Wrapper } from 'src/components/common/Wrapper';
 
 async function handleApiDeleteMessage(path: string, element: MessageType, user: User<string, Section>): Promise<void> {
     if (!(await validationEvents(element, path, user))) {

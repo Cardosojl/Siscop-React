@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopIndex, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AcquisitionWay, Process, Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/common/Message';
 
 async function updateProcess(process: Partial<Process>, form: Partial<Process>): Promise<void> {
     await siscopUpdate('processes', { _id: process._id }, form);

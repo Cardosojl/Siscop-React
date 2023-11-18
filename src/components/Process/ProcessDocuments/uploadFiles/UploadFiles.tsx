@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { handleFileForm, handleFilename, setFiles } from './UploadFilesFunction';
 import { useLocation } from 'react-router-dom';
 import useAsyncError from 'src/hooks/useAsyncError';
-import { Wrapper } from '../Wrapper';
-import { Button } from '../Button';
+import { Wrapper } from '../../../common/Wrapper';
+import { Button } from '../../../common/Button';
 import DataContext from 'src/data/DataContext';
 
 const LabelButtonStyle = styled.label`

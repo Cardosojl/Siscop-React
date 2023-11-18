@@ -2,9 +2,9 @@ import React, { ChangeEvent, FormEvent, ReactNode } from 'react';
 import { siscopCreate, siscopIndex, siscopShow } from 'src/apis/siscopDB';
 import { MessageType, Process, Section, User } from 'src/config/types/types';
 import { setInputs } from '../elementsCreator';
-import { Select } from 'src/components/Select';
-import { Message } from 'src/components/Message';
-import { FormField } from 'src/components/FormField';
+import { Select } from 'src/components/common/Select';
+import { Message } from 'src/components/common/Message';
+import { FormField } from 'src/components/common/FormField';
 
 async function validate(form: Partial<MessageType> & Partial<Process>, setErrorMessage: CallableFunction) {
     setErrorMessage('');

@@ -1,6 +1,6 @@
 import React, { FormEventHandler } from 'react';
 import styled from 'styled-components';
-import { Button } from './Button';
+import { Button } from '../../common/Button';
 
 const FormMessageStyle = styled.form`
     padding: 20px 45px 0px 45px;

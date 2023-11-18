@@ -1,7 +1,7 @@
 import React, { FormEvent } from 'react';
 import { Process, ProcessState, Section, User } from 'src/config/types/types';
 import { siscopCreate, siscopShow } from 'src/apis/siscopDB';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/common/Message';
 
 function validationForm(form: Partial<ProcessState>, setMessage: CallableFunction): boolean {
     const stateOptions = ['Coletando Orçamentos', 'Em Montagem', 'Montagem Finalizada', 'Em Análise', 'Outro'];

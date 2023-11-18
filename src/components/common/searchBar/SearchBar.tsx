@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import searchImg from '../../assets/lupa2.png';
+import searchImg from '../../../assets/lupa2.png';
 import { handleSearch, handleSearchOptions } from './SearchBarFunctions';
 import { SearchBarType } from 'src/config/types/types';
 

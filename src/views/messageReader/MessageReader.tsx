@@ -5,10 +5,10 @@ import { handleApiMessage, handleIcons, handleResponsible } from './MessageReade
 import useAsyncError from 'src/hooks/useAsyncError';
 import reader from 'src/views/messageReader/StringtoJSX';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { MessageContent } from 'src/components/MessageContent';
-import { Wrapper } from 'src/components/Wrapper';
+import { Window } from 'src/components/common/Window';
+import Title from 'src/components/common/Title';
+import { MessageContent } from 'src/components/Messages/messageReader/MessageContent';
+import { Wrapper } from 'src/components/common/Wrapper';
 import DataContext from 'src/data/DataContext';
 
 function MessageReader({ path }: { path: string }): JSX.Element {

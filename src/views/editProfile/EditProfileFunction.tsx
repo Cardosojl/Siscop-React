@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { DispatchUser, Profile, Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/common/Message';
 
 async function formValidator(form: Partial<Profile>, user: User, setMessage: CallableFunction) {
     let error = false;

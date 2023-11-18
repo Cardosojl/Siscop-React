@@ -5,11 +5,11 @@ import { GlobalStyles } from './styles/Global';
 import { theme } from './styles/Theme';
 import { BrowserRouter } from 'react-router-dom';
 import Content from './components/content/Content';
-import Header from './components/header/Header';
-import LeftBar from './components/leftBar/LeftBar';
+import Header from './components/common/header/Header';
+import LeftBar from './components/common/leftBar/LeftBar';
 import { Section, User } from './config/types/types';
 import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
-import { Wrapper } from './components/Wrapper';
+import { Wrapper } from './components/common/Wrapper';
 
 function App() {
     const [user, setUser] = useState<User<string, Section>>(dataUser.user);

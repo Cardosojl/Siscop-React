@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Table from 'src/components/Table';
+import Table from 'src/components/common/Table';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Process, TableType } from 'src/config/types/types';
 import { handleFiles, handleProcess, handleTableFiles } from './DocumentListFunction';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
-import ProcessInformation from 'src/components/processInformation/ProcessInformation';
-import UploadFiles from 'src/components/uploadFiles/UploadFiles';
+import ProcessInformation from 'src/components/Process/ProcessDocuments/processInformation/ProcessInformation';
+import UploadFiles from 'src/components/Process/ProcessDocuments/uploadFiles/UploadFiles';
 import arrow from '../../assets/seta2.png';
 import mail from '../../assets/email.png';
-import Title from 'src/components/Title';
-import { Window } from 'src/components/Window';
-import { Wrapper } from 'src/components/Wrapper';
-import { RoundButton } from 'src/components/RoundButton';
+import Title from 'src/components/common/Title';
+import { Window } from 'src/components/common/Window';
+import { Wrapper } from 'src/components/common/Wrapper';
+import { RoundButton } from 'src/components/common/RoundButton';
 import DataContext from 'src/data/DataContext';
 
 function DocumentList({ path }: { path: string | undefined }): JSX.Element {

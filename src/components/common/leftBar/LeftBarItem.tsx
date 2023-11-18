@@ -1,6 +1,6 @@
 import React, { MouseEventHandler, ReactNode, useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import arrow from '../../assets/leftbararrow.png';
+import arrow from '../../../assets/leftbararrow.png';
 import useColorVariation from 'src/hooks/useColorVariation';
 import DataContext from 'src/data/DataContext';
 

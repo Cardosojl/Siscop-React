@@ -1,8 +1,8 @@
 import React from 'react';
 import { Process } from 'src/config/types/types';
-import { StatusBlockSmall } from '../StatusBlockSmall';
-import { Td, Tr } from '../Table';
-import { LinkStyled } from '../LinkStyled';
+import { StatusBlockSmall } from './StatusBlockSmall';
+import { Td, Tr } from '../../common/Table';
+import { LinkStyled } from '../../common/LinkStyled';
 
 function generateContent(element: Process) {
     return (

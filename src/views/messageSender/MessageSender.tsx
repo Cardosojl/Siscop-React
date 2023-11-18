@@ -8,13 +8,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 import joditConfig from './jodit/joditConfig';
 import { setInputs } from '../elementsCreator';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
-import { Select } from 'src/components/Select';
-import { Wrapper } from 'src/components/Wrapper';
-import { FormField } from 'src/components/FormField';
-import { FormMessageButton } from 'src/components/FormMessageButton';
+import { Window } from 'src/components/common/Window';
+import Title from 'src/components/common/Title';
+import { InputForm } from 'src/components/common/InputForm';
+import { Select } from 'src/components/common/Select';
+import { Wrapper } from 'src/components/common/Wrapper';
+import { FormField } from 'src/components/common/FormField';
+import { FormMessageButton } from 'src/components/Messages/MessageSender/FormMessageButton';
 import DataContext from 'src/data/DataContext';
 
 function MessageSender(): JSX.Element {
