@@ -11,6 +11,7 @@ import { Button } from 'src/components/common/Button';
 import Title from 'src/components/common/Title';
 import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function RegisterUser(): JSX.Element {
     const { setUser } = useContext(DataContext);
@@ -43,26 +44,28 @@ function RegisterUser(): JSX.Element {
     }, []);
 
     return (
-        <Window $small>
-            <Title title="Cadastrar Usuário" />
-            <hr />
-            <form onSubmit={sendForm}>
-                {message}
-                <FormField label="Nome:">
-                    <InputForm $small type="text" name="name" value={form.name} onChange={handleInput} />
-                </FormField>
-                <FormField label="Senha:">
-                    <InputForm $small type="password" name="password" value={form.password} onChange={handleInput} />
-                </FormField>
-                <FormField label="Seção:">
-                    <Select name="section" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
-                </FormField>
-                <FormField label="Level:">
-                    <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
-                </FormField>
-                <Button $green>Cadastrar</Button>
-            </form>
-        </Window>
+        <DefaultLayout>
+            <Window $small>
+                <Title title="Cadastrar Usuário" />
+                <hr />
+                <form onSubmit={sendForm}>
+                    {message}
+                    <FormField label="Nome:">
+                        <InputForm $small type="text" name="name" value={form.name} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Senha:">
+                        <InputForm $small type="password" name="password" value={form.password} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Seção:">
+                        <Select name="section" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Level:">
+                        <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
+                    </FormField>
+                    <Button $green>Cadastrar</Button>
+                </form>
+            </Window>
+        </DefaultLayout>
     );
 }
 

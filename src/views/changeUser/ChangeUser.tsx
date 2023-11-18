@@ -11,6 +11,7 @@ import { setInputs } from '../elementsCreator';
 import Title from 'src/components/common/Title';
 import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function ChangeUser(): JSX.Element {
     const { setUser } = useContext(DataContext);
@@ -52,37 +53,39 @@ function ChangeUser(): JSX.Element {
     }, []);
 
     return (
-        <Window $small>
-            <Title title="Alterar Usuário" />
-            <hr />
-            <form onSubmit={findUser}>
-                <FormField label="Nome do Usuário:">
-                    <InputForm type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    <Button $green>Procurar</Button>
-                </FormField>
-            </form>
-            {profile ? (
-                <form onSubmit={sendForm}>
-                    {message}
-                    <hr />
-                    <FormField label="Nome:">
-                        <InputForm name="name" type="text" value={form.name || ''} onChange={handleInput} />
+        <DefaultLayout>
+            <Window $small>
+                <Title title="Alterar Usuário" />
+                <hr />
+                <form onSubmit={findUser}>
+                    <FormField label="Nome do Usuário:">
+                        <InputForm type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                        <Button $green>Procurar</Button>
                     </FormField>
-                    <FormField label="Senha:">
-                        <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
-                    </FormField>
-                    <FormField label="Seção:">
-                        <Select name="section" sort={true} optionValues={sectionArray} elementValue={(profile.section as Section).name} alternativeValues={sectionArrayID} onChange={handleInput} />
-                    </FormField>
-                    <FormField label="Level:">
-                        <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
-                    </FormField>
-                    <Button $green>Alterar</Button>
                 </form>
-            ) : (
-                ''
-            )}
-        </Window>
+                {profile ? (
+                    <form onSubmit={sendForm}>
+                        {message}
+                        <hr />
+                        <FormField label="Nome:">
+                            <InputForm name="name" type="text" value={form.name || ''} onChange={handleInput} />
+                        </FormField>
+                        <FormField label="Senha:">
+                            <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
+                        </FormField>
+                        <FormField label="Seção:">
+                            <Select name="section" sort={true} optionValues={sectionArray} elementValue={(profile.section as Section).name} alternativeValues={sectionArrayID} onChange={handleInput} />
+                        </FormField>
+                        <FormField label="Level:">
+                            <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
+                        </FormField>
+                        <Button $green>Alterar</Button>
+                    </form>
+                ) : (
+                    ''
+                )}
+            </Window>
+        </DefaultLayout>
     );
 }
 

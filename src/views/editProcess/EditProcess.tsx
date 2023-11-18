@@ -12,6 +12,7 @@ import { Button } from 'src/components/common/Button';
 import Title from 'src/components/common/Title';
 import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function EditProcess({ path }: { path: string | undefined }): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -68,29 +69,31 @@ function EditProcess({ path }: { path: string | undefined }): JSX.Element {
     }, []);
 
     return (
-        <Window $medium>
-            <Title title={process.title || ''} />
-            <hr />
-            <form onSubmit={sendForm}>
-                {message}
-                <FormField label="Nome:">
-                    <InputForm $medium name="title" type="text" value={form.title || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Nup:">
-                    <InputForm name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Origem:">
-                    <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section).name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />
-                </FormField>
-                <FormField label="Forma de Aquisição:">
-                    <Select sort={false} name="category" optionValues={acquisitionArray} elementValue={process.category || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Descrição">
-                    <textarea name="description" value={form.description} onChange={handleInput} />
-                </FormField>
-                <Button $green>Enviar</Button>
-            </form>
-        </Window>
+        <DefaultLayout>
+            <Window $medium>
+                <Title title={process.title || ''} />
+                <hr />
+                <form onSubmit={sendForm}>
+                    {message}
+                    <FormField label="Nome:">
+                        <InputForm $medium name="title" type="text" value={form.title || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Nup:">
+                        <InputForm name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Origem:">
+                        <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section).name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Forma de Aquisição:">
+                        <Select sort={false} name="category" optionValues={acquisitionArray} elementValue={process.category || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Descrição">
+                        <textarea name="description" value={form.description} onChange={handleInput} />
+                    </FormField>
+                    <Button $green>Enviar</Button>
+                </form>
+            </Window>
+        </DefaultLayout>
     );
 }
 

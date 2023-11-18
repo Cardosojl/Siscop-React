@@ -11,6 +11,7 @@ import { Button } from 'src/components/common/Button';
 import { setInputs } from '../elementsCreator';
 import Title from 'src/components/common/Title';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function ProcessStatus({ path }: { path: string | undefined }): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -43,20 +44,22 @@ function ProcessStatus({ path }: { path: string | undefined }): JSX.Element {
     }, []);
 
     return (
-        <Window $medium>
-            <Title title={process.title || ''} />
-            <hr />
-            <form onSubmit={sendForm}>
-                {message}
-                <FormField label="Anotação:">
-                    <textarea name="anotation" value={form.anotation} onChange={handleInput}></textarea>
-                </FormField>
-                <FormField label="Status:">
-                    <Select name="state" sort={false} optionValues={stateOptions} elementValue="" onChange={handleInput} />
-                </FormField>
-                <Button $green>Enviar</Button>
-            </form>
-        </Window>
+        <DefaultLayout>
+            <Window $medium>
+                <Title title={process.title || ''} />
+                <hr />
+                <form onSubmit={sendForm}>
+                    {message}
+                    <FormField label="Anotação:">
+                        <textarea name="anotation" value={form.anotation} onChange={handleInput}></textarea>
+                    </FormField>
+                    <FormField label="Status:">
+                        <Select name="state" sort={false} optionValues={stateOptions} elementValue="" onChange={handleInput} />
+                    </FormField>
+                    <Button $green>Enviar</Button>
+                </form>
+            </Window>
+        </DefaultLayout>
     );
 }
 

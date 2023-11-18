@@ -22,10 +22,7 @@ function App() {
                     <ErrorBoundary>
                         <div>
                             <Header />
-                            <Wrapper $displayFlex="flex-start">
-                                {user.logged ? <LeftBar /> : null}
-                                <Content />
-                            </Wrapper>
+                            <Content />
                         </div>
                     </ErrorBoundary>
                 </BrowserRouter>

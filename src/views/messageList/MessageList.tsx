@@ -10,6 +10,7 @@ import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/common/Window';
 import Title from 'src/components/common/Title';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function MessageList({ title, path }: { title: string | undefined; path: string | undefined }): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -39,14 +40,16 @@ function MessageList({ title, path }: { title: string | undefined; path: string 
     }, [index, filter, changedPath, refresh]);
 
     return (
-        <Window $large>
-            <Title title={title || ''} $dark>
-                <SearchBar setFilter={setFilter} path={changedPath} optionValues={['Mensagem', 'Processo']} apiValues={['title', 'process_title']} />
-            </Title>
-            <Table table={messageTable} />
-            <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={itensLimit} filter={filter} listener={refresh} />
-            <Navigate to={`/${handleUrl(path as string)}/${index}`} />
-        </Window>
+        <DefaultLayout>
+            <Window $large>
+                <Title title={title || ''} $dark>
+                    <SearchBar setFilter={setFilter} path={changedPath} optionValues={['Mensagem', 'Processo']} apiValues={['title', 'process_title']} />
+                </Title>
+                <Table table={messageTable} />
+                <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={itensLimit} filter={filter} listener={refresh} />
+                <Navigate to={`/${handleUrl(path as string)}/${index}`} />
+            </Window>
+        </DefaultLayout>
     );
 }
 

@@ -31,12 +31,16 @@ const sizes = [
 ];
 
 export const Window = styled.div<WindowProps>`
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
     padding: 0px 0px 20px 0px;
+    height: fit-content;
     background-color: ${({ theme }) => theme.colors.primary};
     border-radius: 3px;
     min-height: 180px;
     box-shadow: 6px 6px 10px 1px ${({ theme }) => theme.colors.darkness};
-    margin-bottom: 30px;
     padding-bottom: 20px;
     color: ${({ theme }) => theme.colors.primaryText};
 

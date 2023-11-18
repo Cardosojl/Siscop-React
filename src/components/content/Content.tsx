@@ -17,12 +17,6 @@ import RegisterUser from 'src/views/registerUser/RegisterUser';
 import ChangeUser from 'src/views/changeUser/ChangeUser';
 import DataContext from 'src/data/DataContext';
 
-const ContentStyle = styled.main`
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 30px;
-`;
-
 function Content(): JSX.Element {
     const { user } = useContext(DataContext);
     const login = <Login />;
@@ -49,7 +43,7 @@ function Content(): JSX.Element {
     const changeUser = <ChangeUser />;
 
     return (
-        <ContentStyle>
+        <div>
             <Routes>
                 <Route path="/" element={login} />
                 <Route path="/minhasMensagensRecebidas/:id" element={user.logged ? messagesReaderR : login} />
@@ -74,7 +68,7 @@ function Content(): JSX.Element {
                 <Route path="/cadastrarUsuario" element={user.logged ? registerUser : login} />
                 <Route path="/alterarUsuario" element={user.logged ? changeUser : login} />
             </Routes>
-        </ContentStyle>
+        </div>
     );
 }
 

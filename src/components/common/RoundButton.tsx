@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const RoundButtonStyle = styled(Button)`
     border-radius: 18px;
-    padding: 5px 5px 7px 5px;
+    padding: 5px;
 `;
 
 const ImgButtonStyle = styled.img`

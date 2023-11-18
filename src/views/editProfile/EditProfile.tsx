@@ -11,6 +11,7 @@ import { Button } from 'src/components/common/Button';
 import { setInputs } from '../elementsCreator';
 import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function EditProfile(): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -28,23 +29,25 @@ function EditProfile(): JSX.Element {
     };
 
     return (
-        <Window $small>
-            <Title title="Alterar Senha" />
-            <hr />
-            <form onSubmit={sendForm}>
-                {message}
-                <FormField label="Senha Atual:">
-                    <InputForm name="current" type="password" value={form.current || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Senha Nova:">
-                    <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Repetir Senha:">
-                    <InputForm name="confirm" type="password" value={form.confirm || ''} onChange={handleInput} />
-                </FormField>
-                <Button $green>Alterar</Button>
-            </form>
-        </Window>
+        <DefaultLayout>
+            <Window $small>
+                <Title title="Alterar Senha" />
+                <hr />
+                <form onSubmit={sendForm}>
+                    {message}
+                    <FormField label="Senha Atual:">
+                        <InputForm name="current" type="password" value={form.current || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Senha Nova:">
+                        <InputForm name="password" type="password" value={form.password || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Repetir Senha:">
+                        <InputForm name="confirm" type="password" value={form.confirm || ''} onChange={handleInput} />
+                    </FormField>
+                    <Button $green>Alterar</Button>
+                </form>
+            </Window>
+        </DefaultLayout>
     );
 }
 

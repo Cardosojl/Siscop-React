@@ -9,6 +9,7 @@ import { handleErros } from 'src/apis/siscopDB';
 import { Window } from 'src/components/common/Window';
 import Title from 'src/components/common/Title';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function ProcessList({ path, title }: { path: string | undefined; title: string | undefined }): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -57,16 +58,18 @@ function ProcessList({ path, title }: { path: string | undefined; title: string 
     }, [filter, index, refresh]);
 
     return (
-        <Window $large>
-            <Title title={title || ''}>
-                <h3>{filter.year !== '0000' ? filter.year : ''}</h3>
-            </Title>
-            <hr />
-            {generateIndex(yearIndex, filter, setFilter)}
-            <Table table={processesTable} />
-            <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} listener={refresh} />
-            <Navigate to={`/${handleUrl(path as string)}/${index}`} />
-        </Window>
+        <DefaultLayout>
+            <Window $large>
+                <Title title={title || ''}>
+                    <h3>{filter.year !== '0000' ? filter.year : ''}</h3>
+                </Title>
+                <hr />
+                {generateIndex(yearIndex, filter, setFilter)}
+                <Table table={processesTable} />
+                <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} listener={refresh} />
+                <Navigate to={`/${handleUrl(path as string)}/${index}`} />
+            </Window>
+        </DefaultLayout>
     );
 }
 

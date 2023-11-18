@@ -9,6 +9,7 @@ import { Window } from 'src/components/common/Window';
 import { Wrapper } from 'src/components/common/Wrapper';
 import { ManagerInfo } from 'src/components/ProcessManager/ProcessManagerInfo/ManagerInfo';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function DocumentManager(): JSX.Element {
     const { setUser } = useContext(DataContext);
@@ -43,15 +44,17 @@ function DocumentManager(): JSX.Element {
     }, []);
 
     return (
-        <Window $large>
-            <Title title={process?.title || ''}>
-                <h3>{process?.year || ''}</h3>
-            </Title>
-            <hr />
-            <Wrapper $displayFlex="flex-start" $position="relative" width="100%" height="min-content">
-                <ManagerInfo infos={generateContent(process)} documents={generateFiles(files)} states={generateStates(states)} />
-            </Wrapper>
-        </Window>
+        <DefaultLayout>
+            <Window $large>
+                <Title title={process?.title || ''}>
+                    <h3>{process?.year || ''}</h3>
+                </Title>
+                <hr />
+                <Wrapper $displayFlex="flex-start" $position="relative" width="100%" height="min-content">
+                    <ManagerInfo infos={generateContent(process)} documents={generateFiles(files)} states={generateStates(states)} />
+                </Wrapper>
+            </Window>
+        </DefaultLayout>
     );
 }
 

@@ -1,12 +1,12 @@
 import React, { ChangeEvent, FormEvent, ReactNode, useContext, useEffect, useRef, useState } from 'react';
-import './jodit/jodit.css';
+import '../../config/jodit/jodit.css';
 import { MessageType, Process } from 'src/config/types/types';
 import { generateProcessSelect, generateSectionSelect, generateUserSelect, handleForm, handleProcesses, handleSections, handleUsers } from './MessageSenderFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
-import joditConfig from './jodit/joditConfig';
+import joditConfig from '../../config/jodit/joditConfig';
 import { setInputs } from '../elementsCreator';
 import { Window } from 'src/components/common/Window';
 import Title from 'src/components/common/Title';
@@ -16,6 +16,7 @@ import { Wrapper } from 'src/components/common/Wrapper';
 import { FormField } from 'src/components/common/FormField';
 import { FormMessageButton } from 'src/components/Messages/MessageSender/FormMessageButton';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function MessageSender(): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -74,28 +75,30 @@ function MessageSender(): JSX.Element {
     }, [destination]);
 
     return (
-        <Window $large>
-            <Title title="Nova Mensagem" $dark />
-            {errorMessage}
-            <Wrapper $displayFlex="space-between">
-                <Wrapper>
-                    <Wrapper $paddingLeft="15px" $paddingTop="20px" $displayFlex="flex-start">
-                        <FormField label="Título:">
-                            <InputForm type="text" name="title" value={form?.title || ''} onChange={handleInput} />
-                        </FormField>
-                        <FormField label="Destinatário:">
-                            <Select name="receiver" onChange={handleSelect} optionValues={destinationArray} elementValue="" alternativeValues={destinationArrayValue} sort={false} />
-                        </FormField>
-                        {selectDestination}
+        <DefaultLayout>
+            <Window $large>
+                <Title title="Nova Mensagem" $dark />
+                {errorMessage}
+                <Wrapper $displayFlex="space-between">
+                    <Wrapper>
+                        <Wrapper $paddingLeft="15px" $paddingTop="20px" $displayFlex="flex-start">
+                            <FormField label="Título:">
+                                <InputForm type="text" name="title" value={form?.title || ''} onChange={handleInput} />
+                            </FormField>
+                            <FormField label="Destinatário:">
+                                <Select name="receiver" onChange={handleSelect} optionValues={destinationArray} elementValue="" alternativeValues={destinationArrayValue} sort={false} />
+                            </FormField>
+                            {selectDestination}
+                        </Wrapper>
+                        <Wrapper $paddingLeft="15px" $paddingTop="5px" $displayFlex="space-between" $paddingRight="50px">
+                            <FormField label="Processo:">{selectProcess}</FormField>
+                        </Wrapper>
                     </Wrapper>
-                    <Wrapper $paddingLeft="15px" $paddingTop="5px" $displayFlex="space-between" $paddingRight="50px">
-                        <FormField label="Processo:">{selectProcess}</FormField>
-                    </Wrapper>
+                    <FormMessageButton onSubmit={send} />
                 </Wrapper>
-                <FormMessageButton onSubmit={send} />
-            </Wrapper>
-            <JoditEditor ref={editor} value={form?.content || ''} config={joditConfig} onChange={(e) => setForm((curr) => ({ ...curr, content: e }))} />
-        </Window>
+                <JoditEditor ref={editor} value={form?.content || ''} config={joditConfig} onChange={(e) => setForm((curr) => ({ ...curr, content: e }))} />
+            </Window>
+        </DefaultLayout>
     );
 }
 

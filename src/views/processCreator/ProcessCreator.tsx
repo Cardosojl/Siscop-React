@@ -12,6 +12,7 @@ import { Button } from 'src/components/common/Button';
 import Title from 'src/components/common/Title';
 import { InputForm } from 'src/components/common/InputForm';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function ProcessCreator(): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -53,29 +54,31 @@ function ProcessCreator(): JSX.Element {
     }, []);
 
     return (
-        <Window $medium>
-            <Title title="Novo Processo" />
-            <hr />
-            <form onSubmit={sendForm}>
-                {message}
-                <FormField label="Nome:">
-                    <InputForm $medium name="title" type="text" value={form.title || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Nup:">
-                    <InputForm $medium name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
-                </FormField>
-                <FormField label="Origem:">
-                    <Select name="origin" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
-                </FormField>
-                <FormField label="Forma de Aquisição:">
-                    <Select name="category" sort={false} optionValues={acquisitionArray} elementValue="" onChange={handleInput} />
-                </FormField>
-                <FormField label="Descrição:">
-                    <textarea name="description" value={form.description || ''} onChange={handleInput} />
-                </FormField>
-                <Button $green>Enviar</Button>
-            </form>
-        </Window>
+        <DefaultLayout>
+            <Window $medium>
+                <Title title="Novo Processo" />
+                <hr />
+                <form onSubmit={sendForm}>
+                    {message}
+                    <FormField label="Nome:">
+                        <InputForm $medium name="title" type="text" value={form.title || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Nup:">
+                        <InputForm $medium name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Origem:">
+                        <Select name="origin" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Forma de Aquisição:">
+                        <Select name="category" sort={false} optionValues={acquisitionArray} elementValue="" onChange={handleInput} />
+                    </FormField>
+                    <FormField label="Descrição:">
+                        <textarea name="description" value={form.description || ''} onChange={handleInput} />
+                    </FormField>
+                    <Button $green>Enviar</Button>
+                </form>
+            </Window>
+        </DefaultLayout>
     );
 }
 

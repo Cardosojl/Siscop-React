@@ -14,6 +14,7 @@ import { Window } from 'src/components/common/Window';
 import { Wrapper } from 'src/components/common/Wrapper';
 import { RoundButton } from 'src/components/common/RoundButton';
 import DataContext from 'src/data/DataContext';
+import { DefaultLayout } from 'src/components/common/DefaultLayout';
 
 function DocumentList({ path }: { path: string | undefined }): JSX.Element {
     const { user, setUser } = useContext(DataContext);
@@ -54,21 +55,23 @@ function DocumentList({ path }: { path: string | undefined }): JSX.Element {
     }, [process]);
 
     return (
-        <Window $large>
-            <Title title={process.title || ''}>
-                <small>{process.date || ''}</small>
-            </Title>
-            <hr />
-            <Wrapper $paddingLeft="15px" $paddingRight="15px">
-                <Table table={table} />
-            </Wrapper>
-            <ProcessInformation process={process} />
-            <UploadFiles setRefresh={setRefresh} />
-            <Wrapper $displayFlex="space-between" $paddingLeft="15px" $paddingRight="15px">
-                <RoundButton $green src={arrow} onClick={() => navigate(-1)} />
-                <RoundButton $blue src={mail} link={`/novaMensagem/${processId}`} />
-            </Wrapper>
-        </Window>
+        <DefaultLayout>
+            <Window $large>
+                <Title title={process.title || ''}>
+                    <small>{process.date || ''}</small>
+                </Title>
+                <hr />
+                <Wrapper $paddingLeft="15px" $paddingRight="15px">
+                    <Table table={table} />
+                </Wrapper>
+                <ProcessInformation process={process} />
+                <UploadFiles setRefresh={setRefresh} />
+                <Wrapper $displayFlex="space-between" $paddingLeft="15px" $paddingRight="15px">
+                    <RoundButton $green src={arrow} onClick={() => navigate(-1)} />
+                    <RoundButton $blue src={mail} link={`/novaMensagem/${processId}`} />
+                </Wrapper>
+            </Window>
+        </DefaultLayout>
     );
 }
 
