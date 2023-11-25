@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
-import { Wrapper } from 'src/components/Wrapper';
-import DocumentItem from 'src/components/documentItem/DocumentItem';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
+import { DocumentItem } from 'src/components/Table/DocumentItem';
 import { FileTypes, Process, Section, TableType, User } from 'src/config/types/types';
 
 export async function handleProcess(path: string, user: User<string, Section>, processId: string): Promise<Process> {

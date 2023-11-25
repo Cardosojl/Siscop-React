@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopCreate, siscopIndex, siscopShow } from 'src/apis/siscopDB';
 import { Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/Message/index';
 
 export async function handleSections(): Promise<Section[] | null> {
     const section = await siscopIndex('sections', 0, 0, 0, {});

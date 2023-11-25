@@ -1,7 +1,7 @@
 import React, { MouseEvent } from 'react';
 import styled from 'styled-components';
-import { Button } from './Button';
-import { Wrapper } from './Wrapper';
+import { ButtonStyle } from './Button/Button.styles';
+import { Wrapper } from './Wrapper/Wrapper/index';
 
 const PageStyle = styled.div`
     background-color: ${({ theme }) => theme.colors.background};
@@ -24,7 +24,7 @@ const WrapperErrorStyle = styled(Wrapper)`
     justify-content: center;
 `;
 
-const ButtonsErrorStyle = styled(Button)`
+const ButtonsErrorStyle = styled(ButtonStyle)`
     padding: 15px;
     font-weight: bolder;
     font-size: 20px;

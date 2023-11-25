@@ -4,12 +4,12 @@ import { Process, ProcessState } from 'src/config/types/types';
 import { handleForm, handleProcess } from './ProcessStatusFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import { Select } from 'src/components/Select';
-import { Button } from 'src/components/Button';
-import { setInputs } from '../elementsCreator';
-import Title from 'src/components/Title';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { Select } from 'src/components/Select/index';
+import { Button } from 'src/components/Button/index';
+import { setInputs } from '../../elementsCreator';
+import { Title } from 'src/components/Title/index';
 import DataContext from 'src/data/DataContext';
 
 function ProcessStatus({ path }: { path: string | undefined }): JSX.Element {

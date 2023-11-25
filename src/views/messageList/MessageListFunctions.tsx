@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex } from 'src/apis/siscopDB';
 import { MessageType, ObjFilter, Section, TableType, User } from 'src/config/types/types';
-import MessageItem from 'src/components/messageItem/MessageItem';
-import { Th, Tr } from 'src/components/Table';
+import { MessageItem } from 'src/components/Table/MessageItem';
+import { Tr } from 'src/components/Table/Tr';
+import { Th } from 'src/components/Table/Th';
 
 async function indexMessages(path: string, limit: number, index: number, user: User<string, Section>, filter: ObjFilter | null): Promise<MessageType[] | null> {
     if (path === 'messages') {

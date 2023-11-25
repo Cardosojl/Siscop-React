@@ -1,14 +1,20 @@
 import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import { NavigateFunction } from 'react-router-dom';
-import { handleErros, siscopLoginCreate } from 'src/apis/siscopDB';
+import { getToken, handleErros, siscopShow } from 'src/apis/siscopDB';
 import { DispatchUser, Section, User } from 'src/config/types/types';
 
 async function handleLogin(navigate: NavigateFunction, dispatchUser: DispatchUser, form: Partial<User<string, Section>>): Promise<void> {
+    await createSession(dispatchUser, form);
     navigate('/caixaDeEntrada/0');
-    dispatchUser(await siscopLoginCreate(form));
 }
 
-export async function handleUser(
+async function handleUserValues(dispatchUser: DispatchUser, form: Partial<User<string, Section>>): Promise<void> {
+    const user = (await siscopShow('users/user', ['section'], { name: form.name, select: '-password' })).data.response;
+    dispatchUser({ ...user, logged: true });
+    localStorage.setItem('user', JSON.stringify({ ...user, logged: true }));
+}
+
+export async function handleSession(
     e: FormEvent<HTMLFormElement>,
     navigate: NavigateFunction,
     dispatchUser: DispatchUser,
@@ -28,4 +34,13 @@ export async function handleUser(
 export function handleInputs(e: ChangeEvent<HTMLInputElement>, setForm: CallableFunction, form: Partial<User>): void {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
+}
+
+async function createSession(dispatchUser: DispatchUser, form: Partial<User<string, Section>>): Promise<void> {
+    try {
+        await getToken(form);
+        await handleUserValues(dispatchUser, form);
+    } catch (error) {
+        console.log(error);
+    }
 }

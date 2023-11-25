@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import PageSelector from 'src/components/pageSelector/PageSelector';
-import Table from 'src/components/Table';
+import { PageSelector } from 'src/components/PageSelector/index';
+import { Table } from 'src/components/Table/index';
 import { ObjFilter, TableType, Year } from 'src/config/types/types';
 import { handleProcesses, handleYears, handleProcessesTable, handleUrl, generateIndex } from './ProcessListFunctions';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Navigate, useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Title } from 'src/components/Title/index';
 import DataContext from 'src/data/DataContext';
 
 function ProcessList({ path, title }: { path: string | undefined; title: string | undefined }): JSX.Element {
@@ -63,7 +63,7 @@ function ProcessList({ path, title }: { path: string | undefined; title: string 
             </Title>
             <hr />
             {generateIndex(yearIndex, filter, setFilter)}
-            <Table table={processesTable} />
+            <Table head={processesTable.head} body={processesTable.body} />
             <PageSelector path={changedPath} filter={filter} setChangePage={setIndex} index={index} limit={limit} listener={refresh} />
             <Navigate to={`/${handleUrl(path as string)}/${index}`} />
         </Window>

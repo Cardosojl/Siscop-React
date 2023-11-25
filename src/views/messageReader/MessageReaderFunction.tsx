@@ -4,8 +4,8 @@ import { DispatchUser, MessageType, Section, User } from 'src/config/types/types
 import archived from '../../assets/archive.png';
 import trash from '../../assets/trash.png';
 import { NavigateFunction } from 'react-router-dom';
-import { ImageIcon } from 'src/components/ImageIcon';
-import { Wrapper } from 'src/components/Wrapper';
+import { MessageListButton } from 'src/components/Button/MessageListButton/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
 
 async function handleApiDeleteMessage(path: string, element: MessageType, user: User<string, Section>): Promise<void> {
     if (!(await validationEvents(element, path, user))) {
@@ -87,7 +87,7 @@ export function handleIcons(user: User<string, Section>, path: string, element: 
     const archive =
         path === 'messages' ? (
             <Wrapper $displayFlex="flex-start" $aling="center">
-                <ImageIcon $width="28px" $yellow src={archived} onClick={handleArchive} />
+                <MessageListButton $width="28px" $yellow src={archived} onClick={handleArchive} />
                 <small>Arquivar</small>
             </Wrapper>
         ) : (
@@ -96,7 +96,7 @@ export function handleIcons(user: User<string, Section>, path: string, element: 
 
     const trashDelete = (
         <Wrapper $displayFlex="flex-start" $aling="center">
-            <ImageIcon $width="28px" $red src={trash} onClick={handleDelete} />
+            <MessageListButton $width="28px" $red src={trash} onClick={handleDelete} />
             <small>Apagar</small>
         </Wrapper>
     );

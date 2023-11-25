@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { siscopIndex, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { AcquisitionWay, Process, Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/Message/index';
 
 async function updateProcess(process: Partial<Process>, form: Partial<Process>): Promise<void> {
     await siscopUpdate('processes', { _id: process._id }, form);
@@ -43,6 +43,7 @@ export async function handleSections(): Promise<Section[] | null> {
 
 export async function handleProcess(path: string, user: User<string, Section>, processId: string): Promise<Process> {
     const process = await siscopShow('processes/process', ['origin'], { _id: processId });
+    console.log(process);
     const { response }: { response: Process | null } = process.data;
     if (path === 'myProcess' && response && response.user === user._id) return response;
     if (path === 'receivedProcess' && response && (response.receiver === user._id || response.section_receiver === user.section._id)) return response;

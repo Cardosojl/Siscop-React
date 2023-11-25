@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Table from 'src/components/Table';
+import { Table } from 'src/components/Table/index';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Process, TableType } from 'src/config/types/types';
 import { handleFiles, handleProcess, handleTableFiles } from './DocumentListFunction';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
-import ProcessInformation from 'src/components/processInformation/ProcessInformation';
-import UploadFiles from 'src/components/uploadFiles/UploadFiles';
+import { ProcessInfo } from 'src/components/ProcessInfo/index';
+import { UploadFiles } from 'src/components/UploadFiles';
 import arrow from '../../assets/seta2.png';
 import mail from '../../assets/email.png';
-import Title from 'src/components/Title';
-import { Window } from 'src/components/Window';
-import { Wrapper } from 'src/components/Wrapper';
-import { RoundButton } from 'src/components/RoundButton';
+import { Title } from 'src/components/Title/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
+import { RoundButton } from 'src/components/Button/RoundButton/index';
 import DataContext from 'src/data/DataContext';
 
 function DocumentList({ path }: { path: string | undefined }): JSX.Element {
@@ -60,9 +60,9 @@ function DocumentList({ path }: { path: string | undefined }): JSX.Element {
             </Title>
             <hr />
             <Wrapper $paddingLeft="15px" $paddingRight="15px">
-                <Table table={table} />
+                <Table head={table.head} body={table.body} />
             </Wrapper>
-            <ProcessInformation process={process} />
+            <ProcessInfo proc={process} />
             <UploadFiles setRefresh={setRefresh} />
             <Wrapper $displayFlex="space-between" $paddingLeft="15px" $paddingRight="15px">
                 <RoundButton $green src={arrow} onClick={() => navigate(-1)} />

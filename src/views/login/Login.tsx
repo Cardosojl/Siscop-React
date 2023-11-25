@@ -2,12 +2,12 @@ import React, { ChangeEvent, useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
-import { handleInputs, handleUser } from './LoginFunction';
-import { Button } from 'src/components/Button';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { handleInputs, handleSession } from './LoginFunction';
+import { Button } from 'src/components/Button/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
 import DataContext from 'src/data/DataContext';
 
 function Login(): JSX.Element {
@@ -16,7 +16,7 @@ function Login(): JSX.Element {
     const [message, setMessage] = useState<string>('');
     const throwError = useAsyncError();
     const navigate = useNavigate();
-    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleUser(e, navigate, setUser, form, throwError, setMessage);
+    const sendForm = (e: ChangeEvent<HTMLFormElement>) => handleSession(e, navigate, setUser, form, throwError, setMessage);
     const userValues = (e: ChangeEvent<HTMLInputElement>) => handleInputs(e, setForm, form);
 
     if (user.logged) {

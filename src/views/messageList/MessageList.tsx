@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import PageSelector from 'src/components/pageSelector/PageSelector';
-import SearchBar from 'src/components/searchBar/SearchBar';
+import { PageSelector } from 'src/components/PageSelector/index';
+import { SearchBar } from 'src/components/SearchBar/index';
 import { ObjFilter, TableType } from 'src/config/types/types';
-import Table from 'src/components/Table';
+import { Table } from 'src/components/Table/index';
 import { handleMessageTable, handleMessages, handleUrl } from './MessageListFunctions';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Title } from 'src/components/Title/index';
 import DataContext from 'src/data/DataContext';
 
 function MessageList({ title, path }: { title: string | undefined; path: string | undefined }): JSX.Element {
@@ -43,7 +43,7 @@ function MessageList({ title, path }: { title: string | undefined; path: string 
             <Title title={title || ''} $dark>
                 <SearchBar setFilter={setFilter} path={changedPath} optionValues={['Mensagem', 'Processo']} apiValues={['title', 'process_title']} />
             </Title>
-            <Table table={messageTable} />
+            <Table head={messageTable.head} body={messageTable.body} />
             <PageSelector setChangePage={setIndex} path={changedPath} index={index} limit={itensLimit} filter={filter} listener={refresh} />
             <Navigate to={`/${handleUrl(path as string)}/${index}`} />
         </Window>

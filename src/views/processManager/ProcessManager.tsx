@@ -3,13 +3,13 @@ import { ObjFilter, Process, Section, TableType } from 'src/config/types/types';
 import { generatePageSelector, generateSectionTitle, handleProcesses, handleProcessesTable, handleSections } from './ProcessManagerFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
-import Table from 'src/components/Table';
+import { Table } from 'src/components/Table/index';
 import { useLocation } from 'react-router-dom';
-import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
-import SearchBar from 'src/components/searchBar/SearchBar';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { Wrapper } from 'src/components/Wrapper';
+import { IndexSelector } from 'src/components/IndexSelector/index';
+import { SearchBar } from 'src/components/SearchBar/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Title } from 'src/components/Title/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
 import DataContext from 'src/data/DataContext';
 
 function ProcessManager(): JSX.Element {
@@ -66,7 +66,7 @@ function ProcessManager(): JSX.Element {
                 <h5>{titleSelected}</h5>
                 <SearchBar setFilter={setFilter} path={''} optionValues={['Titulo', 'Ano', 'F. Aquisição']} apiValues={['title', 'year', 'category']} />
             </Wrapper>
-            <Table table={processesTable} />
+            <Table head={processesTable.head} body={processesTable.body} />
             {generatePageSelector(itensLimit, index, sectionSelected, filter, setIndex, listener)}
         </Window>
     );

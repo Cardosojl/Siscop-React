@@ -4,13 +4,13 @@ import { AcquisitionWay, Process, Section } from 'src/config/types/types';
 import { handleAcquisitionWays, handleForm, handleSections } from './processCreatorFunction';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import { Select } from 'src/components/Select';
-import { setInputs } from '../elementsCreator';
-import { Button } from 'src/components/Button';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { Select } from 'src/components/Select/index';
+import { setInputs } from '../../elementsCreator';
+import { Button } from 'src/components/Button/index';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
 import DataContext from 'src/data/DataContext';
 
 function ProcessCreator(): JSX.Element {

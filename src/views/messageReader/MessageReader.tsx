@@ -3,12 +3,11 @@ import { MessageType } from 'src/config/types/types';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleApiMessage, handleIcons, handleResponsible } from './MessageReaderFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
-import reader from 'src/views/messageReader/StringtoJSX';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { MessageContent } from 'src/components/MessageContent';
-import { Wrapper } from 'src/components/Wrapper';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Title } from 'src/components/Title/index';
+import { MessageContent } from 'src/components/MessageContent/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
 import DataContext from 'src/data/DataContext';
 
 function MessageReader({ path }: { path: string }): JSX.Element {
@@ -16,7 +15,6 @@ function MessageReader({ path }: { path: string }): JSX.Element {
     const url = useLocation().pathname.split('/');
     const [messageID] = url.reverse();
     const [message, setMessage] = useState<MessageType | null>(null);
-    const [content, setContent] = useState<ReactNode>();
     const navigate = useNavigate();
     const throwError = useAsyncError();
 
@@ -26,10 +24,6 @@ function MessageReader({ path }: { path: string }): JSX.Element {
             .catch((error) => handleErros(error as Error, setUser, throwError));
     }, []);
 
-    useEffect(() => {
-        if (message?.content) setContent(reader(message.content));
-    }, [message]);
-
     if (message)
         return (
             <Window $large>
@@ -37,9 +31,7 @@ function MessageReader({ path }: { path: string }): JSX.Element {
                     <small>{message.date}</small>
                 </Title>
                 <hr />
-                <MessageContent>
-                    <span>{content}</span>
-                </MessageContent>
+                <MessageContent content={message.content} />
                 {handleResponsible(path, message)}
                 <Wrapper $displayFlex="space-between">
                     <Wrapper $paddingLeft="10px" $paddingTop="10px">

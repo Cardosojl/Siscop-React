@@ -7,14 +7,14 @@ import { handleErros } from 'src/apis/siscopDB';
 import { useLocation, useNavigate } from 'react-router-dom';
 import JoditEditor from 'jodit-react';
 import joditConfig from './jodit/joditConfig';
-import { setInputs } from '../elementsCreator';
-import { Window } from 'src/components/Window';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
-import { Select } from 'src/components/Select';
-import { Wrapper } from 'src/components/Wrapper';
-import { FormField } from 'src/components/FormField';
-import { FormMessageButton } from 'src/components/FormMessageButton';
+import { setInputs } from '../../elementsCreator';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
+import { Select } from 'src/components/Select/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { FormMessageButton } from 'src/components/Button/FormMessageButton/index';
 import DataContext from 'src/data/DataContext';
 
 function MessageSender(): JSX.Element {

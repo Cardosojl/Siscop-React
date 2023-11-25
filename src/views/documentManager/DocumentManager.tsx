@@ -4,10 +4,10 @@ import { generateContent, generateFiles, generateStates, handleFiles, handleProc
 import { useLocation } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
 import useAsyncError from 'src/hooks/useAsyncError';
-import Title from 'src/components/Title';
-import { Window } from 'src/components/Window';
-import { Wrapper } from 'src/components/Wrapper';
-import { ManagerInfo } from 'src/components/ManagerInfo';
+import { Title } from 'src/components/Title/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
+import { ManagerInfo } from 'src/components/ManagerInfo/index';
 import DataContext from 'src/data/DataContext';
 
 function DocumentManager(): JSX.Element {

@@ -5,15 +5,47 @@ import { initialUser } from 'src/data/DataContext';
 
 const axiosSiscopDB = axios.create({ baseURL: process.env.REACT_APP_SISCOP_API, withCredentials: true });
 
-export async function siscopLoginCreate(login: Partial<User<string, Section>>): Promise<User<string, Section>> {
-    const response = await axiosSiscopDB.post('/login', login);
-    return { ...response.data.user, logged: true };
+axiosSiscopDB.interceptors.response.use(
+    (respose) => respose,
+    (error) => {
+        if (error.response && error.response.status === 401) {
+            localStorage.clear();
+            window.location.reload();
+        }
+        return Promise.reject(error);
+    }
+);
+
+export function sessionValues() {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    if (!user) {
+        localStorage.setItem('user', JSON.stringify(initialUser));
+    }
+
+    if (token) {
+        axiosSiscopDB.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
 }
 
-export async function siscopLogoffDelete(): Promise<User> {
+export async function getToken(form: Partial<User<string, Section>>) {
+    const {
+        data: { token },
+    } = await siscopCreate('token', form);
+    localStorage.setItem('token', token);
+    axiosSiscopDB.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
+/*export async function siscopLoginCreate(login: Partial<User<string, Section>>): Promise<User<string, Section>> {
+    const response = await axiosSiscopDB.post('/login', login);
+    return { ...response.data.user, logged: true };
+}*/
+
+/*export async function siscopLogoffDelete(): Promise<User> {
     const response = await axiosSiscopDB.delete('/logoff');
     return { ...response.data.user, logged: true };
-}
+}*/
 
 export async function siscopIndex(baseUrl: string, limit: number, index: number, includes: string[] | number, parameters?: ObjFilter, filter?: ObjFilter | null): Promise<AxiosResponse> {
     const url = generateIndexRequest(baseUrl, limit, index, includes, parameters, filter);
@@ -60,3 +92,5 @@ export function handleErros(error: Error, dispatchUser: DispatchUser, throwError
         }
     } else throwError(new Error((error as Error).message));
 }
+
+export default axiosSiscopDB;

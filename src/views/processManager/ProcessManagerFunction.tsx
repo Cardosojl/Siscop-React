@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex } from 'src/apis/siscopDB';
-import { IndexSelector } from 'src/components/indexSelector/IndexSelector';
-import PageSelector from 'src/components/pageSelector/PageSelector';
-import ProcessItemManager from 'src/components/processItemManager/ProcessItemManager';
-import { Th } from 'src/components/Table';
+import { IndexSelector } from 'src/components/IndexSelector/index';
+import { PageSelector } from 'src/components/PageSelector/index';
+import { ProcessManagerItem } from 'src/components/Table/ProcessManagerItem';
+import { Th } from 'src/components/Table/Th';
 import { ObjFilter, Process, Section, SiscopApiIndex, TableType } from 'src/config/types/types';
 
 export async function handleSections(): Promise<Section[] | null> {
@@ -47,7 +47,7 @@ function createHead(): ReactNode {
 }
 
 function handleArrayProcesses(processes: Process[] | null): ReactNode {
-    const body = processes ? processes.map((element, index) => <ProcessItemManager key={index} process={element} />) : processes;
+    const body = processes ? processes.map((element, index) => <ProcessManagerItem key={index} process={element} />) : processes;
     return <tbody>{body}</tbody>;
 }
 

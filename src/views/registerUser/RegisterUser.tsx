@@ -3,13 +3,13 @@ import { Section, User } from 'src/config/types/types';
 import { handleForm, handleSections } from './RegisterUserFunction';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { setInputs } from '../elementsCreator';
-import { Select } from 'src/components/Select';
-import { FormField } from 'src/components/FormField';
-import { Window } from 'src/components/Window';
-import { Button } from 'src/components/Button';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { setInputs } from '../../elementsCreator';
+import { Select } from 'src/components/Select/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { Button } from 'src/components/Button/index';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
 import DataContext from 'src/data/DataContext';
 
 function RegisterUser(): JSX.Element {
@@ -58,7 +58,7 @@ function RegisterUser(): JSX.Element {
                     <Select name="section" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
                 </FormField>
                 <FormField label="Level:">
-                    <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
+                    <Select name="level" sort={false} optionValues={level} elementValue="1" onChange={handleInput} />
                 </FormField>
                 <Button $green>Cadastrar</Button>
             </form>

@@ -4,13 +4,13 @@ import { handleAcquisitionWays, handleForm, handleProcess, handleSections } from
 import useAsyncError from 'src/hooks/useAsyncError';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { handleErros } from 'src/apis/siscopDB';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import { setInputs } from '../elementsCreator';
-import { Select } from 'src/components/Select';
-import { Button } from 'src/components/Button';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { setInputs } from '../../elementsCreator';
+import { Select } from 'src/components/Select/index';
+import { Button } from 'src/components/Button/index';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
 import DataContext from 'src/data/DataContext';
 
 function EditProcess({ path }: { path: string | undefined }): JSX.Element {
@@ -80,7 +80,7 @@ function EditProcess({ path }: { path: string | undefined }): JSX.Element {
                     <InputForm name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
                 </FormField>
                 <FormField label="Origem:">
-                    <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section).name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />
+                    <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section)?.name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />
                 </FormField>
                 <FormField label="Forma de Aquisição:">
                     <Select sort={false} name="category" optionValues={acquisitionArray} elementValue={process.category || ''} onChange={handleInput} />

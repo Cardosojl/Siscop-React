@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { siscopIndex, siscopShow } from 'src/apis/siscopDB';
-import { Wrapper } from 'src/components/Wrapper';
-import { FileComponent } from 'src/components/fileComponent/FileComponent';
-import StatusBlock from 'src/components/statusBlock/StatusBlock';
+import { Wrapper } from 'src/components/Wrapper/Wrapper/index';
+import { File } from 'src/components/File/File/index';
+import { StatusBlock } from 'src/components/StatusBlock/StatusBlock/index';
 import { FileTypes, Process, ProcessState, Section } from 'src/config/types/types';
 
 export async function handleProcess(parameter: Partial<Process>): Promise<Process | null> {
@@ -59,7 +59,7 @@ export function generateFiles(files: FileTypes[] | null): ReactNode {
     if (files) {
         const file = files.map((element, index) => (
             <Wrapper key={index} $paddingTop="3px" $paddingLeft="16px">
-                <FileComponent name={`${element.filename}${element.extension}`} id={element._id} />
+                <File name={`${element.filename}${element.extension}`} id={element._id} />
             </Wrapper>
         ));
         return (

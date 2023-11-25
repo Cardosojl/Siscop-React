@@ -1,10 +1,11 @@
 import React, { ChangeEvent } from 'react';
 import { siscopIndex, siscopShow, siscopUpdate } from 'src/apis/siscopDB';
 import { Section, User } from 'src/config/types/types';
-import { Message } from 'src/components/Message';
+import { Message } from 'src/components/Message/index';
 
-async function handleUser(name: string) {
-    const user = await siscopShow('users/user', ['section'], { name, select: '-password' });
+async function handleUser(name: Partial<User>) {
+    console.log(name);
+    const user = await siscopShow('users/user', ['section'], { ...name, select: '-password' });
     const { response }: { response: User<string, Section> | null } = user.data;
     return response;
 }
@@ -15,7 +16,7 @@ export async function handleSections(): Promise<Section[] | null> {
     return response;
 }
 
-export async function handleFind(e: ChangeEvent<HTMLFormElement>, name: string, setMessage: CallableFunction, setUser: CallableFunction, setForm: CallableFunction) {
+export async function handleFind(e: ChangeEvent<HTMLFormElement>, name: Partial<User>, setMessage: CallableFunction, setUser: CallableFunction, setForm: CallableFunction) {
     e.preventDefault();
     setMessage('');
     if (name) {
@@ -39,7 +40,7 @@ async function formValidator(form: Partial<User>, setMessage: CallableFunction, 
         ));
         error = true;
     }
-    if (form.name && form.name !== user.name && (await handleUser(form.name))) {
+    if (form.name && form.name !== user.name && (await handleUser({ name: form.name }))) {
         setMessage((current: string) => (
             <>
                 {current} <Message $error>Nome Já cadastrado no Sistema</Message>

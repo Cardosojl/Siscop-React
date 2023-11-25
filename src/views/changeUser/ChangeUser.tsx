@@ -3,25 +3,26 @@ import { Section, User } from 'src/config/types/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import { handleFind, handleForm, handleSections } from './ChangeUserFunction';
-import { Button } from 'src/components/Button';
-import { Window } from 'src/components/Window';
-import { FormField } from 'src/components/FormField';
-import { Select } from 'src/components/Select';
-import { setInputs } from '../elementsCreator';
-import Title from 'src/components/Title';
-import { InputForm } from 'src/components/InputForm';
+import { Button } from 'src/components/Button/index';
+import { Window } from 'src/components/Wrapper/Window/index';
+import { FormField } from 'src/components/Form/FormField/index';
+import { Select } from 'src/components/Select/index';
+import { setInputs } from '../../elementsCreator';
+import { Title } from 'src/components/Title/index';
+import { InputForm } from 'src/components/Form/InputForm/index';
 import DataContext from 'src/data/DataContext';
 
 function ChangeUser(): JSX.Element {
     const { setUser } = useContext(DataContext);
     const [profile, setProfile] = useState<User<string, Section> | null>(null);
     const [sections, setSections] = useState<Section[] | null>(null);
-    const [name, setName] = useState<string>('');
+    const [name, setName] = useState<Partial<User>>({});
     const [form, setForm] = useState<Partial<User>>({});
     const [message, setMessage] = useState<ReactNode>('');
     const sectionArray = sections ? sections.map((element) => element.name) : [];
     const sectionArrayID = sections ? sections.map((element) => element._id) : [];
     const level = Array.from({ length: 10 }, (_, index) => `${index + 1}`);
+    const handleSearch = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setName);
     const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setForm);
     const throwError = useAsyncError();
 
@@ -57,7 +58,7 @@ function ChangeUser(): JSX.Element {
             <hr />
             <form onSubmit={findUser}>
                 <FormField label="Nome do Usuário:">
-                    <InputForm type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                    <InputForm name="name" type="text" value={name.name} onChange={handleSearch} />
                     <Button $green>Procurar</Button>
                 </FormField>
             </form>
@@ -75,7 +76,7 @@ function ChangeUser(): JSX.Element {
                         <Select name="section" sort={true} optionValues={sectionArray} elementValue={(profile.section as Section).name} alternativeValues={sectionArrayID} onChange={handleInput} />
                     </FormField>
                     <FormField label="Level:">
-                        <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
+                        <Select name="level" sort={false} optionValues={level} elementValue="1" onChange={handleInput} />
                     </FormField>
                     <Button $green>Alterar</Button>
                 </form>
