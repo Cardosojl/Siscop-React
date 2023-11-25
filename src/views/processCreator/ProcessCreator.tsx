@@ -63,6 +63,7 @@ function ProcessCreator(): JSX.Element {
                 </FormField>
                 <FormField label="Nup:">
                     <InputForm $medium name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
+                    <small>(número de protocolo)</small>
                 </FormField>
                 <FormField label="Origem:">
                     <Select name="origin" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />

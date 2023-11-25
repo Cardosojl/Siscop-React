@@ -45,7 +45,6 @@ export default function LeftBar(): JSX.Element {
                 <LinkStyle to="/processosRecebidos/0">
                     <LeftBarSubitem title={'Processos Recebidos'} active={activeElement(['processosRecebidos'], changedPath)} />
                 </LinkStyle>
-                <LeftBarSubitem title={'Modelo a partir do Mapa Comparativo'} active={false} />
             </LeftBarItem>
             <LinkStyle to="/acompanharProcessos/0">
                 <LeftBarItem title={'Acompanhar Processos'} itemLevel={0} active={activeElement(['acompanharProcessos'], changedPath)} />
@@ -56,7 +55,6 @@ export default function LeftBar(): JSX.Element {
             <LinkStyle to="/alterarUsuario">
                 <LeftBarItem title={'Alterar Usuário'} itemLevel={10} active={activeElement(['alterarUsuario'], changedPath)} />
             </LinkStyle>
-            <LeftBarItem title={'Apagar Usuário'} itemLevel={10} active={activeElement(['deletarUsuario'], changedPath)} />
         </LeftBarStyle>
     );
 }

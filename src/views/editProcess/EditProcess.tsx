@@ -78,6 +78,7 @@ function EditProcess({ path }: { path: string | undefined }): JSX.Element {
                 </FormField>
                 <FormField label="Nup:">
                     <InputForm name="nup" type="text" value={form.nup || ''} onChange={handleInput} />
+                    <small>(número de protocolo)</small>
                 </FormField>
                 <FormField label="Origem:">
                     <Select sort={true} name="origin" optionValues={sectionArray} elementValue={(process.origin as Section)?.name || ''} alternativeValues={sectionArrayID} onChange={handleInput} />

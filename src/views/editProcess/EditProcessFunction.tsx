@@ -43,7 +43,6 @@ export async function handleSections(): Promise<Section[] | null> {
 
 export async function handleProcess(path: string, user: User<string, Section>, processId: string): Promise<Process> {
     const process = await siscopShow('processes/process', ['origin'], { _id: processId });
-    console.log(process);
     const { response }: { response: Process | null } = process.data;
     if (path === 'myProcess' && response && response.user === user._id) return response;
     if (path === 'receivedProcess' && response && (response.receiver === user._id || response.section_receiver === user.section._id)) return response;

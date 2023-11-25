@@ -59,5 +59,3 @@ export function UploadFiles({ setRefresh }: UploadFilesProps): JSX.Element {
         </form>
     );
 }
-
-UploadFiles;

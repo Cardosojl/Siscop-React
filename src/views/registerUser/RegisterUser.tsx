@@ -58,7 +58,7 @@ function RegisterUser(): JSX.Element {
                     <Select name="section" sort={true} optionValues={sectionArray} elementValue="" alternativeValues={sectionArrayID} onChange={handleInput} />
                 </FormField>
                 <FormField label="Level:">
-                    <Select name="level" sort={false} optionValues={level} elementValue="1" onChange={handleInput} />
+                    <Select name="level" sort={false} optionValues={level} elementValue="" onChange={handleInput} />
                 </FormField>
                 <Button $green>Cadastrar</Button>
             </form>

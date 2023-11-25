@@ -4,7 +4,6 @@ import { Section, User } from 'src/config/types/types';
 import { Message } from 'src/components/Message/index';
 
 async function handleUser(name: Partial<User>) {
-    console.log(name);
     const user = await siscopShow('users/user', ['section'], { ...name, select: '-password' });
     const { response }: { response: User<string, Section> | null } = user.data;
     return response;
@@ -80,7 +79,6 @@ export async function handleForm(e: ChangeEvent<HTMLFormElement>, form: Partial<
     e.preventDefault();
     if (!(await formValidator(form, setMessage, sections, user))) {
         const finalForm = form.name === user.name ? { ...form, name: undefined } : form;
-        console.log(finalForm);
         await siscopUpdate('users', { _id: user._id }, finalForm);
         setMessage(
             <>

@@ -51,7 +51,6 @@ async function formValidator(form: Partial<User>, setMessage: CallableFunction, 
         ));
         error = true;
     }
-
     if (!form.level || (form.level as number) > 10 || (form.level as number) < 0) {
         setMessage((current: string) => (
             <>
