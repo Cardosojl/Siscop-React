@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { ObjFilter } from 'src/config/types/types';
+import { FilterTypes } from 'src/apis/types';
 
 type SelectorProps = {
     $selected?: boolean;
@@ -30,7 +30,7 @@ const SelctorText = styled.p`
     font-size: 13px;
 `;
 
-export function IndexSelector({ index, value, setFilter, filter }: { index: string; value: string; setFilter: CallableFunction; filter: ObjFilter }): JSX.Element {
+export function IndexSelector({ index, value, setFilter, filter }: { index: string; value: string; setFilter: CallableFunction; filter: FilterTypes }): JSX.Element {
     const [selected, setSelected] = useState(false);
 
     useEffect(() => {

@@ -2,16 +2,12 @@ import React, { ReactNode } from 'react';
 import { Dispatch, FormEvent, SetStateAction } from 'react';
 import { handleErros } from 'src/apis/siscopDB';
 import { uploadCreate } from 'src/apis/siscopUpload';
-import { DispatchUser, FileTypes } from 'src/config/types/types';
+import { FileTypes } from 'src/apis/types';
+import { DefineUserTypes } from 'src/context/types';
+import { Loading } from '../Load';
 
 export function handleLoad(): ReactNode {
-    return (
-        <div className="loading loading--dark">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    );
+    return <Loading />;
 }
 
 export function handleFilename(value: string, length: number | undefined): string {
@@ -27,7 +23,7 @@ export async function handleFileForm(
     e: FormEvent<HTMLFormElement>,
     setLoad: CallableFunction,
     setRefresh: CallableFunction,
-    dispatchUser: DispatchUser,
+    defineUser: DefineUserTypes,
     formState: [Partial<FileTypes>, CallableFunction],
     throwError: CallableFunction,
     setMessageError: Dispatch<SetStateAction<string>>
@@ -35,7 +31,7 @@ export async function handleFileForm(
     e.preventDefault();
     const [form, setForm] = formState;
     if (!validationForm(form)) {
-        setMessageError('Arquivo com formato não suportado!');
+        setMessageError('Apenas documentos de texto e imagens são suportados');
     } else {
         setLoad(handleLoad());
         try {
@@ -58,7 +54,7 @@ export async function handleFileForm(
             setLoad('');
         } catch (error) {
             setLoad('');
-            handleErros(error as Error, dispatchUser, throwError, setMessageError);
+            handleErros(error as Error, defineUser, throwError, setMessageError);
         }
     }
 }
@@ -73,8 +69,8 @@ export function setFiles(uploaded: FileList | null): FileList | File | undefined
 function validationForm(form: Partial<FileTypes>) {
     const arrayExtension = ['png', 'jpeg', 'jpg', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'tar', 'rar', 'zip', 'odt', 'ods', 'txt'];
     if (form.file && form.file.length === undefined) {
-        const extension = form.file.name.split('.').reverse()[0];
-        return arrayExtension.includes(extension.toLowerCase());
+        const extension = form.file.name.split('.').reverse()[0].toLowerCase();
+        return arrayExtension.includes(extension);
     } else if (form.file && form.file.length > 1) {
         const arra: { name: string }[] = Array.from(form.file);
         return !arra.some((element) => !arrayExtension.includes(element.name.split('.').reverse()[0]));

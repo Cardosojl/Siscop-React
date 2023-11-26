@@ -1,14 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import searchImg from '../../assets/lupa2.png';
 import { handleSearch } from './SearchBarServices';
-import { FilterTypes, SearchBarProps } from './types';
+import { StringFilterTypes, SearchBarProps } from './types';
 import { ImageStyle, InputStyle, SpanStyle } from './SearchBar.styles';
 import { Select } from '../Select';
-import { setInputs } from 'src/elementsCreator';
+import { setInputs } from 'src/pages/PagesFunctions';
 
 export function SearchBar({ setFilter, path, optionValues, apiValues }: SearchBarProps): JSX.Element {
     const [search, setSearch] = useState<string>('');
-    const [selectFilter, setSelectFilter] = useState<FilterTypes>({ filter: apiValues[0] });
+    const [selectFilter, setSelectFilter] = useState<StringFilterTypes>({ filter: apiValues[0] });
     const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setInputs(e, setSelectFilter);
 
     useEffect(() => {

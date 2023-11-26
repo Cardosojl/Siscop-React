@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { Dispatch, SetStateAction } from 'react';
 import { siscopLenght } from 'src/apis/siscopDB';
-import { DispatchUser, ObjFilter, Section, SiscopApiIndex, User } from 'src/config/types/types';
-import { initialUser } from 'src/data/DataContext';
+import { FilterTypes, SectionTypes, SiscopApiIndex, UserTypes } from 'src/apis/types';
+import { DefineUserTypes } from 'src/context/types';
+import { initialUser } from 'src/context/UserContext';
 
-export async function handleApiLength(path: string, user: User<string, Section>, filter?: ObjFilter | null): Promise<number> {
+export async function handleApiLength(path: string, user: UserTypes<string, SectionTypes>, filter?: FilterTypes | null): Promise<number> {
     let response: SiscopApiIndex = null;
     const processPath = 'processes';
     if (path === 'messageSents') response = (await siscopLenght(path, { sender: user._id }, filter)).data.response;
@@ -26,9 +27,9 @@ export function rightArrowActive(indexPage: number, limit: number, length: numbe
     return length > limit * indexPage ? true : false;
 }
 
-export function handleErros(error: Error, dispatchUser: DispatchUser, throwError: CallableFunction, setLength: Dispatch<SetStateAction<number>>): void {
+export function handleErros(error: Error, defineUser: DefineUserTypes, throwError: CallableFunction, setLength: Dispatch<SetStateAction<number>>): void {
     if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) dispatchUser(initialUser);
+        if (error.response?.status === 401) defineUser(initialUser);
         if (error.response?.status === 404) setLength(1);
         else throwError(new Error((error as Error).message));
     } else throwError(new Error((error as Error).message));

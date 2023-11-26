@@ -1,5 +1,5 @@
-import { ProcessState } from 'src/config/types/types';
+import { ProcessStateTypes } from 'src/apis/types';
 
 export type StatusBlockSmallProps = {
-    processState: ProcessState;
+    processState: ProcessStateTypes;
 };

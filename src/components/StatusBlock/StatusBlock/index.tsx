@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ProcessState, User } from 'src/config/types/types';
+import { ProcessStateTypes, UserTypes } from 'src/apis/types';
 import { handleEvents } from './StatusBlockServices';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import DataContext from 'src/data/DataContext';
+import UserContext from 'src/context/UserContext';
 import { ButtonStatusStyle, DivStatusStyle, LabelStatusStyle } from './StatusBlock.styles';
 import { StatusBlockProps } from './types';
 
 export function StatusBlock({ $small, processState }: StatusBlockProps): JSX.Element {
-    const { user, setUser } = useContext(DataContext);
-    const [state, setState] = useState<ProcessState>(processState);
+    const { user, setUser } = useContext(UserContext);
+    const [state, setState] = useState<ProcessStateTypes>(processState);
     const [listenerState, setListenerState] = useState<string>('');
     const throwError = useAsyncError();
 
@@ -33,13 +33,13 @@ export function StatusBlock({ $small, processState }: StatusBlockProps): JSX.Ele
             </LabelStatusStyle>
             <LabelStatusStyle>
                 <small>
-                    <b>De:</b> {state.user ? `${(state as ProcessState<string, User>).user.name}` : 'Sistema'}
+                    <b>De:</b> {state.user ? `${(state as ProcessStateTypes<string, UserTypes>).user.name}` : 'Sistema'}
                     {' - '}
                     {state.date}
                 </small>
             </LabelStatusStyle>
             <ButtonStatusStyle>
-                {state.user ? (state as ProcessState<string, User>).user._id === user._id ? <button onClick={() => setListenerState('Delete')}>Apagar</button> : '' : ''}
+                {state.user ? (state as ProcessStateTypes<string, UserTypes>).user._id === user._id ? <button onClick={() => setListenerState('Delete')}>Apagar</button> : '' : ''}
             </ButtonStatusStyle>
         </DivStatusStyle>
     );

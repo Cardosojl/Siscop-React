@@ -5,11 +5,11 @@ import useAsyncError from '../../hooks/useAsyncError';
 import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorServices';
 import { Wrapper } from '../Wrapper/Wrapper/index';
 import { RoundButton } from '../Button/RoundButton';
-import DataContext from 'src/data/DataContext';
+import UserContext from 'src/context/UserContext';
 import { PageSelectorTypes } from './types';
 
 export function PageSelector({ path, setChangePage, index, limit, filter, listener }: PageSelectorTypes): JSX.Element {
-    const { user, setUser } = useContext(DataContext);
+    const { user, setUser } = useContext(UserContext);
     const [indexPage, setIndexPage] = useState<number>(1);
     const [length, setLength] = useState<number>(0);
     const [leftD, setLeftD] = useState<boolean>(true);

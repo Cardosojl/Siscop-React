@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import DataContext, { dataUser } from './data/DataContext';
+import DataContext, { dataUser } from './context/UserContext';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './styles/Global';
 import { theme } from './styles/Theme';
 import { BrowserRouter } from 'react-router-dom';
-import Content from './components/content/Content';
-import { Header } from './components/Header/index';
-import LeftBar from './components/LeftBar/index';
-import { Section, User } from './config/types/types';
-import ErrorBoundary from './components/ErrorBoundary';
-import { Wrapper } from './components/Wrapper/Wrapper/index';
+import { SectionTypes, UserTypes } from './apis/types';
+import ErrorBoundary from './pages/Error/components/ErrorBoundary';
+import { MessageRoutes } from './routes/MessageRoutes';
+import { ADMRoutes } from './routes/ADMRoutes';
+import { ProcessRoutes } from './routes/ProcessRoutes';
+import { ProfileRoutes } from './routes/ProfileRoutes';
+import { ProcessManagerRoutes } from './routes/ProcessManagerRoutes';
+import { LoginRoutes } from './routes/LoginRoutes';
 
 function App() {
-    const [user, setUser] = useState<User<string, Section>>(dataUser.user);
+    const [user, setUser] = useState<UserTypes<string, SectionTypes>>(dataUser.user);
     dataUser.setUser = setUser;
 
     useEffect(() => {
@@ -29,13 +31,12 @@ function App() {
                 <GlobalStyles />
                 <BrowserRouter>
                     <ErrorBoundary>
-                        <div>
-                            <Header />
-                            <Wrapper $displayFlex="flex-start">
-                                {user.logged ? <LeftBar /> : null}
-                                <Content />
-                            </Wrapper>
-                        </div>
+                        <LoginRoutes />
+                        <MessageRoutes />
+                        <ADMRoutes />
+                        <ProcessRoutes />
+                        <ProfileRoutes />
+                        <ProcessManagerRoutes />
                     </ErrorBoundary>
                 </BrowserRouter>
             </ThemeProvider>

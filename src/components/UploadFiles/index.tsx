@@ -4,12 +4,12 @@ import { useLocation } from 'react-router-dom';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Wrapper } from '../Wrapper/Wrapper/index';
 import { Button } from '../Button/index';
-import DataContext from 'src/data/DataContext';
+import UserContext from 'src/context/UserContext';
 import { InputStyle, LabelButtonStyle, SpanInputStyle } from './UploadFiles.style';
 import { UploadFilesProps } from './types';
 
 export function UploadFiles({ setRefresh }: UploadFilesProps): JSX.Element {
-    const { setUser } = useContext(DataContext);
+    const { setUser } = useContext(UserContext);
     const [process] = useLocation().pathname.split('/').reverse();
     const [filename, setFilename] = useState<string>('');
     const [sendComponent, setSendComponent] = useState<ReactNode>('');

@@ -5,6 +5,6 @@ export type SearchBarProps = {
     apiValues: string[];
 };
 
-export type FilterTypes = {
+export type StringFilterTypes = {
     filter: string;
 };
