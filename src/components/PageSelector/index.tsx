@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import right from '../../assets/seta.png';
 import left from '../../assets/seta2.png';
 import useAsyncError from '../../hooks/useAsyncError';
-import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorServices';
+import { leftArrowActive, handleApiLength, rightArrowActive, handleErros } from './PageSelectorFunctions';
 import { Wrapper } from '../Wrapper/Wrapper/index';
 import { RoundButton } from '../Button/RoundButton';
 import UserContext from 'src/context/UserContext';

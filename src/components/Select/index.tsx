@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateOptions, generateOptionsWS } from './SelectServices';
+import { generateOptions, generateOptionsWS } from './SelectFunctions';
 import { SelectProps } from './type';
 
 export function Select({ name, optionValues, elementValue, alternativeValues, sort, onChange }: SelectProps): JSX.Element {

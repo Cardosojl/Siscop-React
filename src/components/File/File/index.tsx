@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AxiosResponse } from 'axios';
 import useAsyncError from 'src/hooks/useAsyncError';
-import { handleFile, openFile } from '../FileServices';
+import { handleFile, openFile } from '../FileFunctions';
 import { FileButtonStyle, TextStyle } from './File.styles';
 import { FileProps } from '../types';
 

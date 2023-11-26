@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FileTypes } from 'src/apis/types';
-import { generateBody, handleEvents } from './DocumentItemServices';
+import { generateBody, handleEvents } from './DocumentItemFunctions';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import UserContext from 'src/context/UserContext';

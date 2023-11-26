@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import searchImg from '../../assets/lupa2.png';
-import { handleSearch } from './SearchBarServices';
+import { handleSearch } from './SearchBarFunctions';
 import { StringFilterTypes, SearchBarProps } from './types';
 import { ImageStyle, InputStyle, SpanStyle } from './SearchBar.styles';
 import { Select } from '../Select';

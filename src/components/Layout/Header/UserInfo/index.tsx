@@ -14,7 +14,7 @@ export function UserInfo(): JSX.Element {
         setUserOn(user);
     }, [user]);
 
-    const handleLogoff = async (): Promise<void> => {
+    const handleLogoff = (): void => {
         localStorage.clear();
         setUser(initialUser);
         navigate('/');

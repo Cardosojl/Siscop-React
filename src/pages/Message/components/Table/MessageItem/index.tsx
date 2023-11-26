@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { MessageTypes } from 'src/apis/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { generateBody, handleEvents } from './MessageItemServices';
+import { generateBody, handleEvents } from './MessageItemFunctions';
 import UserContext from 'src/context/UserContext';
 import { TableItemProps } from 'src/components/Table/types';
 

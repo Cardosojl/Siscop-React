@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { ProcessStateTypes } from 'src/apis/types';
 import down from 'src/assets/down.png';
-import { handleDescription, handleStatus } from './ProcessInformationServices';
+import { handleDescription, handleStatus } from './ProcessInformationFunctions';
 import { Wrapper } from 'src/components/Wrapper/Wrapper';
 import { MessageListButton } from 'src/components/Button/MessageListButton';
 import { ProcessInfoProps } from './types';

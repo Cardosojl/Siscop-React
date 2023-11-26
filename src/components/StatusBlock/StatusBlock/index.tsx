@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ProcessStateTypes, UserTypes } from 'src/apis/types';
-import { handleEvents } from './StatusBlockServices';
+import { handleEvents } from './StatusBlockFunctions';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
 import UserContext from 'src/context/UserContext';

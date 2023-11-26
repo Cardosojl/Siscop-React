@@ -1,5 +1,5 @@
 import React, { ChangeEvent, ReactNode, useContext, useEffect, useState } from 'react';
-import { handleFileForm, handleFilename, setFiles } from './UploadFilesServices';
+import { handleFileForm, handleFilename, setFiles } from './UploadFilesFunctions';
 import { useLocation } from 'react-router-dom';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { Wrapper } from '../Wrapper/Wrapper/index';

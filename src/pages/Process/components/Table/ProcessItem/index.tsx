@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ProcessTypes } from 'src/apis/types';
 import useAsyncError from 'src/hooks/useAsyncError';
 import { handleErros } from 'src/apis/siscopDB';
-import { generateBody, handleEvents } from './ProcessItemServices';
+import { generateBody, handleEvents } from './ProcessItemFunctions';
 import UserContext from 'src/context/UserContext';
 import { TableItemProps } from 'src/components/Table/types';
 

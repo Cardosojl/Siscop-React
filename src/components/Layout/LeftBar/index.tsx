@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { LeftBarItem } from './LeftBarItem/index';
 import LeftBarSubitem from './LeftBarSubItem/index';
 import { useLocation } from 'react-router-dom';
-import { activeElement } from './LeftBarServices';
+import { activeElement } from './LeftBarFunctions';
 import { LeftBarStyle, LinkStyle } from './LeftBar.styles';
 
 export default function LeftBar(): JSX.Element {
     const path = useLocation().pathname.split('/')[1];
     const [changedPath, setChangedPath] = useState(path);
-    const [messageArrow, setMessageArrow] = useState<boolean>(false);
-    const [processArrow, setProcessArrow] = useState<boolean>(false);
     const messageItens = ['novaMensagem', 'caixaDeEntrada', 'enviadas', 'arquivadas', 'minhasMensagensRecebidas', 'minhasMensagensEnviadas', 'minhasMensagensArquivadas'];
     const processItens = ['novoProcesso', 'meusProcessos', 'processosRecebidos'];
+    const [messageArrow, setMessageArrow] = useState<boolean>(activeElement(messageItens, changedPath));
+    const [processArrow, setProcessArrow] = useState<boolean>(activeElement(processItens, changedPath));
 
     useEffect(() => {
         setChangedPath(path);
