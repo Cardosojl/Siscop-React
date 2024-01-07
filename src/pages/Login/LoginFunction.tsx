@@ -5,14 +5,22 @@ import { SectionTypes, UserTypes } from 'src/apis/types';
 import { DefineUserTypes } from 'src/context/types';
 
 async function handleLogin(navigate: NavigateFunction, defineUser: DefineUserTypes, form: Partial<UserTypes<string, SectionTypes>>): Promise<void> {
-    await createSession(defineUser, form);
-    navigate('/caixaDeEntrada/0');
+    try {
+        await createSession(defineUser, form);
+        navigate('/caixaDeEntrada/0');
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function handleUserValues(defineUser: DefineUserTypes, form: Partial<UserTypes<string, SectionTypes>>): Promise<void> {
-    const user = (await siscopShow('users/user', ['section'], { name: form.name, select: '-password' })).data.response;
-    defineUser({ ...user, logged: true });
-    localStorage.setItem('user', JSON.stringify({ ...user, logged: true }));
+    try {
+        const user = (await siscopShow('users/user', ['section'], { name: form.name, select: '-password' })).data.response;
+        defineUser({ ...user, logged: true });
+        localStorage.setItem('user', JSON.stringify({ ...user, logged: true }));
+    } catch (error) {
+        throw error;
+    }
 }
 
 export async function handleSession(
@@ -27,7 +35,6 @@ export async function handleSession(
     try {
         await handleLogin(navigate, defineUser, form);
     } catch (error) {
-        console.log(error);
         handleErros(error as Error, defineUser, throwError, setMessageError);
     }
 }
@@ -42,6 +49,6 @@ async function createSession(defineUser: DefineUserTypes, form: Partial<UserType
         await getToken(form);
         await handleUserValues(defineUser, form);
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
